@@ -1,0 +1,205 @@
+<section class="view-work-order py-6">
+  <div class="max-w-7xl mx-auto px-4">
+
+    <!-- ACTION BUTTONS -->
+    <div class="flex justify-end mb-6 space-x-3">
+      <ng-container *ngFor="let btnId of btnsToShow">
+        <app-button className="w-40" (clicked)="onAction(btnId)">
+          {{ getLabel(btnId) | translate }}
+        </app-button>
+      </ng-container>
+    </div>
+
+    <!-- HEADER -->
+    <div class="border-b pb-4 mb-4">
+      <h4 class="text-xl font-semibold">{{ 'orders.details' | translate }}</h4>
+
+      <div class="flex justify-between items-center py-3">
+        <h4 class="text-lg font-semibold">{{ orderData?.number }}</h4>
+
+        <h4 class="text-gray-600">
+          {{ orderData?.start_date | date:'yyyy-MM-dd' }}
+        </h4>
+      </div>
+
+      <p class="text-gray-700">{{ orderData?.description }}</p>
+    </div>
+
+    <!-- ORDER DETAILS GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Department -->
+      <div class="flex justify-between items-start border-r md:border-r md:pr-6">
+        <div>
+          <h4 class="font-semibold">{{ 'orders.department' | translate }}</h4>
+          <p class="text-gray-600">{{ orderData?.department?.name }}</p>
+        </div>
+      </div>
+
+      <!-- Work type -->
+      <div class="flex justify-between items-start border-r md:border-r md:pr-6">
+        <div>
+          <h4 class="font-semibold">{{ 'orders.workType' | translate }}</h4>
+          <p class="text-gray-600">{{ orderData?.work_type?.name }}</p>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div>
+        <h4 class="font-semibold">{{ 'orders.status' | translate }}</h4>
+        <p class="font-medium" [ngClass]="'status-label status-' + orderData?.status?.id">
+          {{ orderData?.status?.name }}
+        </p>
+      </div>
+
+      <!-- Engineer -->
+      <div class="flex justify-between items-start border-r md:border-r md:pr-6">
+        <div>
+          <h4 class="font-semibold">{{ 'orders.engineer' | translate }}</h4>
+          <p>{{ orderData?.engineer?.name }}</p>
+        </div>
+      </div>
+
+      <!-- Technician -->
+      <div class="flex justify-between items-start border-r md:border-r md:pr-6">
+        <div>
+          <h4 class="font-semibold">{{ 'orders.technician' | translate }}</h4>
+          <p>{{ orderData?.technician?.name }}</p>
+        </div>
+      </div>
+
+      <!-- Requester -->
+      <div>
+        <h4 class="font-semibold">{{ 'orders.requestername' | translate }}</h4>
+        <p>{{ orderData?.customer_name }}</p>
+      </div>
+
+      <!-- Building -->
+      <div class="flex justify-between items-start border-r md:border-r md:pr-6">
+        <div>
+          <h4 class="font-semibold">{{ 'orders.building' | translate }}</h4>
+          <p>{{ orderData?.building?.name }}</p>
+        </div>
+      </div>
+
+      <!-- Floor -->
+      <div class="flex justify-between items-start border-r md:border-r md:pr-6">
+        <div>
+          <h4 class="font-semibold">{{ 'orders.floor' | translate }}</h4>
+          <p>{{ orderData?.floor_no }}</p>
+        </div>
+      </div>
+
+      <!-- Room -->
+      <div>
+        <h4 class="font-semibold">{{ 'orders.room' | translate }}</h4>
+        <p>{{ orderData?.room_no }}</p>
+      </div>
+
+      <!-- Added By -->
+      <div class="flex justify-between items-start border-r md:border-r md:pr-6">
+        <div>
+          <h4 class="font-semibold">{{ 'orders.added_by' | translate }}</h4>
+          <p>{{ orderData?.added_by?.name }}</p>
+        </div>
+      </div>
+
+      <!-- Equipment -->
+      <div class="flex justify-between items-start border-r md:border-r md:pr-6">
+        <div>
+          <h4 class="font-semibold">{{ 'orders.equipment' | translate }}</h4>
+          <p>{{ orderData?.equipment?.name }}</p>
+        </div>
+      </div>
+
+      <!-- Source -->
+      <div>
+        <h4 class="font-semibold">{{ 'orders.source' | translate }}</h4>
+        <p>{{ orderData?.source?.name }}</p>
+      </div>
+
+      <!-- Attachment -->
+      <div *ngIf="orderData?.attachment">
+        <h4 class="font-semibold">{{ 'orders.attachment' | translate }}</h4>
+        <img class="w-32 h-32 rounded" [src]="orderData?.attachment" />
+      </div>
+
+    </div>
+
+    <!-- HOLDING STATUS -->
+    <div *ngIf="orderData?.status.id === 4" class="mt-10 space-y-6">
+      <h3 class="text-xl font-semibold">{{ 'orders.holding_title' | translate }}</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <!-- Reason -->
+        <div>
+          <h4 class="font-semibold">{{ 'orders.holding_reason' | translate }}</h4>
+          <p>{{ orderData?.holding_reason }}</p>
+        </div>
+
+        <!-- Required items -->
+        <div>
+          <h4 class="font-semibold">{{ 'orders.required_items' | translate }}</h4>
+          <p>{{ orderData?.used_items_descriptions }}</p>
+        </div>
+
+        <!-- Tech report -->
+        <div>
+          <h4 class="font-semibold">{{ 'orders.tech_report' | translate }}</h4>
+          <p>{{ orderData?.technician_report }}</p>
+        </div>
+
+        <!-- Attachment -->
+        <div *ngIf="orderData?.pendding_attachment">
+          <h4 class="font-semibold">{{ 'orders.attachment' | translate }}</h4>
+          <img class="w-32 h-32 rounded" [src]="orderData?.pendding_attachment" />
+        </div>
+
+      </div>
+    </div>
+
+    <!-- REJECTION STATUS -->
+    <div *ngIf="orderData?.status.id === 7" class="mt-10 space-y-6">
+      <h3 class="text-xl font-semibold">{{ 'orders.rejection_title' | translate }}</h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <h4 class="font-semibold">{{ 'orders.rejection_reason' | translate }}</h4>
+          <p>{{ orderData?.rejection_reason }}</p>
+        </div>
+
+        <div *ngIf="orderData?.rejection_attachment">
+          <h4 class="font-semibold">{{ 'orders.attachment' | translate }}</h4>
+          <img class="w-32 h-32 rounded" [src]="orderData?.rejection_attachment" />
+        </div>
+      </div>
+    </div>
+
+    <!-- MATERIAL TABLE -->
+    <ng-container *ngIf="materialTableData.length > 0">
+      <h4 class="mt-10 mb-3 text-xl font-semibold">
+        {{ 'orders.update.material' | translate }}
+      </h4>
+
+      <table class="w-full border rounded-lg overflow-hidden text-left">
+        <thead class="bg-gray-100 text-gray-700 uppercase text-sm">
+          <tr>
+            <th class="p-3">{{ 'orders.update.name' | translate }}</th>
+            <th class="p-3">{{ 'orders.update.description' | translate }}</th>
+            <th class="p-3">{{ 'orders.update.quantity' | translate }}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of materialTableData; let isEven = even" [ngClass]="isEven ? 'bg-white' : 'bg-gray-50'">
+            <td class="p-3">{{ item.name }}</td>
+            <td class="p-3">{{ item.description }}</td>
+            <td class="p-3">{{ item.quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+
+  </div>
+</section>

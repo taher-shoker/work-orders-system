@@ -1,0 +1,51 @@
+i {
+    width: 14px;
+    height: 14px;
+}
+.container h4 {
+    font-size: 18px;
+    color: #232931
+}
+  .vertical-divider {
+  width: 2px;            
+  height: 40px;           
+  background: #E5E5EF;       
+  display: inline-block; 
+  vertical-align: middle;
+  border-radius: 1px;    
+}
+.image img {
+    width: 56px;
+    height: 56px;
+    border-radius: 200px;
+}
+.status {
+  border-radius: 16px;
+  color: white;
+  padding: 2px 8px;
+
+
+  &.notActive {
+    background-color: #FBECEC;
+    color: #D73D3D;
+  }
+
+  &.active {
+    background-color: #E9F7EE;
+    color: #1FB155;
+  }
+}
+
+.dialog-bottom-btn {
+  position: absolute;
+  bottom: 16px;  /* المسافة من أسفل الـ dialog */
+  left: 16px;    /* المسافة من اليسار */
+  color: white;
+  border: none;
+  cursor: pointer;
+  background-color: #D73D3D;
+}
+
+.btn-user{
+  padding-top: 6rem;
+}

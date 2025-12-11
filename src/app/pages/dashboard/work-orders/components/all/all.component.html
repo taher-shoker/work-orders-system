@@ -1,0 +1,105 @@
+<section>
+  <div *ngIf="_AuthService.isAdmin()" class="mt-6 ltr:text-right rtl:text-left">
+    <app-button (clicked)="addOrder()" [startIcon]="'add_circle'">{{'orders.addOrder'|translate}}</app-button>
+  </div>
+  <div class="border rounded-xl p-6 mt-4 bg-white">
+
+    <!-- Title -->
+    <h3 class="text-lg font-semibold text-blue-700 mb-4 rtl:text-right">{{'orders.quickSearch' | translate}}</h3>
+
+    <!-- Filters Grid -->
+    <form class="grid grid-cols-1 md:grid-cols-3 gap-5" [formGroup]="orderForm" (ngSubmit)="onSubmit(orderForm)">
+      <div class="
+        ">
+        <app-label>{{'orders.status' | translate}}</app-label>
+        <app-select formControlName="status" [options]="status"></app-select>
+      </div>
+      <div class="
+                    ">
+        <app-label>{{'orders.department' | translate}}</app-label>
+        <app-select formControlName="department_id" [options]="departments"></app-select>
+      </div>
+      <div class="
+                        ">
+        <app-label>{{'orders.engineer' | translate}}</app-label>
+        <app-select formControlName="engineer_id" [options]="engineers"></app-select>
+      </div>
+      <div class="
+                            ">
+        <app-label>{{'orders.technician' | translate}}</app-label>
+        <app-select formControlName="technician_id" [options]="technicians"></app-select>
+      </div>
+      <div class="
+                                ">
+        <app-label>{{'orders.building' | translate}}</app-label>
+        <app-select formControlName="building_id" [options]="buildingsList"
+          [labelName]="isRtl?'name_ar':'name_en'"></app-select>
+      </div>
+      <div class="
+                                 ">
+        <app-label>{{'orders.workType' | translate}}</app-label>
+        <app-select formControlName="work_type_id" [labelName]="isRtl?'name_ar':'name_en'"
+          [options]="workTypeList"></app-select>
+      </div>
+      <app-date-picker formControlName="from_date" id="date-picker" [label]="'reports.start' | translate"
+        placeholder="">
+      </app-date-picker>
+      <app-date-picker formControlName="to_date" id="date-picker" [label]="'reports.end' | translate" placeholder="">
+      </app-date-picker>
+
+      <div class="mt-6 ltr:text-right rtl:text-left">
+        <button class="px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 duration-200">
+          بحث
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Statistics Section -->
+  <div class="mt-8">
+
+    <app-component-card [title]="'orders.orders' | translate">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <!-- Card -->
+        <!-- <div class="bg-white border rounded-xl p-4 text-center shadow-sm">
+          <div class="text-3xl font-bold text-blue-700">{{tableResponse?.total}}</div>
+          <div class="text-sm text-blue-700 mt-2">{{'home.totalWorkOrders' | translate}}</div>
+        </div> -->
+        <app-StatCard [title]="'home.totalWorkOrders' | translate" [icon]="'group'"
+          [number]="this.statisticData?.total_orders" [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'charts.opened' | translate" [icon]="'group'"
+          [number]="this.statisticData?.total_opened_orders" [colorClass]="'text-blue-500'">
+        </app-StatCard><app-StatCard [title]="'charts.holding' | translate" [icon]="'group'"
+          [number]="this.statisticData?.total_hold_orders" [colorClass]="'text-blue-500'">
+        </app-StatCard><app-StatCard [title]="'charts.completed' | translate" [icon]="'group'"
+          [number]="this.statisticData?.total_completed_orders" [colorClass]="'text-blue-500'">
+        </app-StatCard><app-StatCard [title]="'charts.rejected' | translate" [icon]="'group'"
+          [number]="this.statisticData?.total || 0" [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'charts.in_progress' | translate" [icon]="'group'"
+          [number]="this.statisticData?.in_progress_orders" [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'charts.canceled' | translate" [icon]="'group'" [number]="this.statisticData?.total || 0"
+          [colorClass]="'text-blue-500'">
+        </app-StatCard><app-StatCard [title]="'charts.closed' | translate" [icon]="'group'"
+          [number]="this.statisticData?.total_closed_orders" [colorClass]="'text-blue-500'">
+        </app-StatCard>
+
+      </div>
+    </app-component-card>
+  </div>
+
+
+  <div class="mt-6">
+    <app-basic-table-three [data]="tableData" [columns]="columns" [title]="'orders.orders' | translate"
+      (doAction)="tableAction($event)"></app-basic-table-three>
+    <ng-template #statusTemplate let-item="item">
+
+      <app-badge [colorId]="getOrderNumberById(item.status?.id)">
+        {{ item.status.name }}
+      </app-badge>
+    </ng-template>
+  </div>
+</section>

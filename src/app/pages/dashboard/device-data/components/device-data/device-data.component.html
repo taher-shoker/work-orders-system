@@ -1,0 +1,17 @@
+<section class="container">
+    <div class="row align-items-center">
+
+        <div class="px-4">
+            <app-AccordionItem [title]="'devices.manufacturer' | translate">
+                <app-manufacturers></app-manufacturers>
+            </app-AccordionItem>
+            <app-AccordionItem [title]="'devices.model' | translate">
+                <app-device-model></app-device-model>
+            </app-AccordionItem>
+            <app-AccordionItem [title]="'devices.type' | translate">
+                <app-device-type></app-device-type>
+            </app-AccordionItem>
+
+        </div>
+    </div>
+</section>

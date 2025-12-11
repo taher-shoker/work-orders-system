@@ -1,0 +1,108 @@
+<section>
+  <form [formGroup]="deviceForm">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+      <div>
+        <app-label>{{ 'devices.name_ar' | translate }}</app-label>
+        <app-input-field placeholder="{{ 'devices.name_ar' | translate }}" formControlName="name_ar"
+          className="form-input">
+        </app-input-field>
+      </div>
+      <div>
+        <app-label>{{ 'devices.name_en' | translate }}</app-label>
+        <app-input-field placeholder="{{ 'devices.name_en' | translate }}" formControlName="name_en"
+          className="form-input">
+        </app-input-field>
+      </div>
+      <div>
+        <app-label>{{ 'devices.device_type' | translate }}</app-label>
+        <app-select formControlName="type_id" [options]="deviceTypes"
+          [labelName]="isRtl?'name_ar':'name_en'"></app-select>
+
+      </div>
+      <div>
+        <app-label>{{ 'devices.code' | translate }}</app-label>
+        <app-input-field placeholder="{{ 'devices.code' | translate }}" formControlName="model_code"
+          className="form-input">
+        </app-input-field>
+      </div>
+      <div>
+        <app-label>{{ 'devices.department' | translate }}</app-label>
+        <app-select formControlName="department_id" [labelName]="isRtl?'name_ar':'name_en'"
+          [options]="departments"></app-select>
+
+      </div>
+      <div>
+        <app-label>{{ 'devices.manufacturer' | translate }}</app-label>
+        <app-select formControlName="company_id" [labelName]="isRtl?'name_ar':'name_en'"
+          [options]="manufacturers"></app-select>
+
+      </div>
+      <div>
+        <app-label>{{ 'devices.model' | translate }}</app-label>
+        <app-select formControlName="model_id" [labelName]="isRtl?'name_ar':'name_en'"
+          [options]="devicesModel"></app-select>
+
+      </div>
+      <div>
+        <app-label>{{ 'devices.serial_number' | translate }}</app-label>
+        <app-input-field placeholder="{{ 'devices.serial_number' | translate }}" formControlName="serial_number"
+          className="form-input">
+        </app-input-field>
+      </div>
+
+      <div>
+        <app-label>{{ 'devices.status' | translate }}</app-label>
+        <app-select formControlName="status" [labelName]="isRtl?'name_ar':'name_en'"
+          [options]="deviceStatus"></app-select>
+
+      </div>
+      <div>
+        <app-label>{{ 'devices.custodians' | translate }}</app-label>
+        <app-select formControlName="custodians" [options]="custodiansList"></app-select>
+
+      </div>
+      <!-- Date -->
+      <app-date-picker formControlName="buy_date" id="date-picker" [label]="'devices.buy_date' | translate"
+        placeholder="">
+      </app-date-picker>
+      <div>
+        <app-label>{{ 'devices.warranty_period' | translate }}</app-label>
+        <app-input-field placeholder="{{ 'devices.warranty_period' | translate }}" formControlName="warranty_period"
+          className="form-input">
+        </app-input-field>
+      </div>
+
+      <div class="md:col-span-4">
+        <app-label>{{ 'orders.add_attachment' | translate }}</app-label>
+        <app-file-input [multiple]="false" [attachmentFiles]="uploadedFiles" formControlName="image"
+          (onformchange)="onUploadFile($event)" (ondelete)="onDeleteFile($event)">
+        </app-file-input>
+      </div>
+
+      <div class="md:col-span-4">
+        <app-label>{{ 'devices.description_ar' | translate }}</app-label>
+        <app-text-area formControlName="description_ar" placeholder="{{'forms.add_description'| translate}}">
+        </app-text-area>
+      </div>
+      <div class="md:col-span-4">
+        <app-label>{{ 'devices.description_en' | translate }}</app-label>
+        <app-text-area formControlName="description_en" placeholder="{{'forms.add_description'| translate}}">
+        </app-text-area>
+      </div>
+
+
+
+    </div>
+    <!-- Buttons -->
+    <div class="mt-10 flex justify-between">
+      <app-button type="button" (clicked)="onSubmit()" [size]="'md'" className="w-40">
+        {{ (!isUpdatePage ? 'forms.add': 'forms.edit') | translate }}
+      </app-button>
+
+      <app-button type="button" [variant]="'outline'" [size]="'md'" className="w-40" (clicked)="goback()">
+        {{ 'forms.back' | translate }}
+      </app-button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,31 @@
+<section>
+    <h1 mat-dialog-title class="mb-4 text-center w-100 bg-orange text-dark">
+        {{ (isEditing ? 'devices.edit' : 'department.add_information') | translate }}
+    </h1>
+    <div mat-dialog-content>
+        <form [formGroup]="manufacturersForm">
+            <div class="grid grid-col-1 md:grid-col-2 gap-2">
+                <div class="">
+
+                    <app-label>{{'department.name_en' | translate}}</app-label>
+                    <app-input-field formControlName="name_en"
+                        placeholder="{{'department.name_en' | translate}}"></app-input-field>
+                </div>
+                <div class="">
+                    <app-label>{{'department.name_ar' | translate}}</app-label>
+                    <app-input-field formControlName="name_ar"
+                        placeholder="{{'department.name_ar' | translate}}"></app-input-field>
+
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div mat-dialog-actions class="flex justify-between mt-6">
+
+        <app-button [disabled]="manufacturersForm.invalid" (clicked)="onSubmit()">{{'save'|translate }}</app-button>
+        <app-button (clicked)="onNoClick()">{{'cancel'|translate }}</app-button>
+
+
+    </div>
+</section>

@@ -1,0 +1,30 @@
+.all-orders {
+    border-radius: 24px;
+    border: 1px solid #F2F3F4;
+    padding: 16px;
+
+}
+.container h4 {
+    font-size: 18px;
+    color: #051573;
+}
+.addbtn{
+    width: 15%;
+}
+
+.status {
+  border-radius: 16px;
+  color: white;
+  padding: 2px 8px;
+
+
+  &.notActive {
+    background-color: #FBECEC;
+    color: #D73D3D;
+  }
+
+  &.active {
+    background-color: #E9F7EE;
+    color: #1FB155;
+  }
+}

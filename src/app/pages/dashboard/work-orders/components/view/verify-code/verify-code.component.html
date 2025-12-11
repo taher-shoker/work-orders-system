@@ -1,0 +1,20 @@
+<section class="close-popup p-4 md:p-12">
+  <h2>{{'confirmation.title' |translate}}</h2>
+  <p>{{'confirmation.des' | translate}}</p>
+  <div class="
+">
+    <ng-otp-input (onInputChange)="onOtpChange($event)"
+      [config]="{ length: 4,allowNumbersOnly:true ,containerClass:'custom-inputs'}" #otpComp></ng-otp-input>
+
+  </div>
+
+  <div class="flex justify-bettween  gap-3 mt-8">
+    <app-button (clicked)="submitOtp()" [size]="'md'" className="w-40" [disabled]="codeValue.length < 4">
+      {{ 'confirmation.confirm' | translate }}
+    </app-button>
+
+    <app-button [variant]="'outline'" type="button" (clicked)="dialogRef.close()" [size]="'md'" className="w-40">
+      {{ 'confirmation.cancel' | translate }}
+    </app-button>
+  </div>
+</section>

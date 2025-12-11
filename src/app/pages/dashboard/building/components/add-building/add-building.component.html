@@ -1,0 +1,36 @@
+<section>
+    <h1 mat-dialog-title class="mb-4 text-center w-100 bg-orange text-dark">
+        {{ (isEditing ? 'building.edit' : 'building.add') | translate }}
+    </h1>
+    <div mat-dialog-content>
+        <form [formGroup]="buildingForm">
+            <div class="grid grid-col-1 md:grid-col-2 gap-2">
+                <div class="">
+                    <app-label>{{'building.name_en' | translate}}</app-label>
+                    <app-input-field formControlName="name_en"
+                        placeholder="{{'building.name_en' | translate}}"></app-input-field>
+                </div>
+                <div class="">
+                    <app-label>{{'building.name_ar' | translate}}</app-label>
+                    <app-input-field formControlName="name_ar"
+                        placeholder="{{'building.name_ar' | translate}}"></app-input-field>
+                </div>
+                <div class="">
+                    <app-label>{{'building.no_of_floors' | translate}}</app-label>
+                    <app-input-field formControlName="no_of_floors"
+                        placeholder="{{'building.no_of_floors' | translate}}"></app-input-field>
+                </div>
+
+            </div>
+
+
+        </form>
+    </div>
+    <div mat-dialog-actions class="flex justify-between mt-6">
+
+        <app-button (clicked)="onSubmit()" [disabled]="buildingForm.invalid">{{'save'|translate }}</app-button>
+        <app-button (clicked)="onNoClick()">{{'cancel'|translate }}</app-button>
+
+
+    </div>
+</section>

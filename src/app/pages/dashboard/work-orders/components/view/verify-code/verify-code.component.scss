@@ -1,0 +1,11 @@
+.close-popup {
+  text-align: center;
+  padding: 20px;
+
+  ::ng-deep .custom-inputs {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-block: 30px;
+  }
+}

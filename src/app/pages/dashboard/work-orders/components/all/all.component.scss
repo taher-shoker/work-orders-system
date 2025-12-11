@@ -1,0 +1,98 @@
+.card {
+  border-radius: 24px;
+  border: 1px solid #f2f3f4;
+  padding: 16px;
+}
+.container h4 {
+  font-size: 18px;
+  color: #051573;
+}
+.mat-date-range-input-inner {
+  color: #000;
+}
+
+.mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+  color: black !important;
+}
+.addbtn {
+  width: 15%;
+}
+mat-form-field {
+  width: 100%;
+}
+.all-orders {
+  border-radius: 24px;
+  border: 1px solid #f2f3f4;
+  padding: 16px;
+}
+.col h4 {
+  font-size: 16px;
+  font-weight: 500;
+  // color: #3575DD;
+}
+
+.status-label {
+  padding: 8px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 500;
+  text-transform: capitalize; /* Capitalizes each word in the status */
+  max-width: 140px !important;
+}
+/* Individual Status Styles */
+
+/* Blue (مُسند) */
+.status-2 {
+  background-color: rgba($color: #a3c8ff, $alpha: 0.2); /* Soft Blue */
+  color: #79a8ef;
+}
+
+/* Status 3: قيد التنفيذ (Light Yellow) */
+.status-3 {
+  background-color: rgba(247, 230, 124, 0.2) !important;
+  color: #e1c722 !important; /* Use the original color for the text */
+}
+
+/* Status 4: معلق (Soft Purple) */
+.status-4 {
+  background-color: rgba(
+    184,
+    143,
+    246,
+    0.2
+  ) !important; /* Soft Purple with 0.2 opacity */
+  color: #a270ed !important; /* Use the original color for the text */
+}
+
+/* Status 5: مكتمل (Soft Green) */
+.status-5 {
+  background-color: rgba(
+    130,
+    224,
+    167,
+    0.2
+  ) !important; /* Soft Green with 0.2 opacity */
+  color: #4de58a !important; /* Use the original color for the text */
+}
+
+/* Status 7: مرفوض (Light Red) */
+.status-7 {
+  background-color: rgba(
+    242,
+    139,
+    130,
+    0.2
+  ) !important; /* Light Red with 0.2 opacity */
+  color: #f06b5f !important; /* Use the original color for the text */
+}
+
+/* Status 8: ملغي (Light Gray) */
+.status-8 {
+  background-color: rgba(
+    211,
+    211,
+    211,
+    0.2
+  ) !important; /* Light Gray with 0.2 opacity */
+  color: #a19f9f !important; /* Use the original color for the text */
+}

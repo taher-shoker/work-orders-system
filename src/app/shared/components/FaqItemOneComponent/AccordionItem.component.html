@@ -1,0 +1,22 @@
+<div class=" rounded-xl shadow border transition-all mt-4">
+  <!-- Header -->
+  <button (click)="toggle()" class="w-full flex justify-between items-center p-6 text-left">
+    <span class="text-lg font-semibold text-gray-900">
+      {{ title }}
+    </span>
+
+    <!-- Arrow icon -->
+    <span class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-50 transition-transform duration-300"
+      [ngClass]="{'rotate-180': open}">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-700" fill="none" viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+      </svg>
+    </span>
+  </button>
+
+  <!-- Body -->
+  <div *ngIf="open" class="px-6 pb-6 text-gray-600 transition-all">
+    <ng-content></ng-content>
+  </div>
+</div>

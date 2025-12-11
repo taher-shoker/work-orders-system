@@ -1,0 +1,254 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
+
+    <div class="">
+
+        <div class="bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6 ">
+            <!-- Stats -->
+            <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
+
+                <!-- Total -->
+                <div class="text-center">
+                    <p class="text-gray-500 text-sm font-medium">{{ 'dashboard.total_work_orders' | translate }}</p>
+                    <p class="text-2xl font-bold text-gray-900 mt-2">{{data?.total_orders}}</p>
+
+                </div>
+
+                <!-- Open -->
+                <div class="text-center">
+                    <p class="text-gray-500 text-sm font-medium">{{ 'dashboard.open' | translate }}</p>
+                    <p class="text-2xl font-bold text-gray-900 mt-2">{{data?.total_opened_orders}}</p>
+                </div>
+
+                <!-- Closed -->
+                <div class="text-center">
+                    <p class="text-gray-500 text-sm font-medium">{{ 'dashboard.closed' | translate }}</p>
+                    <p class="text-2xl font-bold text-gray-900 mt-2">{{data?.total_closed_orders}}</p>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
+                <!-- Replace with your icon -->
+                <mat-icon>home</mat-icon>
+            </div>
+        </div>
+        <div class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6 ">
+            <!-- Stats -->
+            <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
+
+                <!-- Total -->
+                <div class="text-center">
+                    <p class="text-gray-500 text-sm font-medium">{{ 'dashboard.total_users' | translate }}</p>
+                    <p class="text-2xl font-bold text-gray-900 mt-2">{{data?.active_users +data?.not_active_users}}
+                    </p>
+
+                </div>
+
+                <!-- Open -->
+                <div class="text-center">
+                    <p class="text-gray-500 text-sm font-medium">{{ 'dashboard.active_users' | translate }}</p>
+                    <p class="text-2xl font-bold text-gray-900 mt-2">{{data?.active_users}}</p>
+                </div>
+
+                <!-- Closed -->
+                <div class="text-center">
+                    <p class="text-gray-500 text-sm font-medium">{{ 'dashboard.inactive_users' | translate }}</p>
+                    <p class="text-2xl font-bold text-gray-900 mt-2">{{data?.not_active_users}}</p>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
+                <!-- Replace with your icon -->
+                <mat-icon>people</mat-icon>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div
+                class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6 ">
+                <!-- Stats -->
+                <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
+                    <!-- Total -->
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm font-medium">{{ 'sidebar.departments' | translate }}</p>
+                        <p class="text-2xl font-bold text-gray-900 mt-2">{{data?.total_categories}}</p>
+
+                    </div>
+
+                </div>
+                <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
+                    <!-- Replace with your icon -->
+                    <mat-icon>settings_brightness</mat-icon>
+                </div>
+            </div>
+            <div
+                class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6 ">
+                <!-- Stats -->
+                <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
+
+                    <!-- Total -->
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm font-medium">{{ 'dashboard.total_devices' | translate }}</p>
+                        <p class="text-2xl font-bold text-gray-900 mt-2">{{data?.total_devices}}</p>
+
+                    </div>
+
+                </div>
+
+                <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
+                    <!-- Replace with your icon -->
+                    <mat-icon>devices_other</mat-icon>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div
+                class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6 ">
+                <!-- Stats -->
+                <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
+                    <!-- Total -->
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm font-medium">{{ 'dashboard.buildings' | translate }}</p>
+                        <p class="text-2xl font-bold text-gray-900 mt-2">24,560</p>
+
+                    </div>
+
+                </div>
+                <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
+                    <!-- Replace with your icon -->
+                    <mat-icon>widgets</mat-icon>
+                </div>
+            </div>
+            <div
+                class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6 ">
+                <!-- Stats -->
+                <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
+
+                    <!-- Total -->
+                    <div class="text-center">
+                        <p class="text-gray-500 text-sm font-medium">{{ 'dashboard.equipments' | translate }}</p>
+                        <p class="text-2xl font-bold text-gray-900 mt-2">24,560</p>
+
+                    </div>
+
+                </div>
+
+                <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
+                    <!-- Replace with your icon -->
+                    <mat-icon>build</mat-icon>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow mb-6">
+        <h2 class="text-lg font-semibold mb-4">{{ 'dashboard.in_maintenance' | translate }}</h2>
+
+        <div class="space-y-5">
+            <!-- Single Device Item -->
+            <div class="p-4 border rounded-lg hover:bg-gray-50">
+                <div class="flex items-center justify-between gap-4">
+
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-12 bg-gray-600 rounded-lg"></div>
+                        <div>
+                            <p class="font-semibold">{{ 'dashboard.ventilator' | translate }}</p>
+                            <p class="text-gray-400 text-sm">ED17</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center">
+                        <!-- <p class="text-sm">{{ 'dashboard.maintenance_count' | translate:{count:12} }}</p> -->
+                        <img src="assets/images/QR.png" alt="QR" class="w-12 h-12 rounded-sm  mt-2" />
+                    </div>
+                </div>
+
+                <!-- Divider line -->
+                <div class="my-3 w-[90%] h-px bg-gray-300 mx-auto"></div>
+
+                <div class="flex justify-between text-gray-600 text-sm">
+                    <div class="text-center">
+                        <p class="font-semibold">{{ 'dashboard.maintenance_count' | translate }}</p>
+                        <p class="mt-2">12</p>
+                    </div>
+
+                    <div class="border-l h-10"></div>
+
+                    <div class="text-center">
+                        <p class="font-semibold">{{ 'dashboard.total_downtime' | translate }}</p>
+                        <p class="mt-2">45</p>
+                    </div>
+
+                    <div class="border-l h-10"></div>
+
+                    <div class="text-center">
+                        <p class="font-semibold">{{ 'dashboard.last_maintenance' | translate }}</p>
+                        <p class="mt-2">12-1-2023</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border rounded-lg hover:bg-gray-50">
+                <div class="flex items-center justify-between gap-4">
+
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-12 bg-gray-600 rounded-lg"></div>
+                        <div>
+                            <p class="font-semibold">{{ 'dashboard.ventilator' | translate }}</p>
+                            <p class="text-gray-400 text-sm">ED17</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center">
+                        <!-- <p class="text-sm">{{ 'dashboard.maintenance_count' | translate:{count:12} }}</p> -->
+                        <img src="assets/images/QR.png" alt="QR" class="w-12 h-12 rounded-sm  mt-2" />
+                    </div>
+                </div>
+
+                <!-- Divider line -->
+                <div class="my-3 w-[90%] h-px bg-gray-300 mx-auto"></div>
+
+                <div class="flex justify-between text-gray-600 text-sm">
+                    <div class="text-center">
+                        <p class="font-semibold">{{ 'dashboard.maintenance_count' | translate }}</p>
+                        <p class="mt-2">12</p>
+                    </div>
+
+                    <div class="border-l h-10"></div>
+
+                    <div class="text-center">
+                        <p class="font-semibold">{{ 'dashboard.total_downtime' | translate }}</p>
+                        <p class="mt-2">45</p>
+                    </div>
+
+                    <div class="border-l h-10"></div>
+
+                    <div class="text-center">
+                        <p class="font-semibold">{{ 'dashboard.last_maintenance' | translate }}</p>
+                        <p class="mt-2">12-1-2023</p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+<div class="bg-white rounded-xl  shadow p-6  ">
+
+    <div class="grid grid-cols-1  gap-2 mb-6">
+
+        <app-radial-chart [data]="dataPieChart"></app-radial-chart>
+
+        <!-- <app-radial-chart [data]="dataPieChart"></app-radial-chart> -->
+
+    </div>
+    <div class="grid grid-cols-1  gap-2 mb-6">
+
+
+        <app-bar-chart-one></app-bar-chart-one>
+
+    </div>
+
+
+</div>

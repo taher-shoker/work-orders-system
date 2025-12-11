@@ -1,0 +1,42 @@
+<section>
+  <!-- <div *ngIf="_AuthService.isAdmin()" class="mt-6 ltr:text-right rtl:text-left">
+    <app-button [startIcon]="'add_circle'">{{'breadCrumb.add_new_report'|translate}}</app-button>
+
+  </div> -->
+
+
+  <!-- Statistics Section -->
+  <div class="mt-8">
+
+    <app-component-card [title]="'reports.reports' | translate">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+        <app-StatCard [title]="'reports.total-work-orders' | translate" [icon]="'group'" [number]="tableData.length"
+          [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'reports.equipment-in-operation' | translate" [icon]="'group'"
+          [number]="tableData.length" [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'reports.background' | translate" [icon]="'group'" [number]="tableData.length"
+          [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'reports.closed' | translate" [icon]="'group'" [number]="tableData.length"
+          [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'reports.open' | translate" [icon]="'group'" [number]="tableData.length"
+          [colorClass]="'text-blue-500'">
+        </app-StatCard>
+
+
+
+      </div>
+    </app-component-card>
+  </div>
+
+
+  <div class="mt-6">
+    <app-basic-table-three [importExport]="true" [haveView]="false" [data]="tableData" [columns]="columns"
+      [title]="'reports.reports' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
+
+  </div>
+</section>

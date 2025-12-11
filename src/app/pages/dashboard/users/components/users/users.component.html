@@ -1,0 +1,44 @@
+<section>
+  <div *ngIf="_AuthService.isAdmin()" class="mt-6 ltr:text-right rtl:text-left">
+    <app-button (clicked)="addUser()" [startIcon]="'add_circle'">{{'users.add_user'|translate}}</app-button>
+  </div>
+
+
+  <!-- Statistics Section -->
+  <div class="mt-8">
+
+    <app-component-card [title]="'users.users' | translate">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+
+        <app-StatCard [title]="'users.users' | translate" [icon]="'group'" [number]="tableResponse?.total"
+          [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'users.active' | translate" [icon]="'group'" [number]="tableResponse?.total"
+          [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'users.notActive' | translate" [icon]="'group'" [number]="tableResponse?.total"
+          [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'users.engineer' | translate" [icon]="'group'" [number]="tableResponse?.total"
+          [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <app-StatCard [title]="'users.technician' | translate" [icon]="'group'" [number]="tableResponse?.total"
+          [colorClass]="'text-blue-500'">
+        </app-StatCard>
+
+      </div>
+    </app-component-card>
+  </div>
+
+
+  <div class="mt-6">
+    <app-basic-table-three [type]="'users'" [data]="tableData" [columns]="columns" [title]="'users.users' | translate"
+      (doAction)="tableAction($event)"></app-basic-table-three>
+    <ng-template #statusTemplate let-item="item">
+      <app-badge [colorId]="item.is_active ?3:4 ">
+        {{ item.is_active ? ('users.active' | translate) : ('users.notActive' | translate) }}
+      </app-badge>
+    </ng-template>
+
+  </div>
+</section>

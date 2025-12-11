@@ -1,0 +1,13 @@
+<button (click)="toggleLanguage()"
+  class="relative flex items-center justify-center text-gray-500 transition-colors bg-white   hover:text-dark-900 h-11 w-11 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white">
+  @switch (directionService.translate.currentLang) {
+  @case ('en') {
+  <img src="assets/images/flags/ar.svg" alt="Arabic Flag" />}
+  @case ('ar') {
+  <img src="assets/images/flags/en.svg" alt="English Flag" />
+  }
+  @default {
+  <img src="assets/images/flags/en.svg" alt="English Flag" />
+  }
+  }
+</button>

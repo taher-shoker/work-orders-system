@@ -1,0 +1,36 @@
+<section>
+    <div *ngIf="_AuthService.isAdmin()" class="mt-6 ltr:text-right rtl:text-left">
+        <app-button (clicked)="openAddBuilding()"
+            [startIcon]="'add_circle'">{{'breadCrumb.add_new_building'|translate}}</app-button>
+    </div>
+
+
+    <!-- Statistics Section -->
+    <div class="mt-8">
+
+        <app-component-card [title]="'building.buildings' | translate">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                <app-StatCard [title]="'building.total-buildings' | translate" [icon]="'group'"
+                    [number]="tableData.length" [colorClass]="'text-blue-500'">
+                </app-StatCard>
+                <app-StatCard [title]="'building.main-buildings' | translate" [icon]="'group'"
+                    [number]="tableData.length" [colorClass]="'text-blue-500'">
+                </app-StatCard>
+                <app-StatCard [title]="'building.service-buildings' | translate" [icon]="'group'"
+                    [number]="tableData.length" [colorClass]="'text-blue-500'">
+                </app-StatCard>
+
+
+
+            </div>
+        </app-component-card>
+    </div>
+
+
+    <div class="mt-6">
+        <app-basic-table-three [haveView]="false" [data]="tableData" [columns]="columns"
+            [title]="'sidebar.devices' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
+
+    </div>
+</section>

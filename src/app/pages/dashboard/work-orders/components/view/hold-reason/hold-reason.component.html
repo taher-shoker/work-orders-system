@@ -1,0 +1,42 @@
+<section class="close-popup p-4 md:p-12">
+  <h2 class="mb-2">{{ 'orders.holding_title' | translate }}</h2>
+  <form [formGroup]="orderForm">
+    <div class="grid grid-cols-12 gap-4">
+
+      <div class="col-span-12 ">
+        <app-label>{{'orders.holding_reason' | translate }}</app-label>
+        <app-input-field formControlName="holding_reason"
+          placeholder="{{ 'orders.holding_reason' | translate }}"></app-input-field>
+      </div>
+
+      <div class="col-span-12">
+        <app-label>{{ 'orders.required_items' | translate }}</app-label>
+        <app-text-area formControlName="used_items_descriptions"></app-text-area>
+      </div>
+
+      <div class="col-span-12">
+        <app-label>{{'orders.tech_report' | translate}}</app-label>
+        <app-text-area formControlName="technician_report"></app-text-area>
+      </div>
+
+      <div class="col-span-12">
+        <app-label>{{'orders.add_attachment' | translate}}</app-label>
+        <app-file-input [multiple]="false" [attachmentFiles]="uploadedFiles" formControlName="pendding_attachment"
+          (onformchange)="onUploadFile($event)" (ondelete)="onDeleteFile($event)">
+        </app-file-input>
+      </div>
+
+    </div>
+
+    <div class="flex justify-bettween  gap-3 mt-8">
+      <app-button (clicked)="onSubmit()" [size]="'md'" className="w-40">
+        {{ 'confirmation.confirm' | translate }}
+      </app-button>
+
+      <app-button [variant]="'outline'" type="button" (clicked)="onCancel()" [size]="'md'" className="w-40">
+        {{ 'confirmation.cancel' | translate }}
+      </app-button>
+    </div>
+  </form>
+
+</section>

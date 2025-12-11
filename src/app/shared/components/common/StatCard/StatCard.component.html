@@ -1,0 +1,14 @@
+<div class="p-6 bg-white rounded-lg shadow-md flex items-center space-x-4"
+  [ngClass]="colorClass ? colorClass + ' border-l-4' : ''">
+  <!-- Icon with dynamic color class -->
+  <!-- <span class="material-icons" [ngClass]="colorClass" class="text-3xl">{{ icon }}</span> -->
+  <mat-icon>{{ icon }}</mat-icon>
+  <div class="flex-1">
+    <!-- Number display -->
+    <div class="text-3xl font-bold text-gray-800 mt-2">{{ number }}</div>
+    <!-- Title with dynamic color class -->
+    <span [ngClass]="colorClass" class="block text-lg font-medium">{{ title }}</span>
+
+
+  </div>
+</div>
