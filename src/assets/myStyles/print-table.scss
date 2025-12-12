@@ -1,0 +1,35 @@
+html {
+    border: 1px solid gray;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border: 1px solid gray;
+    border-collapse: collapse;
+
+    th,
+    td {
+        border: 1px solid gray;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 5px;
+    }
+}
+
+.form-card {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.mat-mdc-form-field-icon-suffix, 
+.mat-mdc-select-arrow svg,
+mat-hint,
+.mat-mdc-text-field-wrapper .mdc-text-field .ng-tns-c1205077789-35 .mdc-text-field--filled .mdc-text-field--disabled{
+    display: none;
+    padding: 0px;
+}

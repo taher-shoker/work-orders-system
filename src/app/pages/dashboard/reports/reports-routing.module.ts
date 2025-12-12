@@ -1,14 +1,26 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ReportsComponent } from './components/reports/reports.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ReportsComponent } from "./components/reports/reports.component";
+import { ReportsDashComponent } from "./reports.component";
 
 const routes: Routes = [
-  { path: '', component: ReportsComponent },
-  { path: 'reports', component: ReportsComponent }
+  {
+    path: "",
+    component: ReportsDashComponent,
+    data: { breadcrumb: "breadCrumb.reports" },
+
+    children: [
+      {
+        path: "",
+        component: ReportsComponent,
+        data: { breadcrumb: "" },
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ReportsRoutingModule { }
+export class ReportsRoutingModule {}

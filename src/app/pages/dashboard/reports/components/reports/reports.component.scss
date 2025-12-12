@@ -1,0 +1,41 @@
+.page-header {
+  button {
+    background-color: #00A551;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.mat-date-range-input-inner {
+  color: #000;
+}
+
+.mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+  color: black !important;
+}
+
+
+img{
+    width: 10%;
+    display: none;
+}
+
+// table
+table {
+    width: 100%;
+    border: 1px solid gray;
+    border-collapse: collapse;
+
+    th,
+    td {
+        border: 1px solid gray;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 5px;
+    }
+}

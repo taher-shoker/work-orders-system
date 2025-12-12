@@ -1,42 +1,149 @@
 <section>
-  <!-- <div *ngIf="_AuthService.isAdmin()" class="mt-6 ltr:text-right rtl:text-left">
-    <app-button [startIcon]="'add_circle'">{{'breadCrumb.add_new_report'|translate}}</app-button>
+  <div class="border rounded-xl p-6 mt-4 bg-white">
+    <!-- Title -->
+    <h3 class="text-lg font-semibold text-blue-700 mb-4 rtl:text-right">
+      {{ "orders.quickSearch" | translate }}
+    </h3>
 
-  </div> -->
-
-
-  <!-- Statistics Section -->
-  <div class="mt-8">
-
-    <app-component-card [title]="'reports.reports' | translate">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-
-        <app-StatCard [title]="'reports.total-work-orders' | translate" [icon]="'group'" [number]="tableData.length"
-          [colorClass]="'text-blue-500'">
-        </app-StatCard>
-        <app-StatCard [title]="'reports.equipment-in-operation' | translate" [icon]="'group'"
-          [number]="tableData.length" [colorClass]="'text-blue-500'">
-        </app-StatCard>
-        <app-StatCard [title]="'reports.background' | translate" [icon]="'group'" [number]="tableData.length"
-          [colorClass]="'text-blue-500'">
-        </app-StatCard>
-        <app-StatCard [title]="'reports.closed' | translate" [icon]="'group'" [number]="tableData.length"
-          [colorClass]="'text-blue-500'">
-        </app-StatCard>
-        <app-StatCard [title]="'reports.open' | translate" [icon]="'group'" [number]="tableData.length"
-          [colorClass]="'text-blue-500'">
-        </app-StatCard>
-
-
-
+    <!-- Filters Grid -->
+    <form
+      class="grid grid-cols-1 md:grid-cols-3 gap-5"
+      [formGroup]="reportForm"
+      (ngSubmit)="onSubmit(reportForm)"
+    >
+      <div class="">
+        <app-label>{{ "orders.status" | translate }}</app-label>
+        <app-select formControlName="status" [options]="status"></app-select>
       </div>
-    </app-component-card>
+      <div class="">
+        <app-label>{{ "orders.department" | translate }}</app-label>
+        <app-select
+          formControlName="department_id"
+          [options]="departments"
+        ></app-select>
+      </div>
+      <div class="">
+        <app-label>{{ "orders.engineer" | translate }}</app-label>
+        <app-select
+          formControlName="engineer_id"
+          [options]="engineers"
+        ></app-select>
+      </div>
+      <div class="">
+        <app-label>{{ "orders.technician" | translate }}</app-label>
+        <app-select
+          formControlName="technician_id"
+          [options]="technicians"
+        ></app-select>
+      </div>
+
+      <app-date-picker
+        formControlName="from_date"
+        id="date-picker"
+        [label]="'reports.start' | translate"
+        placeholder=""
+      >
+      </app-date-picker>
+      <app-date-picker
+        formControlName="to_date"
+        id="date-picker"
+        [label]="'reports.end' | translate"
+        placeholder=""
+      >
+      </app-date-picker>
+
+      <div class="mt-6 ltr:text-right rtl:text-left">
+        <button
+          class="px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 duration-200"
+        >
+          بحث
+        </button>
+      </div>
+    </form>
   </div>
 
+  <!-- Table -->
+  <div
+    id="print-section"
+    class="d-flex align-items-center border rounded-xl p-6 mt-4 bg-white"
+    [dir]="currentLang == 'en' ? 'ltr' : 'rtl'"
+  >
+    <div [dir]="currentLang == 'en' ? 'rtl' : 'ltr'">
+      <img
+        src="../../../../../../assets/images/LogInLogo.png"
+        alt="LogInLogo"
+      />
+      <img src="../../../../../../assets/images/Logo.jpg" alt="Logo" />
+    </div>
+    <div class="table-card container">
+      <div
+        class="page-header"
+        [dir]="currentLang == 'en' ? 'ltr' : 'rtl'"
+      >
+        <h1 class="p-2">{{ "reports.reports" | translate }}</h1>
+      </div>
+      <table
+        class="custom-table table-print"
+        [dir]="currentLang == 'en' ? 'ltr' : 'rtl'"
+      >
+        <thead class="text-capitalize">
+          <th class="alone">#</th>
+          <th class="alone">{{ "reports.building" | translate }}</th>
+          <th class="alone">{{ "reports.work_type" | translate }}</th>
+          <th class="alone">{{ "reports.source" | translate }}</th>
+          <th class="alone">{{ "reports.department" | translate }}</th>
+          <th class="alone">{{ "reports.engineer" | translate }}</th>
+          <th class="alone">{{ "reports.technician" | translate }}</th>
+          <th class="alone">{{ "reports.added_by" | translate }}</th>
+          <th class="alone">{{ "reports.status" | translate }}</th>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let item of data; let isEven = even"
+            [class]="isEven ? '' : 'bg-secondary-subtle'"
+          >
+            <td class="alone p-2">
+              <a
+                [routerLink]="[
+                  '/dashboard/work-orders/view',
+                  item.id
+                ]"
+                >{{ item.id }}</a
+              >
+            </td>
+            <td class="alone">{{ item.building?.name }}</td>
+            <td class="alone">{{ item.work_type?.name }}</td>
+            <td class="alone">{{ item.source?.name }}</td>
+            <td class="alone">{{ item.department?.name }}</td>
+            <td class="alone">{{ item.engineer?.name }}</td>
+            <td class="alone">{{ item.technician?.name }}</td>
+            <td class="alone">{{ item.added_by?.name }}</td>
+            <td class="alone">{{ item.status?.name }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-  <div class="mt-6">
-    <app-basic-table-three [importExport]="true" [haveView]="false" [data]="tableData" [columns]="columns"
-      [title]="'reports.reports' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
-
+<!-- print -->
+  <div class="mt-3 p-3" [dir]="currentLang == 'en' ? 'rtl' : 'ltr'">
+    <button
+      class="px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 duration-200"
+      printTitle="Report"
+      [printStyle]="{
+        img: {
+          width: '10%',
+          'text-align': 'start',
+          display: 'inline-block',
+          margin: '0px 10px'
+        },
+        thead: { 'background-color': '#333' }
+      }"
+      styleSheetFile="../../../../../../assets/myStyles/print-table.scss"
+      printSectionId="print-section"
+      ngxPrint
+    >
+      {{ "reports.print" | translate }}
+    </button>
   </div>
 </section>

@@ -7,6 +7,7 @@ import {
   LookupsService,
   HelperService,
   AuthService,
+  WorkOrdersService,
 } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { CommonModule } from "@angular/common";
@@ -16,12 +17,12 @@ import { BasicTableThreeComponent } from "../../../../../shared/components/table
   selector: "app-reports",
   templateUrl: "./reports.component.html",
   styleUrls: ["./reports.component.scss"],
-  imports: [SharedUiModule, BasicTableThreeComponent],
+  imports: [SharedUiModule],
 })
 export class ReportsComponent {
   data: any;
   status: any;
-  reports: any;
+  departments: any;
   departmentId: any;
   supervisor: any;
   engineers: any;
@@ -29,7 +30,7 @@ export class ReportsComponent {
   start_date: any;
   date: any;
   tableResponse: any | undefined;
-  tableData: any[] = [];
+  tableData: any[] | undefined = [];
   pageSize: number | undefined = 5;
   page: number | undefined = 1;
   isEmptyData: boolean = false;
@@ -38,43 +39,17 @@ export class ReportsComponent {
   hide: boolean = true;
   confirmHide: boolean = true;
   hideRequiredMarker: boolean = true;
-  columns: any = [];
 
   constructor(
     private _ReportsService: ReportsService,
     private _LookupsService: LookupsService,
     private _ToastrService: ToastrService,
     private _Router: Router,
-    private _HelperService: HelperService,
-    public _AuthService: AuthService,
-    public router: Router,
-    public route: ActivatedRoute
+    private _HelperService: HelperService
   ) {}
 
   ngOnInit() {
-    // // for get all work orders first
-    // Object.entries(this.reportForm.value).forEach(([key, value]) => {
-    //   if (!value) {
-    //     this.isEmptyData = true
-    //   }
-    // })
-
-    // if (this.isEmptyData == true) {
-    //   this.onSubmit(this.reportForm)
-    // }
-
-    this.columns = [
-      { header: "reports.name", field: "name", type: "text" },
-      {
-        header: "reports.date",
-        field: "date",
-        type: "text",
-      },
-      { header: "reports.file", field: "file", type: "text" },
-
-      { header: "", field: "action", type: "action" },
-    ];
-    this.getReports();
+    this.getDepartment();
     this.getAllStatus();
     this.getEngineers();
     this.getTechnicians();
@@ -99,6 +74,7 @@ export class ReportsComponent {
     this._ReportsService.addReports(data.value, params).subscribe({
       next: (res) => {
         this.data = res.data;
+        console.log(data);
 
         this._ToastrService.success("Report Added Succesfuly");
       },
@@ -115,10 +91,9 @@ export class ReportsComponent {
     });
   }
   // Department
-  getReports() {
-    this._LookupsService.getReport().subscribe((res) => {
-      this.reports = res.data;
-      this.tableData = res.data;
+  getDepartment() {
+    this._LookupsService.getDepartment().subscribe((res) => {
+      this.departments = res.data;
     });
   }
   // Engineers
@@ -132,27 +107,5 @@ export class ReportsComponent {
     this._ReportsService.getTechnicians().subscribe((res) => {
       this.technicians = res.data;
     });
-  }
-  tableAction(event: { value: string; dataRow?: any }) {
-    if (event.value === "edit") {
-      // this.router.navigate(["./edit", event?.dataRow.id], {
-      //   relativeTo: this.route,
-      // });
-    } else if (event.value === "delete") {
-      // this._WorkOrdersService.deleteOrder(event.dataRow.id).subscribe({
-      //   next: (res) => {},
-      //   error: (err) => {
-      //     this._ToastrService.error("delete order failed");
-      //   },
-      //   complete: () => {
-      //     this.onSubmit(this.orderForm);
-      //     this._ToastrService.success("Order Deleted");
-      //   },
-      // });
-    } else if (event.value === "view") {
-      this.router.navigate(["./view", event?.dataRow.id], {
-        relativeTo: this.route,
-      });
-    }
   }
 }
