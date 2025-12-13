@@ -379,10 +379,12 @@
     "delete_title": "تأكيد الحذف",
     "close": "إغلاق",
     "confirm": "تأكيد",
-    "confirm_msg": "هل ترغب في حذف {{title}} رقم ",
+    "confirm_msg": "هل ترغب في حذف  ",
     "import": "إدخال",
     "export": "إستخراج",
-    "add": "أضف"
+    "add": "أضف",
+    "search_name_ar": "إبحث عن الإسم باللغة العربية",
+    "noData": "لا توجد بيانات"
   },
   "breadCrumb": {
     "home": "الرئيسية",

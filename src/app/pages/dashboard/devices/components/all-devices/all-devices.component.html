@@ -32,7 +32,7 @@
 
     <div class="mt-6">
         <app-basic-table-three [data]="tableData" [columns]="columns" [title]="'sidebar.devices' | translate"
-            (doAction)="tableAction($event)"></app-basic-table-three>
+            (doAction)="tableAction($event)" [totalItems]="tableResponse"></app-basic-table-three>
         <!-- <ng-template #statusTemplate let-item="item">
       <app-badge [colorId]="item.status?.id">
         {{ item.status.name }}

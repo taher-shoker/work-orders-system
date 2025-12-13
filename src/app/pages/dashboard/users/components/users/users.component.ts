@@ -90,10 +90,10 @@ export class UsersComponent implements OnInit {
   }
 
   /** ✅ Fetch all users with pagination */
-  loadUsers(): void {
-    this.usersService.getAllUsers().subscribe({
+  loadUsers(pageNumber?: number): void {
+    this.usersService.getAllUsers(pageNumber).subscribe({
       next: (res) => {
-        this.tableResponse = res;
+        this.tableResponse = res.total;
         this.tableData = res?.data || [];
       },
       error: () => {
@@ -103,10 +103,8 @@ export class UsersComponent implements OnInit {
   }
 
   /** ✅ Handle pagination change */
-  onPageChange(event: PageEvent): void {
-    this.pageSize = event.pageSize;
-    this.pageIndex = event.pageIndex;
-    this.loadUsers();
+  onPageChange(event: number): void {
+    this.loadUsers(event);
   }
 
   /** ✅ Open block/unblock user dialog */

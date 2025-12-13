@@ -34,10 +34,10 @@ export class ReportsComponent {
   pageSize: number | undefined = 5;
   page: number | undefined = 1;
   isEmptyData: boolean = false;
-  currentLang = localStorage.getItem('lang')
+  currentLang = localStorage.getItem("lang");
   hide: boolean = true;
   confirmHide: boolean = true;
-  hideRequiredMarker: boolean = true;
+  dataToPrint: any = [];
 
   @ViewChild("statusTemplate", { static: true })
   statusTemplate!: TemplateRef<any>;
@@ -88,8 +88,9 @@ export class ReportsComponent {
       },
       error: (err) => {
         this._ToastrService.error(err.message, "Error in filter report");
-      }
+      },
     });
+    this.handlePrint();
   }
   // Status
   getAllStatus() {
@@ -115,7 +116,21 @@ export class ReportsComponent {
       this.technicians = res.data;
     });
   }
+  handlePrint() {
+    let params = {
+      page_size: 200,
+      page: this.page,
+    };
 
+    this._ReportsService.addReports(this.reportForm.value, params).subscribe({
+      next: (res) => {
+        this.dataToPrint = res.data;
+      },
+      error: (err) => {
+        this._ToastrService.error(err.message, "Error in filter report");
+      },
+    });
+  }
   handlePageEvent(e: PageEvent) {
     this.pageSize = e.pageSize;
     this.page = e.pageIndex + 1;

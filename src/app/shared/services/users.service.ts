@@ -7,11 +7,11 @@ import { Observable } from "rxjs";
 })
 export class UsersService {
   constructor(private _HttpClient: HttpClient) {}
-  // getAllUsers(params: any): Observable<any> {
-  //   return this._HttpClient.get('auth/get_all_users', { params: params });
-  // }
-  getAllUsers(params?: any): Observable<any> {
-    return this._HttpClient.get("auth/get_all_users", { params: params });
+
+  getAllUsers(params: any = 1): Observable<any> {
+    return this._HttpClient.get("auth/get_all_users", {
+      params: { page: params },
+    });
   }
   getUser(id: number): Observable<any> {
     return this._HttpClient.get(`profile/get_user_by_id/${id}`);

@@ -1,5 +1,13 @@
 import { DatePipe } from "@angular/common";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
 import { SharedUiModule } from "../../../shared-ui.module";
 import { PaginationComponent } from "../../../common/paginator/paginator.component";
 import { ModalComponent } from "../../../ui/modal/modal.component";
@@ -24,25 +32,33 @@ interface Transaction {
   ],
   providers: [DatePipe],
   templateUrl: "./basic-table-three.component.html",
+  styleUrls: ["./basic-table-three.component.scss"],
   standalone: true,
 })
-export class BasicTableThreeComponent implements OnInit {
+export class BasicTableThreeComponent implements OnInit, OnChanges {
   // Type definition for the transaction data
   @Input() type: string = "normal";
   @Input() importExport: boolean = false;
   @Input() noFilter: boolean = false;
   @Input() addBtn: boolean = false;
-
+  @Input() print: boolean = false;
+  @Input() placeholderSearch: string = "";
   @Input() title: string = "";
   @Input() deleteMsg: string = "45";
   @Input() columns: any = [];
   @Input() data: Record<string, any>[] = [];
+  @Input() dataPrint: Record<string, any>[] = [];
+  @Input() totalItems!: number;
   @Output() doAction: EventEmitter<{ value: string; dataRow?: any }> =
     new EventEmitter<{ value: string; dataRow?: any }>();
+  @Output() searchEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output() paginationEvent: EventEmitter<number> = new EventEmitter<number>();
+
   @Input() haveView: boolean = true;
   isOpen = false;
   selectItem: any;
   isRtl!: boolean;
+  totalPages!: number;
   ngOnInit(): void {
     const language = localStorage.getItem("lang");
     if (language === "en") {
@@ -50,7 +66,47 @@ export class BasicTableThreeComponent implements OnInit {
     } else {
       this.isRtl = true;
     }
-    console.log(this.data);
+    this.calculatePages();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes["data"]) {
+      this.calculatePages();
+    }
+  }
+  printStyles = {
+    "#print-section": {
+      display: "block",
+    },
+
+    ".print-header": {
+      "text-align": "center",
+      "margin-bottom": "10px",
+    },
+
+    ".print-header img": {
+      width: "120px",
+      display: "block",
+      margin: "0 auto",
+    },
+
+    ".page-header": {
+      "text-align": "center",
+      "margin-bottom": "20px",
+    },
+
+    ".print-title": {
+      "font-size": "22px",
+      "font-weight": "bold",
+    },
+  };
+  handlePagination(event: number) {
+    console.log(event);
+    this.paginationEvent.emit(event);
+  }
+  calculatePages(): void {
+    // Divide total items by items per page and round up to get full pages
+    this.totalPages = Math.ceil(this.totalItems / 15);
   }
   getNestedProperty(item: any, field: string): any {
     return field.split(".").reduce((acc, part) => acc && acc[part], item);
@@ -83,9 +139,17 @@ export class BasicTableThreeComponent implements OnInit {
   handleAdd(type: string) {
     this.doAction.emit({ value: type });
   }
+
   handleImport(type: string) {
     // logic here
     this.doAction.emit({ value: type });
+  }
+  onSearchChange(event: Event): void {
+    const value = (event.target as HTMLInputElement).value;
+    console.log(value);
+    this.searchEvent.emit(value);
+
+    // filter table / call API / update list
   }
   handleView(type: string, item: any) {
     // logic here

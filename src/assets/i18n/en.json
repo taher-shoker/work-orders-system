@@ -360,10 +360,12 @@
     "delete_title": "Confirmation Delete",
     "close": "Close",
     "confirm": "Confirm",
-    "confirm_msg": "Would you like to delete work order number",
+    "confirm_msg": "Would you like to delete ",
     "import": "Import",
     "export": "Export",
-    "add": "Add"
+    "add": "Add",
+    "search_name_ar": "Search about name by arabic language",
+    "noData":"No data have found"
   },
   "breadCrumb": {
     "home": "Home",

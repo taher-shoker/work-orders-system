@@ -25,6 +25,7 @@ export class BuildingComponent {
   pageIndex: number = 0;
   buildingData: any;
   columns: any = [];
+  originalTableData: any[] = []; // keep the original full data
 
   private subject = new Subject<any>();
   constructor(
@@ -68,11 +69,16 @@ export class BuildingComponent {
       next: (res) => {
         this.tableResponse = res;
         this.tableData = res?.data;
+        this.originalTableData = [...this.tableData]; // store original data
         this.spinner.hide();
       },
     });
   }
-
+  handleSearch(value: string) {
+    this.tableData = this.originalTableData.filter((item) =>
+      item.name_ar.toLowerCase().includes(value)
+    );
+  }
   // add building
   openAddBuilding() {
     const dialogRef = this.dialog.open(AddBuildingComponent, {});

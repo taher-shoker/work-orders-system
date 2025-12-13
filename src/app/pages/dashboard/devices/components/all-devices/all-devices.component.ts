@@ -67,14 +67,13 @@ export class AllDevicesComponent {
   }
   onGetAllDevices() {
     let params = {
-      page_size: this.pageSize,
       page: this.page,
       // userName: this.searchValue,
     };
     this.spinner.show();
     this._DevicesService.getAllDevices(params).subscribe({
       next: (res) => {
-        this.tableResponse = res;
+        this.tableResponse = res.total;
         this.tableData = res?.data;
         this.spinner.hide();
       },

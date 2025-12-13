@@ -86,11 +86,10 @@ export class AllComponent {
     this._LookupsService.getDashboard().subscribe(); // Fetch the first time
 
     this._LookupsService.dashboard$.subscribe((data) => {
-      console.log("Dashboard Data Updated: ", data);
       this.statisticData = data;
     });
 
-    this.getWorkOrders();
+    this.getWorkOrders(1);
     this.getDepartment();
     this.getAllStatus();
     this.getEngineers();
@@ -119,13 +118,16 @@ export class AllComponent {
   addOrder() {
     this.router.navigate(["./add"], { relativeTo: this.route });
   }
-  getWorkOrders() {
-    this._WorkOrdersService.getAllOrders().subscribe({
+  getWorkOrders(page: number) {
+    this._WorkOrdersService.getAllOrders(page).subscribe({
       next: (res) => {
-        this.tableResponse = res;
-        this.tableData = this.tableResponse.data;
+        this.tableResponse = res.data.total;
+        this.tableData = res.data.data;
       },
     });
+  }
+  onPageChange(event: number): void {
+    this.getWorkOrders(event);
   }
   // Status
   getAllStatus() {
