@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit {
       next: (res) => {
         if (res.data) {
           this.data = res.data;
+          console.log(this.data);
+          
           this.dataPieChart = [
             this.data?.total_opened_orders,
             this.data?.in_progress_orders,
