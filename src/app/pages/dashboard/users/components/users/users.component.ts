@@ -31,6 +31,7 @@ export class UsersComponent implements OnInit {
   pageSize = 5;
   pageIndex = 0;
   columns: any = [];
+  originalTableData: any[] = []; // keep the original full data
   @ViewChild("statusTemplate", { static: true })
   statusTemplate!: TemplateRef<any>;
   @ViewChild("actionTemplate", { static: true })
@@ -95,11 +96,18 @@ export class UsersComponent implements OnInit {
       next: (res) => {
         this.tableResponse = res.total;
         this.tableData = res?.data || [];
+        this.originalTableData = [...this.tableData]; // store original data
       },
       error: () => {
         this.toastr.error("Failed to load users", "Error");
       },
     });
+  }
+  // search
+  handleSearch(value: string) {
+    this.tableData = this.originalTableData.filter((item) =>
+      item.email.toLowerCase().includes(value)
+    );
   }
 
   /** ✅ Handle pagination change */

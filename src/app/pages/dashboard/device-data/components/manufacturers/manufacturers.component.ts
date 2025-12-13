@@ -22,7 +22,7 @@ export class ManufacturersComponent implements OnInit {
   searchValue: string = "";
   columns: any = [];
   tableData: any[] = [];
-
+  originalTableData: any[] = [];
   constructor(
     private manufacturersService: ManufacturersService,
     private activatedRoute: ActivatedRoute,
@@ -51,17 +51,16 @@ export class ManufacturersComponent implements OnInit {
     this.manufacturersService.getAllManufacturers().subscribe({
       next: (res) => {
         this.tableData = res.data;
+        this.originalTableData = [...this.tableData];
       },
     });
   }
-  // filetr
-  filterManufacturers(keyword: string) {
-    const search = keyword.toLowerCase();
-
-    this.filteredList = this.companies.filter(
+  // search
+  handleSearch(value: string) {
+    this.tableData = this.originalTableData.filter(
       (item) =>
-        item.name_en?.toLowerCase().includes(search) ||
-        item.name_ar?.includes(keyword)
+        item.name_ar.toLowerCase().includes(value.toLowerCase()) ||
+        item.name_en.toLowerCase().includes(value.toLowerCase())
     );
   }
 

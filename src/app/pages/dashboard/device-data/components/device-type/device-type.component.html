@@ -1,5 +1,5 @@
 <div class="mt-6">
-  <app-basic-table-three [addBtn]="true" [noFilter]="true" [haveView]="false" [data]="tableData" [columns]="columns"
+  <app-basic-table-three (searchEvent)="handleSearch($event)" [addBtn]="true" [noFilter]="true" [haveView]="false" [data]="tableData" [columns]="columns"
     (doAction)="tableAction($event)"></app-basic-table-three>
 
 </div>

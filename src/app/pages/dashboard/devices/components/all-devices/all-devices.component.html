@@ -31,7 +31,7 @@
 
 
     <div class="mt-6">
-        <app-basic-table-three [data]="tableData" [columns]="columns" [title]="'sidebar.devices' | translate"
+        <app-basic-table-three (searchEvent)="handleSearch($event)"  [data]="tableData" [columns]="columns" [title]="'sidebar.devices' | translate"
             (doAction)="tableAction($event)" [totalItems]="tableResponse"></app-basic-table-three>
         <!-- <ng-template #statusTemplate let-item="item">
       <app-badge [colorId]="item.status?.id">

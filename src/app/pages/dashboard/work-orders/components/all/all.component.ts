@@ -42,6 +42,7 @@ export class AllComponent {
   isRtl = false;
   columns: any = [];
   statisticData: any;
+  originalTableData: any[] = []; // keep the original full data
   constructor(
     private _ReportsService: ReportsService,
     private _LookupsService: LookupsService,
@@ -123,11 +124,18 @@ export class AllComponent {
       next: (res) => {
         this.tableResponse = res.data.total;
         this.tableData = res.data.data;
+        this.originalTableData = [...this.tableData]; // store original data
       },
     });
   }
   onPageChange(event: number): void {
     this.getWorkOrders(event);
+  }
+  // search
+  handleSearch(value: string) {
+    this.tableData = this.originalTableData.filter((item) =>
+      item.number.toLowerCase().includes(value)
+    );
   }
   // Status
   getAllStatus() {

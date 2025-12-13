@@ -19,6 +19,7 @@ export class DeviceTypeComponent implements OnInit {
   deviceTypesId: any;
   selectedType: string | null = null;
   searchValue: string = "";
+  originalTableData: any[] = [];
 
   columns: any = [];
   tableData: any[] = [];
@@ -46,20 +47,18 @@ export class DeviceTypeComponent implements OnInit {
     this.deviceTypeService.getAllDeviceType().subscribe({
       next: (res) => {
         this.tableData = res.data;
+        this.originalTableData = [...this.tableData];
       },
     });
   }
-  // filetr
-  filter(keyword: string) {
-    const search = keyword.toLowerCase();
-
-    this.filteredList = this.deviceTypes.filter(
+    // search
+  handleSearch(value: string) {
+    this.tableData = this.originalTableData.filter(
       (item) =>
-        item.name_en?.toLowerCase().includes(search) ||
-        item.name_ar?.includes(keyword)
+        item.name_ar.toLowerCase().includes(value.toLowerCase()) ||
+        item.name_en.toLowerCase().includes(value.toLowerCase())
     );
   }
-
   // add device Type
   openAddDeviceType() {
     const dialogRef = this.dialog.open(AddDeviceTypeComponent, {

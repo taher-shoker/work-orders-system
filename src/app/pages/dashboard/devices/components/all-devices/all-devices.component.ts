@@ -24,7 +24,7 @@ export class AllDevicesComponent {
   pageIndex: number = 0;
   user_id: number = 0;
   columns: any = [];
-
+  originalTableData: any[] = []; // keep the original full data
   private subject = new Subject<any>();
   constructor(
     private _DevicesService: DevicesService,
@@ -75,6 +75,7 @@ export class AllDevicesComponent {
       next: (res) => {
         this.tableResponse = res.total;
         this.tableData = res?.data;
+        this.originalTableData = [...this.tableData]; // store original data
         this.spinner.hide();
       },
       error: (err) => {},
@@ -86,7 +87,12 @@ export class AllDevicesComponent {
     this.page = e.pageIndex + 1;
     this.onGetAllDevices();
   }
-
+  // search
+  handleSearch(value: string) {
+    this.tableData = this.originalTableData.filter((item) =>
+      item.name.toLowerCase().includes(value)
+    );
+  }
   addDevices() {
     this.router.navigate(["./add"], { relativeTo: this.route });
   }

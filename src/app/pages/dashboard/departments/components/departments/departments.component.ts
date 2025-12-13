@@ -25,7 +25,7 @@ export class DepartmentsComponent {
   page: number | undefined = 1;
   pageIndex: number = 0;
   columns: any = [];
-
+ originalTableData: any[] = []; 
   constructor(
     private _DepartmentService: DepartmentService,
     private spinner: NgxSpinnerService,
@@ -63,8 +63,17 @@ export class DepartmentsComponent {
       next: (res) => {
         this.tableResponse = res;
         this.tableData = res?.data;
+        this.originalTableData = [...this.tableData];
       },
     });
+  }
+  // search
+  handleSearch(value: string) {
+    this.tableData = this.originalTableData.filter(
+      (item) =>
+        item.name_ar.toLowerCase().includes(value.toLowerCase()) ||
+        item.name_en.toLowerCase().includes(value.toLowerCase())
+    );
   }
   // add Department
   openAddDepartment() {

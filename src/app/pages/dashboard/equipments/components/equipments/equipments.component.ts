@@ -24,7 +24,7 @@ export class EquipmentsComponent implements OnInit {
   page: number | undefined = 1;
   pageIndex: number = 0;
   columns: any = [];
-
+  originalTableData: any[] = []; // keep the original full data
   private subject = new Subject<any>();
   constructor(
     private _EquipmentsService: EquipmentsService,
@@ -62,15 +62,23 @@ export class EquipmentsComponent implements OnInit {
       next: (res) => {
         this.tableResponse = res;
         this.tableData = res?.data;
+        this.originalTableData = [...this.tableData]; // store original data
         this.spinner.hide();
       },
     });
   }
+  // search
+  handleSearch(value: string) {
+    this.tableData = this.originalTableData.filter(
+      (item) =>
+        item.name_ar.toLowerCase().includes(value.toLowerCase()) ||
+        item.name_en.toLowerCase().includes(value.toLowerCase())
+    );
+  }
 
   // add equipment
   openAddEquipment() {
-    const dialogRef = this.dialog.open(AddEquipmentComponent, {
-    });
+    const dialogRef = this.dialog.open(AddEquipmentComponent, {});
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.addEquipment(result);

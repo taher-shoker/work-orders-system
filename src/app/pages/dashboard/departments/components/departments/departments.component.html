@@ -32,7 +32,7 @@
 
     <div class="mt-6">
         <app-basic-table-three [haveView]="false" [data]="tableData" [columns]="columns"
-            [title]="'department.department' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
+           (searchEvent)="handleSearch($event)" [title]="'department.department' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
         <!-- <ng-template #statusTemplate let-item="item">
       <app-badge [colorId]="item.status?.id">
         {{ item.status.name }}

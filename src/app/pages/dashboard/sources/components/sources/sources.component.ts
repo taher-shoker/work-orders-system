@@ -24,7 +24,7 @@ export class SourcesComponent {
   page: number | undefined = 1;
   pageIndex: number = 0;
   columns: any = [];
-
+  originalTableData: any[] = [];
   private subject = new Subject<any>();
   constructor(
     private _SourcesService: SourcesService,
@@ -62,15 +62,22 @@ export class SourcesComponent {
       next: (res) => {
         this.tableResponse = res;
         this.tableData = res?.data;
+        this.originalTableData = [...this.tableData];
         this.spinner.hide();
       },
     });
   }
-
+  // search
+  handleSearch(value: string) {
+    this.tableData = this.originalTableData.filter(
+      (item) =>
+        item.name_ar.toLowerCase().includes(value.toLowerCase()) ||
+        item.name_en.toLowerCase().includes(value.toLowerCase())
+    );
+  }
   // add source
   openAddSource() {
-    const dialogRef = this.dialog.open(AddSourceComponent, {
-    });
+    const dialogRef = this.dialog.open(AddSourceComponent, {});
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.addSource(result);

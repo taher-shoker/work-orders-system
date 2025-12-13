@@ -1,14 +1,20 @@
 <section>
-    <div *ngIf="_AuthService.isAdmin()" class="mt-6 ltr:text-right rtl:text-left">
-        <app-button (clicked)="openAddSource()"
-            [startIcon]="'add_circle'">{{'breadCrumb.add_new_source'|translate}}</app-button>
-    </div>
+  @if(_AuthService.isAdmin()){
+  <div class="mt-6 ltr:text-right rtl:text-left">
+    <app-button (clicked)="openAddSource()" [startIcon]="'add_circle'">{{
+      "breadCrumb.add_new_source" | translate
+    }}</app-button>
+  </div>
+  }
 
-
-
-    <div class="mt-6">
-        <app-basic-table-three [haveView]="false" [data]="tableData" [columns]="columns"
-            [title]="'sources.sources' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
-
-    </div>
+  <div class="mt-6">
+    <app-basic-table-three
+      [haveView]="false"
+      [data]="tableData"
+      [columns]="columns"
+      (searchEvent)="handleSearch($event)"
+      [title]="'sources.sources' | translate"
+      (doAction)="tableAction($event)"
+    ></app-basic-table-three>
+  </div>
 </section>

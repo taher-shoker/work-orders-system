@@ -21,6 +21,7 @@ export class DeviceModelComponent implements OnInit {
   deviceModelsId: any;
   selectedModel: string | null = null;
   searchValue: string = "";
+  originalTableData: any[] = [];
 
   columns: any = [];
   tableData: any[] = [];
@@ -49,17 +50,17 @@ export class DeviceModelComponent implements OnInit {
     this.deviceModelService.getAllDeviceModel().subscribe({
       next: (res) => {
         this.tableData = res.data;
+        this.originalTableData = [...this.tableData];
+
       },
     });
   }
-  // filetr
-  filter(keyword: string) {
-    const search = keyword.toLowerCase();
-
-    this.filteredList = this.deviceModels.filter(
+  // search
+  handleSearch(value: string) {
+    this.tableData = this.originalTableData.filter(
       (item) =>
-        item.name_en?.toLowerCase().includes(search) ||
-        item.name_ar?.includes(keyword)
+        item.name_ar.toLowerCase().includes(value.toLowerCase()) ||
+        item.name_en.toLowerCase().includes(value.toLowerCase())
     );
   }
 

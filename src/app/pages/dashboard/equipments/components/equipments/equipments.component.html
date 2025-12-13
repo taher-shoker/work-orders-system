@@ -33,7 +33,7 @@
 
     <div class="mt-6">
         <app-basic-table-three [haveView]="false" [data]="tableData" [columns]="columns"
-            [title]="'equipments.equipments' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
+           (searchEvent)="handleSearch($event)" [title]="'equipments.equipments' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
 
     </div>
 </section>

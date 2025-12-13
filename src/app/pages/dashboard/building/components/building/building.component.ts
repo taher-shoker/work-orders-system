@@ -25,7 +25,7 @@ export class BuildingComponent {
   pageIndex: number = 0;
   buildingData: any;
   columns: any = [];
-  originalTableData: any[] = []; // keep the original full data
+  originalTableData: any[] = []; 
 
   private subject = new Subject<any>();
   constructor(
@@ -69,14 +69,17 @@ export class BuildingComponent {
       next: (res) => {
         this.tableResponse = res;
         this.tableData = res?.data;
-        this.originalTableData = [...this.tableData]; // store original data
+        this.originalTableData = [...this.tableData]; 
         this.spinner.hide();
       },
     });
   }
+  // search
   handleSearch(value: string) {
-    this.tableData = this.originalTableData.filter((item) =>
-      item.name_ar.toLowerCase().includes(value)
+    this.tableData = this.originalTableData.filter(
+      (item) =>
+        item.name_ar.toLowerCase().includes(value.toLowerCase()) ||
+        item.name_en.toLowerCase().includes(value.toLowerCase())
     );
   }
   // add building
