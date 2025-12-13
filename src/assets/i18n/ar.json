@@ -441,7 +441,9 @@
     "active_users": "المفعلين",
     "inactive_users": "المعطلين",
     "buildings": "المباني",
-    "equipments": "المعدات"
+    "equipments": "المعدات",
+    "time":"مرة",
+    "hour":"ساعة"
   },
   "profile_sec": {
     "name": "الأسم",

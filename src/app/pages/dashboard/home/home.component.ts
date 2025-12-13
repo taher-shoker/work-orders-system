@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+import { CommonModule, DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { SharedUiModule } from "../../../shared/components/shared-ui.module";
 import { RadialChartComponent } from "../../../shared/components/charts/radial-chart/radial-chart.component";
@@ -14,6 +14,7 @@ import { BarChartOneComponent } from "../../../shared/components/charts/bar/bar-
     CommonModule,
     RadialChartComponent,
     BarChartOneComponent,
+    DatePipe
   ],
 })
 export class HomeComponent implements OnInit {
@@ -30,6 +31,8 @@ export class HomeComponent implements OnInit {
       next: (res) => {
         if (res.data) {
           this.data = res.data;
+          console.log(this.data);
+          
           this.dataPieChart = [
             this.data?.total_opened_orders,
             this.data?.in_progress_orders,
