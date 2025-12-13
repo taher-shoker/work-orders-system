@@ -99,7 +99,7 @@ export class DeviceTypeComponent implements OnInit {
   }
 
   editDeviceType(data: FormGroup, id: string) {
-    this.deviceTypeService.updateDeviceType(data, id).subscribe({
+    this.deviceTypeService.updateDeviceType(data.value, id).subscribe({
       next: (res) => {
         this.toastrService.success(
           res.message,
