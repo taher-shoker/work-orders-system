@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, TemplateRef, ViewChild } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { ActivatedRoute, Router, RouterModule } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
@@ -12,15 +12,15 @@ import {
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { CommonModule } from "@angular/common";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
+import { PageEvent } from "@angular/material/paginator";
 
 @Component({
   selector: "app-reports",
   templateUrl: "./reports.component.html",
   styleUrls: ["./reports.component.scss"],
-  imports: [SharedUiModule],
+  imports: [SharedUiModule, BasicTableThreeComponent],
 })
 export class ReportsComponent {
-  data: any;
   status: any;
   departments: any;
   departmentId: any;
@@ -28,24 +28,24 @@ export class ReportsComponent {
   engineers: any;
   technicians: any;
   start_date: any;
-  date: any;
-  tableResponse: any | undefined;
-  tableData: any[] | undefined = [];
+  tableData: any[] = [];
+  columns: any = [];
+  isRtl = false;
   pageSize: number | undefined = 5;
   page: number | undefined = 1;
   isEmptyData: boolean = false;
-  currentLang = localStorage.getItem("lang");
-
+  currentLang = localStorage.getItem('lang')
   hide: boolean = true;
   confirmHide: boolean = true;
   hideRequiredMarker: boolean = true;
 
+  @ViewChild("statusTemplate", { static: true })
+  statusTemplate!: TemplateRef<any>;
+
   constructor(
     private _ReportsService: ReportsService,
     private _LookupsService: LookupsService,
-    private _ToastrService: ToastrService,
-    private _Router: Router,
-    private _HelperService: HelperService
+    private _ToastrService: ToastrService
   ) {}
 
   ngOnInit() {
@@ -53,6 +53,18 @@ export class ReportsComponent {
     this.getAllStatus();
     this.getEngineers();
     this.getTechnicians();
+
+    this.columns = [
+      { header: "#", field: "id", type: "text" },
+      { header: "reports.building", field: "building.name", type: "text" },
+      { header: "reports.work_type", field: "work_type.name", type: "text" },
+      { header: "reports.source", field: "source.name", type: "text" },
+      { header: "reports.department", field: "department.name", type: "text" },
+      { header: "reports.engineer", field: "engineer.name", type: "text" },
+      { header: "reports.technician", field: "technician.name", type: "text" },
+      { header: "reports.added_by", field: "added_by.name", type: "text" },
+      { header: "reports.status", field: "status.name", type: "text" },
+    ];
   }
 
   reportForm = new FormGroup({
@@ -69,19 +81,14 @@ export class ReportsComponent {
       page_size: this.pageSize,
       page: this.page,
     };
-    // this.spinner.show()
 
     this._ReportsService.addReports(data.value, params).subscribe({
       next: (res) => {
-        this.data = res.data;
-        console.log(data);
-
-        this._ToastrService.success("Report Added Succesfuly");
+        this.tableData = res.data;
       },
       error: (err) => {
-        this._ToastrService.error(err.message, "Error in Add  Report");
-      },
-      complete: () => {},
+        this._ToastrService.error(err.message, "Error in filter report");
+      }
     });
   }
   // Status
@@ -107,5 +114,11 @@ export class ReportsComponent {
     this._ReportsService.getTechnicians().subscribe((res) => {
       this.technicians = res.data;
     });
+  }
+
+  handlePageEvent(e: PageEvent) {
+    this.pageSize = e.pageSize;
+    this.page = e.pageIndex + 1;
+    this.onSubmit(this.reportForm);
   }
 }
