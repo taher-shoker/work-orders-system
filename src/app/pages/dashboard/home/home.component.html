@@ -203,9 +203,9 @@
       <div class="p-4 border rounded-lg hover:bg-gray-50">
         <div class="flex items-center justify-between gap-4">
           <div class="flex items-center gap-4">
-            @if (item.image) {
+            @if (item.image && item.image !== '') {
             <img [src]="item.image" [alt]="item.name" class="w-25" />
-            }@else {
+            }@else if(!item.image && item.image === '') {
             <div class="w-16 h-12 bg-gray-600 rounded-lg"></div>
             }
             <div>
@@ -232,7 +232,9 @@
             <p class="font-semibold">
               {{ "dashboard.maintenance_count" | translate }}
             </p>
-            <p class="mt-2">{{ item.repair_times }}</p>
+            <p class="mt-2">
+              {{ item.repair_times }} {{ "dashboard.time" | translate }}
+            </p>
           </div>
 
           <div class="border-l h-10"></div>
@@ -241,7 +243,9 @@
             <p class="font-semibold">
               {{ "dashboard.total_downtime" | translate }}
             </p>
-            <p class="mt-2">{{ item.total_stopped_time }}</p>
+            <p class="mt-2">
+              {{ item.total_stopped_time }} {{ "dashboard.hour" | translate }}
+            </p>
           </div>
 
           <div class="border-l h-10"></div>
@@ -251,9 +255,11 @@
               {{ "dashboard.last_maintenance" | translate }}
             </p>
             @if (item.last_repair_time) {
-            <p class="mt-2">{{ item.last_repair_time }}</p>
+            <p class="mt-2">
+              {{ item.last_repair_time | date : "yyyy-MM-dd" }}
+            </p>
             }@else {
-            <p class="mt-2">{{ item.buy_date }}</p>
+            <p class="mt-2">{{ item.buy_date | date : "yyyy-MM-dd" }}</p>
             }
           </div>
         </div>

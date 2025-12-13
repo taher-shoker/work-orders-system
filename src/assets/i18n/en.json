@@ -420,7 +420,9 @@
     "active_users": "Active Users",
     "inactive_users": "Inactive Users",
     "buildings": "buildings",
-    "equipments": "equipments"
+    "equipments": "equipments",
+    "time":"time",
+    "hour":"hour"
   },
   "profile_sec": {
     "name": "name",
