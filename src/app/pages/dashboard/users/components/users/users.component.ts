@@ -10,7 +10,7 @@ import { PageEvent } from "@angular/material/paginator";
 import { AuthService, LookupsService } from "../../../../../shared/services";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
 
@@ -48,7 +48,8 @@ export class UsersComponent implements OnInit {
     private dialog: MatDialog,
     public router: Router,
     public route: ActivatedRoute,
-    private _LookupsService: LookupsService
+    private _LookupsService: LookupsService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -102,7 +103,7 @@ export class UsersComponent implements OnInit {
         this.originalTableData = [...this.tableData]; // store original data
       },
       error: () => {
-        this.toastr.error("Failed to load users", "Error");
+        this.toastr.error(this.translate.instant("users.add_error"));
       },
     });
   }
@@ -134,13 +135,12 @@ export class UsersComponent implements OnInit {
   private toggleUserBlock(userId: number): void {
     this.usersService.onBlockOrUnblockUser({ user_id: userId }).subscribe({
       next: (res) => {
-        const message = res.isActivated
-          ? "User unblocked successfully"
-          : "User blocked successfully";
-        this.toastr.success(message, "Success");
+        res.data.is_active === 1
+          ? this.toastr.success(this.translate.instant("users.add_unblocked"))
+          : this.toastr.success(this.translate.instant("users.add_blocked"));
       },
       error: () => {
-        this.toastr.error("Failed to block or unblock user", "Error");
+        this.toastr.error(this.translate.instant("users.unblock_error"));
       },
       complete: () => this.loadUsers(),
     });
@@ -153,7 +153,9 @@ export class UsersComponent implements OnInit {
       });
     } else if (event.value === "delete") {
       this.usersService.onDeleteUser(event.dataRow.id).subscribe({
-        next: (res) => {},
+        next: (res) => {
+          this.toastr.success(this.translate.instant("users.delete_success"));
+        },
         complete: () => {
           this.loadUsers();
         },

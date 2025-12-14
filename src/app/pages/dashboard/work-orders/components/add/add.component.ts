@@ -17,6 +17,7 @@ import {
 } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { WorkOrderFormComponent } from "../work-order-form/work-order-form.component";
+import { TranslateService } from "@ngx-translate/core";
 
 // Lookup interfaces
 interface LookupItem {
@@ -70,7 +71,9 @@ export class AddComponent implements OnInit {
     private helperService: HelperService,
     private devicesService: DevicesService,
     private spinner: NgxSpinnerService,
-    private fb: NonNullableFormBuilder
+    private fb: NonNullableFormBuilder,
+            private translate: TranslateService
+    
   ) {
     this.deviceId = this.route.snapshot.paramMap.get("deviceId");
     this.orderId = this.route.snapshot.paramMap.get("id");
@@ -166,10 +169,10 @@ export class AddComponent implements OnInit {
   private addNewOrder(formData: FormData): void {
     this.workOrdersService.addNewOrder(formData).subscribe({
       next: () => {
-        this.toastr.success("Work order added successfully");
+        this.toastr.success(this.translate.instant("orders.add_success"));
         this.router.navigate(["/dashboard/work-orders"]);
       },
-      error: (err) => this.toastr.error(err.error?.message || "Error"),
+      error: (err) => this.toastr.error(this.translate.instant("orders.add_success")),
     });
   }
 
@@ -179,10 +182,10 @@ export class AddComponent implements OnInit {
   private updateOrder(formData: FormData): void {
     this.workOrdersService.editOrder(formData, +this.orderId!).subscribe({
       next: () => {
-        this.toastr.success("Work order updated successfully");
+        this.toastr.success(this.translate.instant("orders.edit_success"));
         this.router.navigate(["/dashboard/work-orders"]);
       },
-      error: (err) => this.toastr.error(err.error?.message || "Error"),
+      error: (err) => this.toastr.error(this.translate.instant("orders.edit_error")),
     });
   }
 
@@ -209,7 +212,7 @@ export class AddComponent implements OnInit {
           description: o?.description,
         });
       },
-      error: () => this.toastr.error("Failed to load order details"),
+      error: () => this.toastr.error(this.translate.instant("orders.edit_error2")),
     });
   }
 
@@ -226,7 +229,7 @@ export class AddComponent implements OnInit {
           department_id: o?.department?.id,
         });
       },
-      error: () => this.toastr.error("Failed to load device"),
+      error: () => this.toastr.error(this.translate.instant("orders.edit_error3")),
     });
   }
 
@@ -273,7 +276,7 @@ export class AddComponent implements OnInit {
     const params = { page_size: this.pageSize, page: this.page };
     this.devicesService.getAllDevices(params).subscribe({
       next: (res) => (this.devices = res.data),
-      error: () => this.toastr.error("Failed to load devices"),
+      error: () => this.toastr.error(this.translate.instant("orders.edit_error2")),
     });
   }
 

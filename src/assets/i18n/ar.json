@@ -87,7 +87,18 @@
     "select_account_type": "اختر نوع الحساب",
     "add_user": "إضافة مستخدم جديد",
     "add": "إضافة",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "add_error": "فشل في تحميل المستخدمين",
+    "unblock_error": "فشل في حظر أو إلغاء حظر المستخدم",
+    "add_unblocked": "تم إلغاء حظر المستخدم بنجاح",
+    "add_blocked": "تم حظر المستخدم بنجاح",
+    "delete_success": "تم حذف المستخدم بنجاح",
+    "delete_error": "فشل حذف المستخدم",
+    "fetch_error": "حدث خطأ أثناء جلب بيانات المستخدم",
+    "edit_success": "تم تحديث المستخدم بنجاح",
+    "edit_error1": "حدث خطأ أثناء تحديث المستخدم",
+    "check_email": "تحقق من بريدك الإلكتروني للتفعيل",
+    "add_email": "حدث خطأ أثناء إضافة مستخدم جديد للنظام"
   },
   "cancel": "أغلاق",
   "logOut": "تسجيل خروج",
@@ -187,7 +198,16 @@
     "add_attachment": "إضافة ملف",
     "attachment": " ملفات",
     "rejection_reason": "سبب الرفض",
-    "rejection_title": "أسباب رفض امر العمل"
+    "rejection_title": "أسباب رفض امر العمل",
+    "add_success": "تم إضافة أمر العمل بنجاح",
+    "add_error": "حدث خطأ أثناء إضافة أمر العمل",
+    "edit_success": "تم تحديث أمر العمل بنجاح",
+    "edit_error": "حدث خطأ أثناء تحديث أمر العمل",
+    "delete_success": "تم حذف الأمر بنجاح",
+    "delete_error": "فشل حذف الأمر",
+    "edit_error1": "حدث خطأ أثناء تحميل الأمر",
+    "edit_error2": "فشل تحميل تفاصيل الأمر",
+    "edit_error3": "فشل تحميل الجهاز"
   },
   "department": {
     "department": "إدارة الأقسام",
@@ -205,7 +225,13 @@
     "maintenance_supervisor": {
       "name": "مشرف الصيانة",
       "supervisor": "لا يوجد"
-    }
+    },
+    "add_success": "تم إضافة القسم بنجاح",
+    "edit_success": "تم تحديث القسم بنجاح",
+    "delete_success": "تم حذف القسم بنجاح",
+    "add_error": "حدث خطأ أثناء إضافة القسم",
+    "edit_error": "حدث خطأ أثناء تحديث القسم",
+    "delete_error": "فشل حذف القسم"
   },
   "building": {
     "buildings": "إدارة المباني والمنشآت",
@@ -220,7 +246,13 @@
     "name_en": "الاسم بالانجليزية",
     "name_ar": "الاسم بالعربية",
     "actions": "تحكم",
-    "no_of_floors": "عدد الطوابق"
+    "no_of_floors": "عدد الطوابق",
+    "add_success": "تم إضافة المبنى بنجاح",
+    "edit_success": "تم تحديث المبنى بنجاح",
+    "delete_success": "تم حذف المبنى بنجاح",
+    "add_error": "حدث خطأ أثناء إضافة المبنى",
+    "edit_error": "حدث خطأ أثناء تحديث المبنى",
+    "delete_error": "فشل حذف المبنى"
   },
   "sources": {
     "sources": "المصادر",
@@ -234,7 +266,13 @@
     "actions": "تحكم",
     "holding_reason": "سبب التعليق ",
     "add_new_material": "إضافة مواد مستخدمة ",
-    "add_new_part": "إضافة قطع غيار"
+    "add_new_part": "إضافة قطع غيار",
+    "add_success": "تم إضافة المصدر بنجاح",
+    "edit_success": "تم تحديث المصدر بنجاح",
+    "delete_success": "تم حذف المصدر بنجاح",
+    "add_error": "حدث خطأ أثناء إضافة المصدر",
+    "edit_error": "حدث خطأ أثناء تحديث المصدر",
+    "delete_error": "فشل حذف المصدر"
   },
   "equipments": {
     "equipments": "المعدات",
@@ -249,7 +287,13 @@
     "name": "الأسم",
     "name_en": "الاسم بالانجليزية",
     "name_ar": "الاسم بالعربية",
-    "actions": "تحكم"
+    "actions": "تحكم",
+    "add_success": "تم إضافة المعدّة بنجاح",
+    "edit_success": "تم تحديث المعدّة بنجاح",
+    "delete_success": "تم حذف المعدّة بنجاح",
+    "add_error": "حدث خطأ أثناء إضافة المعدّة",
+    "edit_error": "حدث خطأ أثناء تحديث المعدّة",
+    "delete_error": "فشل حذف المعدّة"
   },
   "reports": {
     "reports": "التقارير",
@@ -341,7 +385,38 @@
     "sure_delete": "هل أنت متأكد من الحذف",
     "delete": "حذف",
     "print": " إعادة طباعة ال QR",
-    "add_new_device": "إضافة جهاز جديد"
+    "add_new_device": "إضافة جهاز جديد",
+    "add_success": "تم إضافة الجهاز بنجاح",
+    "edit_success": "تم تحديث الجهاز بنجاح",
+    "delete_success": "تم حذف الجهاز بنجاح",
+    "add_error": "حدث خطأ أثناء إضافة الجهاز",
+    "edit_error": "حدث خطأ أثناء تحديث الجهاز",
+    "delete_error": "فشل حذف الجهاز",
+    "warning": "يرجى ملء جميع الحقول المطلوبة",
+    "work_error1": "حدث خطأ أثناء جلب الجهاز",
+    "work_error2": "حدث خطأ",
+    "work_add": "تم إضافة أمر العمل بنجاح",
+    "work_error3": "فشل تحميل المهندسين/الفنيين",
+    "work_error4": "فشل تحميل قوائم البحث الأولية",
+    "work_error5": "فشل تحميل الأجهزة",
+    "company_success": "تم إضافة الشركة بنجاح",
+    "company_error": "حدث خطأ أثناء إضافة الشركة",
+    "edit_success_company": "تم تحديث الشركة بنجاح",
+    "edit_error_company": "حدث خطأ أثناء تحديث الشركة",
+    "delete_success_company": "تم حذف الشركة بنجاح",
+    "delete_error_company": "فشل حذف الشركة",
+    "device_success": "تم إضافة نوع الجهاز بنجاح",
+    "device_error": "حدث خطأ أثناء إضافة نوع الجهاز",
+    "edit_success_device": "تم تحديث نوع الجهاز بنجاح",
+    "edit_error_device": "حدث خطأ أثناء تحديث نوع الجهاز",
+    "delete_success_device": "تم حذف نوع الجهاز بنجاح",
+    "delete_error_device": "فشل حذف نوع الجهاز",
+    "model_success": "تم إضافة الموديل بنجاح",
+    "model_error": "حدث خطأ أثناء إضافة الموديل",
+    "edit_success_model": "تم تحديث الموديل بنجاح",
+    "edit_error_model": "حدث خطأ أثناء تحديث الموديل",
+    "delete_success_model": "تم حذف الموديل بنجاح",
+    "delete_error_model": "فشل حذف الموديل"
   },
   "status": {
     "new": "جديد",

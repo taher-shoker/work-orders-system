@@ -10,7 +10,7 @@ import { ToastrService } from "ngx-toastr";
 import { AuthService } from "../../../../../shared/services/auth.service";
 import { UsersService } from "../../../../../shared/services/users.service";
 import { MatDialog } from "@angular/material/dialog";
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { ButtonComponent } from "../../../../../shared/components/ui/button/button.component";
 import { LabelComponent } from "../../../../../shared/components/form/label/label.component";
 import { InputFieldComponent } from "../../../../../shared/components/form/input/input-field.component";
@@ -43,7 +43,8 @@ export class AddEditUserComponent {
     private _ToastrService: ToastrService,
     public router: Router,
     public route: ActivatedRoute,
-    public _MatDialog: MatDialog
+    public _MatDialog: MatDialog,
+     private translate: TranslateService
   ) {
     this.userId = this._activateRoute.snapshot.paramMap.get("id");
     if (this.userId) {
@@ -102,7 +103,7 @@ export class AddEditUserComponent {
   }
 
   onSubmit() {
-    const data = this.userForm;
+    // const data = this.userForm;
     if (this.userId) {
       // Edit Exist User
       // let myData = new FormData();
@@ -110,12 +111,12 @@ export class AddEditUserComponent {
       // for (const [key, value] of myMap) {
       //   myData.append(key, data.value[key]);
       // }
-      this._UsersService.onEditUser(data.value, this.userId).subscribe({
+      this._UsersService.onEditUser(this.userForm.value, this.userId).subscribe({
         next: (res) => {
-          this._ToastrService.success("User Updated Succesfuly");
+          this._ToastrService.success(this.translate.instant("users.edit_success"));
         },
         error: (err) => {
-          this._ToastrService.error(err.message, "Error in Update User");
+          this._ToastrService.error(err.message, this.translate.instant("users.edit_error1"));
         },
         complete: () => {
           this.router.navigate(["/dashboard/users"]);
@@ -128,18 +129,18 @@ export class AddEditUserComponent {
       // for (const [key, value] of myMap) {
       //   myData.append(key, data.value[key]);
       // }
-      this._AuthService.onRegister(data.value).subscribe({
+      this._AuthService.onRegister(this.userForm.value).subscribe({
         next: (res) => {
           this.data = res;
           this._ToastrService.success(
             res.data.email,
-            "Check yor Email to Verify"
+            this.translate.instant("users.check_email")
           );
         },
         error: (err) => {
           this._ToastrService.error(
             err.message,
-            "Error in Adding a new user to the system"
+            this.translate.instant("users.add_email")
           );
         },
         complete: () => {

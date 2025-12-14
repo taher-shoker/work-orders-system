@@ -26,6 +26,9 @@ export class DevicesService {
   onEditDevice(body: FormData, id: number): Observable<any> {
     return this._HttpClient.put(`devices/update/${id}`, body);
   }
+  onDeleteDevice( id: number): Observable<any> {
+    return this._HttpClient.delete(`devices/delete/${id}`,);
+  }
   getDeviceWorkOrder(id: number): Observable<any> {
     return this._HttpClient.get(`work-orders/orders_by_device/${id}`);
   }

@@ -12,7 +12,7 @@ import {
   DevicesService,
   AuthService,
 } from "../../../../../shared/services";
-import { TranslateModule } from "@ngx-translate/core";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 
 @Component({
@@ -39,7 +39,6 @@ export class WorkOrderDeviceComponent implements OnInit {
   deviceId: any;
   data: any;
   isEditing = false;
-  private _ToastrService: any;
 
   constructor(
     private _LookupsService: LookupsService,
@@ -53,7 +52,8 @@ export class WorkOrderDeviceComponent implements OnInit {
     public route: ActivatedRoute,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private _devicesService: DevicesService
+    private _devicesService: DevicesService,
+    private translate: TranslateService
   ) {
     this.deviceId = this.route.snapshot.paramMap.get("deviceId");
   }
@@ -122,7 +122,7 @@ export class WorkOrderDeviceComponent implements OnInit {
         this.data = res.data;
       },
       error: (err) => {
-        this._ToastrService.error(err.message, "Error in Fetch device");
+        this.toastr.error(err.message, this.translate.instant("devices.work_error1"));
       },
     });
   }
@@ -196,10 +196,10 @@ export class WorkOrderDeviceComponent implements OnInit {
   private addNewOrder(formData: FormData): void {
     this._WorkOrdersService.addNewOrder(formData).subscribe({
       next: () => {
-        this.toastr.success("Work order added successfully");
+        this.toastr.success(this.translate.instant("devices.work_add"));
         this.router.navigate(["/dashboard/work-orders"]);
       },
-      error: (err) => this.toastr.error(err.error?.message || "Error"),
+      error: (err) => this.toastr.error(err.error?.message || this.translate.instant("devices.work_error2")),
     });
   }
 
@@ -234,14 +234,14 @@ export class WorkOrderDeviceComponent implements OnInit {
             }).subscribe({
               next: () => this.restFormWithValue(this.data),
               error: () =>
-                this.toastr.error("Failed to load engineers/technicians"),
+                this.toastr.error(this.translate.instant("devices.work_error3")),
             });
           } else {
             this.restFormWithValue(this.data);
           }
         }
       },
-      error: () => this.toastr.error("Failed to load initial lookup lists"),
+      error: () => this.toastr.error(this.translate.instant("devices.work_error4")),
     });
   }
 
@@ -271,7 +271,7 @@ export class WorkOrderDeviceComponent implements OnInit {
   private loadDevices(): void {
     this.devicesService.getAllDevices().subscribe({
       next: (res) => (this.devices = res.data),
-      error: () => this.toastr.error("Failed to load devices"),
+      error: () => this.toastr.error(this.translate.instant("devices.work_error5")),
     });
   }
 

@@ -7,6 +7,7 @@ import { FormGroup } from "@angular/forms";
 import { ManufacturersService } from "../../../../../shared/services";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-manufacturers",
@@ -28,7 +29,8 @@ export class ManufacturersComponent implements OnInit {
     private manufacturersService: ManufacturersService,
     private activatedRoute: ActivatedRoute,
     private toastrService: ToastrService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private translate: TranslateService
   ) {
     this.ManufacturersId = activatedRoute.snapshot.paramMap.get("id");
     console.log(this.ManufacturersId);
@@ -91,10 +93,14 @@ export class ManufacturersComponent implements OnInit {
   addManufacturers(data: FormGroup) {
     this.manufacturersService.addManufacturers(data.value).subscribe({
       next: (res) => {
-        this.toastrService.success(res.message, "Company Added Succesfuly");
+        this.toastrService.success(
+          this.translate.instant("devices.company_success")
+        );
       },
       error: (err) => {
-        this.toastrService.error(err.message, "Error in Added Company");
+        this.toastrService.error(
+          this.translate.instant("devices.company_error")
+        );
       },
       complete: () => {
         this.allManufacturers();
@@ -118,10 +124,14 @@ export class ManufacturersComponent implements OnInit {
   editManufacturers(data: FormGroup, id: string) {
     this.manufacturersService.updateManufacturers(data.value, id).subscribe({
       next: (res) => {
-        this.toastrService.success(res.message, "Company Update Succesfuly");
+        this.toastrService.success(
+          this.translate.instant("devices.edit_success_company")
+        );
       },
       error: (err) => {
-        this.toastrService.error(err.message, "Error in Update Company");
+        this.toastrService.error(
+          this.translate.instant("devices.edit_error_company")
+        );
       },
       complete: () => {
         this.allManufacturers();
@@ -133,11 +143,15 @@ export class ManufacturersComponent implements OnInit {
   deleteCompany(id: any) {
     this.manufacturersService.deleteManufacturers(id).subscribe({
       next: (res) => {
-        this.toastrService.success(res.message);
+        this.toastrService.success(
+          this.translate.instant("devices.delete_success_company")
+        );
         this.allManufacturers();
       },
       error: (err) => {
-        this.toastrService.error(err.error.message);
+        this.toastrService.error(
+          this.translate.instant("devices.delete_error_company")
+        );
       },
     });
   }

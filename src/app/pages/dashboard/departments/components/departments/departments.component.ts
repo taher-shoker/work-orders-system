@@ -10,6 +10,7 @@ import { AuthService, DepartmentService } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
 import { ActivatedRoute, Router } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-departments",
@@ -33,7 +34,8 @@ export class DepartmentsComponent {
     public dialog: MatDialog,
     public _AuthService: AuthService,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -100,10 +102,16 @@ export class DepartmentsComponent {
   addDepartment(data: FormGroup) {
     this._DepartmentService.addDepartment(data.value).subscribe({
       next: (res) => {
-        this._ToastrService.success(res.message, "Department Added Succesfuly");
+        this._ToastrService.success(
+          res.message,
+          this.translate.instant("department.add_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error(err.message, "Error in Update Department");
+        this._ToastrService.error(
+          err.message,
+          this.translate.instant("department.add_error")
+        );
       },
       complete: () => {
         this.getAllDepartments();
@@ -129,11 +137,14 @@ export class DepartmentsComponent {
       next: (res) => {
         this._ToastrService.success(
           res.message,
-          "Department Update Succesfuly"
+          this.translate.instant("department.edit_success")
         );
       },
       error: (err) => {
-        this._ToastrService.error(err.message, "Error in Update Department");
+        this._ToastrService.error(
+          err.message,
+          this.translate.instant("department.edit_error")
+        );
       },
       complete: () => {
         this.getAllDepartments();
@@ -151,10 +162,14 @@ export class DepartmentsComponent {
   deleteItem(id: number) {
     this._DepartmentService.deleteDepartment(id).subscribe({
       next: (res) => {
-        this._ToastrService.success("Department Deleted");
+        this._ToastrService.success(
+          this.translate.instant("department.delete_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error("Delete Department Failed");
+        this._ToastrService.error(
+          this.translate.instant("department.delete_error")
+        );
       },
       complete: () => {
         this.getAllDepartments();

@@ -6,6 +6,7 @@ import { FormGroup } from "@angular/forms";
 import { DeviceTypeService } from "../../../../../shared/services";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-device-type",
@@ -27,7 +28,8 @@ export class DeviceTypeComponent implements OnInit {
   constructor(
     private deviceTypeService: DeviceTypeService,
     private toastrService: ToastrService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+     private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -86,10 +88,10 @@ export class DeviceTypeComponent implements OnInit {
   addDeviceType(data: FormGroup) {
     this.deviceTypeService.addDeviceType(data.value).subscribe({
       next: (res) => {
-        this.toastrService.success(res.message, "Device Type Added Succesfuly");
+        this.toastrService.success(this.translate.instant("devices.device_success"));
       },
       error: (err) => {
-        this.toastrService.error(err.message, "Error in Added Device Type");
+        this.toastrService.error(this.translate.instant("devices.device_error"));
       },
       complete: () => {
         this.allDeviceTypes();
@@ -114,12 +116,11 @@ export class DeviceTypeComponent implements OnInit {
     this.deviceTypeService.updateDeviceType(data.value, id).subscribe({
       next: (res) => {
         this.toastrService.success(
-          res.message,
-          "Device Type Update Succesfuly"
+          this.translate.instant("devices.edit_success_device")
         );
       },
       error: (err) => {
-        this.toastrService.error(err.message, "Error in Update Device Type");
+        this.toastrService.error(this.translate.instant("devices.edit_error_device"));
       },
       complete: () => {
         this.allDeviceTypes();
@@ -132,11 +133,11 @@ export class DeviceTypeComponent implements OnInit {
   deleteType(id: any) {
     this.deviceTypeService.deleteDeviceType(id).subscribe({
       next: (res) => {
-        this.toastrService.success(res.message);
+        this.toastrService.success(this.translate.instant("devices.delete_success_device"));
         this.allDeviceTypes();
       },
       error: (err) => {
-        this.toastrService.error(err.error.message);
+        this.toastrService.error(this.translate.instant("devices.delete_error_device"));
       },
     });
   }

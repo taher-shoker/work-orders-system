@@ -14,6 +14,7 @@ import {
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
 import { Router, ActivatedRoute } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-equipments",
@@ -39,7 +40,8 @@ export class EquipmentsComponent implements OnInit {
     public _AuthService: AuthService,
     public router: Router,
     public route: ActivatedRoute,
-    private _LookupsService: LookupsService
+    private _LookupsService: LookupsService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -108,10 +110,16 @@ export class EquipmentsComponent implements OnInit {
   addEquipment(data: FormGroup) {
     this._EquipmentsService.addEquipment(data.value).subscribe({
       next: (res) => {
-        this._ToastrService.success(res.message, "Equipment Added Succesfuly");
+        this._ToastrService.success(
+          res.message,
+          this.translate.instant("equipments.add_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error(err.message, "Error in Added Equipment");
+        this._ToastrService.error(
+          err.message,
+          this.translate.instant("equipments.add_error")
+        );
       },
       complete: () => {
         this.getAllEquipments();
@@ -134,10 +142,16 @@ export class EquipmentsComponent implements OnInit {
   editEquipment(data: FormGroup, id: number) {
     this._EquipmentsService.editEquipment(data.value, id).subscribe({
       next: (res) => {
-        this._ToastrService.success(res.message, "Equipment Update Succesfuly");
+        this._ToastrService.success(
+          res.message,
+          this.translate.instant("equipments.edit_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error(err.message, "Error in Update Equipment");
+        this._ToastrService.error(
+          err.message,
+          this.translate.instant("equipments.edit_error")
+        );
       },
       complete: () => {
         this.getAllEquipments();
@@ -156,10 +170,14 @@ export class EquipmentsComponent implements OnInit {
   deleteItem(id: number) {
     this._EquipmentsService.deleteEquipment(id).subscribe({
       next: (res) => {
-        this._ToastrService.success("Equipment Deleted");
+        this._ToastrService.success(
+          this.translate.instant("equipments.delete_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error("Delete Equipment Failed");
+        this._ToastrService.error(
+          this.translate.instant("equipments.delete_error")
+        );
       },
       complete: () => {
         this.getAllEquipments();

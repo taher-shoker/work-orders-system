@@ -6,6 +6,7 @@ import { FormGroup } from "@angular/forms";
 import { DeviceModelService } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-device-model",
@@ -30,7 +31,8 @@ export class DeviceModelComponent implements OnInit {
   constructor(
     private deviceModelService: DeviceModelService,
     private toastrService: ToastrService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+     private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -91,10 +93,10 @@ export class DeviceModelComponent implements OnInit {
   addDeviceModels(data: FormGroup) {
     this.deviceModelService.addDeviceModel(data.value).subscribe({
       next: (res) => {
-        this.toastrService.success(res.message, "Model Added Succesfuly");
+        this.toastrService.success(res.message,this.translate.instant("devices.model_success"));
       },
       error: (err) => {
-        this.toastrService.error(err.message, "Error in Added Model");
+        this.toastrService.error(err.message,this.translate.instant("devices.model_error"));
       },
       complete: () => {
         this.allDeviceModels();
@@ -118,10 +120,10 @@ export class DeviceModelComponent implements OnInit {
   editDeviceModel(data: FormGroup, id: string) {
     this.deviceModelService.updateDeviceModel(data.value, id).subscribe({
       next: (res) => {
-        this.toastrService.success(res.message, "Model Update Succesfuly");
+        this.toastrService.success(res.message,this.translate.instant("devices.edit_success_model"));
       },
       error: (err) => {
-        this.toastrService.error(err.message, "Error in Update Model");
+        this.toastrService.error(err.message, this.translate.instant("devices.edit_error_model"));
       },
       complete: () => {
         this.allDeviceModels();
@@ -134,11 +136,11 @@ export class DeviceModelComponent implements OnInit {
   deleteModel(id: any) {
     this.deviceModelService.deleteDeviceModel(id).subscribe({
       next: (res) => {
-        this.toastrService.success(res.message);
+        this.toastrService.success(this.translate.instant("devices.delete_success_model"));
         this.allDeviceModels();
       },
       error: (err) => {
-        this.toastrService.error(err.error.message);
+        this.toastrService.error(this.translate.instant("devices.delete_error_model"));
       },
     });
   }

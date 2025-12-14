@@ -85,7 +85,18 @@
     "select_account_type": "Select account type",
     "add": "Add",
     "add_user": "Add new user",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "add_error":"Failed to load users",
+    "unblock_error":"Failed to block or unblock user",
+    "add_unblocked":"User unblocked successfully",
+    "add_blocked":"User blocked successfully",
+    "delete_success": "User Deleted",
+    "delete_error": "Delete user Failed",
+    "fetch_error": "Error in Fetch user Data",
+    "edit_success":"User Updated Succesfuly",
+    "edit_error1":"Error in Update User",
+    "check_email": "Check yor Email to Verify",
+    "add_email":  "Error in Adding a new user to the system"
   },
   "welcome": "Welcome To Work Orders System",
   "cancel": "Cancel",
@@ -178,7 +189,16 @@
     "add_attachment": "Add Attachment",
     "attachment": " Attachments",
     "rejection_reason": " Rejection Reason",
-    "rejection_title": "The resason for holding work order"
+    "rejection_title": "The resason for holding work order",
+    "add_success": "Work order added successfully",
+    "add_error": "Error while adding Work order",
+    "edit_success": "Work order updated successfully",
+    "edit_error": "Error while update Work order",
+    "delete_success": "Order Deleted",
+    "delete_error": "delete order failed",
+    "edit_error1": "Error loading order.",
+    "edit_error2": "Failed to load order details",
+    "edit_error3": "Failed to load device"
   },
   "department": {
     "department": "Department Management",
@@ -196,7 +216,13 @@
     "maintenance_supervisor": {
       "name": "Maintenance Supervisor",
       "supervisor": "No supervisor"
-    }
+    },
+     "add_success": "Department added successfully",
+    "edit_success": "Department Update Succesfuly",
+    "delete_success": "Department Deleted",
+    "add_error": "Error while adding department",
+    "edit_error": "Error in Update department",
+    "delete_error": "Delete department Failed"
   },
   "building": {
     "buildings": "Buildings and Facilities Management",
@@ -211,7 +237,13 @@
     "name_en": "English Name",
     "name_ar": "Arabic Name",
     "actions": "Actions",
-    "no_of_floors": "Number Of Floors"
+    "no_of_floors": "Number Of Floors",
+    "add_success": "Building added successfully",
+    "edit_success": "Building Update Succesfuly",
+    "delete_success": "Building Deleted",
+    "add_error": "Error while adding building",
+    "edit_error": "Error in Update Building",
+    "delete_error": "Delete Building Failed"
   },
   "sources": {
     "sources": "source",
@@ -225,7 +257,13 @@
     "actions": "Actions",
     "holding_reason": "Holding Reason",
     "add_new_material": "Add New Material",
-    "add_new_part": "Add New Spare Part"
+    "add_new_part": "Add New Spare Part",
+    "add_success": "Source added successfully",
+    "edit_success": "Source Update Succesfuly",
+    "delete_success": "Source Deleted",
+    "add_error": "Error while adding source",
+    "edit_error": "Error in Update source",
+    "delete_error": "Delete source Failed"
   },
   "equipments": {
     "equipments": "equipments",
@@ -240,7 +278,13 @@
     "name": "Name",
     "name_en": "English Name",
     "name_ar": "Arabic Name",
-    "actions": "Actions"
+    "actions": "Actions",
+    "add_success": "Equipment added successfully",
+    "edit_success": "Equipment Update Succesfuly",
+    "delete_success": "Equipment Deleted",
+    "add_error": "Error while adding equipment",
+    "edit_error": "Error in Update equipment",
+    "delete_error": "Delete equipment Failed"
   },
   "reports": {
     "reports": "Reports",
@@ -321,7 +365,38 @@
     "print": "Reprint QR Code",
     "add_new_device": "Add New Device",
     "add_type": "Add New Device Type ",
-    "edit_type": "Edit Device Type"
+    "edit_type": "Edit Device Type",
+     "add_success": "Device added successfully",
+    "edit_success": "Device Update Succesfuly",
+    "delete_success": "Device Deleted",
+    "add_error": "Error while adding device",
+    "edit_error": "Error in Update device",
+    "delete_error": "Delete device Failed",
+    "warning":"Please fill all required fields.",
+    "work_error1":"Error in Fetch device.",
+    "work_error2":"Error",
+    "work_add":"Work order added successfully.",
+    "work_error3":"Failed to load engineers/technicians.",
+    "work_error4":"Failed to load initial lookup lists.",
+    "work_error5":"Failed to load devices.",
+    "company_success":"Company Added Succesfuly",
+    "company_error":"Error in Added Company",
+    "edit_success_company":"Company Update Succesfuly",
+    "edit_error_company":"Error in Update Company",
+   "delete_success_company": "Company Deleted Succesfuly",
+   "delete_error_company": "Delete company Failed",
+   "device_success": "Device Type Added Succesfuly",
+   "device_error": "Error in Added Device Type",
+   "edit_success_device": "Device Type Update Succesfuly",
+   "edit_error_device": "Error in Update Device Type",
+   "delete_success_device": "Device Type Deleted Succesfuly",
+   "delete_error_device": "Delete Device Type Failed",
+   "model_success": "Model Added Succesfuly",
+   "model_error": "Error in Added Model",
+   "edit_success_model": "Model Update Succesfuly",
+   "edit_error_model": "Error in Update Model",
+   "delete_success_model": "Model Deleted Succesfuly",
+   "delete_error_model": "Delete Model Failed"
   },
   "status": {
     "new": "New",

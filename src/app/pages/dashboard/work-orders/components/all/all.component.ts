@@ -11,6 +11,7 @@ import { SharedUiModule } from "../../../../../shared/components/shared-ui.modul
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
 import { forkJoin } from "rxjs";
 import { HelperService } from "../../../../../shared/services";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-all",
@@ -52,7 +53,9 @@ export class AllComponent {
     public _AuthService: AuthService,
     public route: ActivatedRoute,
     private fb: FormBuilder,
-    private helperService: HelperService
+    private helperService: HelperService,
+        private translate: TranslateService
+    
   ) {}
 
   ngOnInit() {
@@ -173,11 +176,11 @@ export class AllComponent {
       this._WorkOrdersService.deleteOrder(event?.dataRow.id).subscribe({
         next: (res) => {},
         error: (err) => {
-          this._ToastrService.error("delete order failed");
+          this._ToastrService.error( this.translate.instant("orders.delete_success"));
         },
         complete: () => {
           this.onSubmit(this.orderForm);
-          this._ToastrService.success("Order Deleted");
+          this._ToastrService.success( this.translate.instant("orders.delete_error"));
         },
       });
     } else if (event.value === "view") {

@@ -10,7 +10,7 @@
     <app-component-card [title]="'users.users' | translate">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-        <app-StatCard [title]="'users.users' | translate" [icon]="'group'" [number]="statisticData.all_users"
+        <app-StatCard [title]="'users.users' | translate" [icon]="'group'" [number]="statisticData?.all_users"
           [colorClass]="'text-blue-500'">
         </app-StatCard>
         <app-StatCard [title]="'users.active' | translate" [icon]="'group'" [number]="statisticData?.active_users"

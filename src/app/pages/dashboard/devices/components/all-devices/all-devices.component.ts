@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { CommonModule } from "@angular/common";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-all-devices",
@@ -40,7 +41,8 @@ export class AllDevicesComponent {
     private dialog: MatDialog,
     public router: Router,
     public route: ActivatedRoute,
-    private _LookupsService: LookupsService
+    private _LookupsService: LookupsService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -123,16 +125,16 @@ export class AllDevicesComponent {
         relativeTo: this.route,
       });
     } else if (event.value === "delete") {
-      // this._WorkOrdersService.deleteOrder(event.dataRow.id).subscribe({
-      //   next: (res) => {},
-      //   error: (err) => {
-      //     this._ToastrService.error("delete order failed");
-      //   },
-      //   complete: () => {
-      //     this.onSubmit(this.orderForm);
-      //     this._ToastrService.success("Order Deleted");
-      //   },
-      // });
+      this._DevicesService.onDeleteDevice(event.dataRow.id).subscribe({
+        next: (res) => {this._ToastrService.success(this.translate.instant("devices.delete_success"));},
+        error: (err) => {
+          this._ToastrService.error(this.translate.instant("devices.delete_success"));
+        },
+        complete: () => {
+          // this.onSubmit(this.orderForm);
+          this.onGetAllDevices();
+        },
+      });
     } else if (event.value === "view") {
       this.router.navigate(["./view", event?.dataRow.id], {
         relativeTo: this.route,

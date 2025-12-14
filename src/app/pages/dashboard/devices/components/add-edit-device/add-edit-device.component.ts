@@ -5,6 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
 import { DevicesService } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-add-edit-device",
@@ -35,7 +36,8 @@ export class AddEditDeviceComponent implements OnInit {
     private devicesService: DevicesService,
     private toastr: ToastrService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+     private translate: TranslateService
   ) {
     this.deviceId = this.route.snapshot.paramMap.get("id");
     this.isUpdatePage = !!this.deviceId;
@@ -80,7 +82,7 @@ export class AddEditDeviceComponent implements OnInit {
   // ---------------------------------------------
   onSubmit(): void {
     if (this.deviceForm.invalid) {
-      this.toastr.warning("Please fill all required fields.");
+      this.toastr.warning(this.translate.instant("devices.warning"));
       return;
     }
 
@@ -107,8 +109,8 @@ export class AddEditDeviceComponent implements OnInit {
     // Update
     if (this.isUpdatePage && this.deviceId) {
       this.devicesService.onEditDevice(formData, +this.deviceId).subscribe({
-        next: () => this.toastr.success("Device updated successfully"),
-        error: (err) => this.toastr.error(err.message, "Update failed"),
+        next: () => this.toastr.success(this.translate.instant("devices.edit_success")),
+        error: (err) => this.toastr.error(err.message, this.translate.instant("devices.edit_error")),
         complete: () => this.router.navigate(["/dashboard/devices"]),
       });
       return;
@@ -116,8 +118,8 @@ export class AddEditDeviceComponent implements OnInit {
 
     // Add
     this.devicesService.addNewDevice(formData).subscribe({
-      next: () => this.toastr.success("Device added successfully"),
-      error: (err) => this.toastr.error(err.message, "Add failed"),
+      next: () => this.toastr.success( this.translate.instant("devices.add_success")),
+      error: (err) => this.toastr.error(err.message, this.translate.instant("devices.add_error")),
       complete: () => this.router.navigate(["/dashboard/devices"]),
     });
   }

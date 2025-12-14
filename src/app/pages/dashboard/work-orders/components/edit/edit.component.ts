@@ -4,6 +4,7 @@ import { ToastrService } from "ngx-toastr";
 import { WorkOrdersService } from "../../../../../shared/services/work-orders.service";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { WorkOrderFormComponent } from "../work-order-form/work-order-form.component";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-edit",
@@ -18,7 +19,9 @@ export class EditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private workOrdersService: WorkOrdersService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+            private translate: TranslateService
+    
   ) {
     this.orderId = this.route.snapshot.paramMap.get("id");
   }
@@ -38,7 +41,7 @@ export class EditComponent implements OnInit {
         this.currentOrder = res.data;
       },
       error: (err) => {
-        this.toastr.error(err?.message || "Error loading order.");
+        this.toastr.error(this.translate.instant("orders.edit_error"));
       },
     });
   }

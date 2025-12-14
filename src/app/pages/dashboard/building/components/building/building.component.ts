@@ -10,6 +10,7 @@ import { AuthService, BuildingService } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
 import { ActivatedRoute, Router } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-building",
@@ -35,7 +36,8 @@ export class BuildingComponent {
     private _ToastrService: ToastrService,
     public _AuthService: AuthService,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -103,10 +105,16 @@ export class BuildingComponent {
   addBuilding(data: FormGroup) {
     this._BuildingService.addBuilding(data.value).subscribe({
       next: (res) => {
-        this._ToastrService.success(res.message, "Building Added Succesfuly");
+        this._ToastrService.success(
+          res.message,
+          this.translate.instant("building.add_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error(err.message, "Error in Added Building");
+        this._ToastrService.error(
+          err.message,
+          this.translate.instant("building.add_error")
+        );
       },
       complete: () => {
         this.getAllBuildings();
@@ -129,10 +137,16 @@ export class BuildingComponent {
   editBuilding(data: FormGroup, id: number) {
     this._BuildingService.editBuilding(data.value, id).subscribe({
       next: (res) => {
-        this._ToastrService.success(res.message, "Building Update Succesfuly");
+        this._ToastrService.success(
+          res.message,
+          this.translate.instant("building.edit_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error(err.message, "Error in Update Building");
+        this._ToastrService.error(
+          err.message,
+          this.translate.instant("building.edit_error")
+        );
       },
       complete: () => {
         this.getAllBuildings();
@@ -152,10 +166,14 @@ export class BuildingComponent {
   deleteItem(id: number) {
     this._BuildingService.deleteBuilding(id).subscribe({
       next: (res) => {
-        this._ToastrService.success("Building Deleted");
+        this._ToastrService.success(
+          this.translate.instant("building.delete_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error("Delete Building Failed");
+        this._ToastrService.error(
+          this.translate.instant("building.delete_error")
+        );
       },
       complete: () => {
         this.getAllBuildings();

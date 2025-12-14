@@ -10,6 +10,7 @@ import { AuthService, SourcesService } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { Router, ActivatedRoute } from "@angular/router";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-sources",
@@ -33,7 +34,8 @@ export class SourcesComponent {
     public dialog: MatDialog,
     public _AuthService: AuthService,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -100,10 +102,16 @@ export class SourcesComponent {
   addSource(data: FormGroup) {
     this._SourcesService.addSource(data.value).subscribe({
       next: (res) => {
-        this._ToastrService.success(res.message, "Source Added Succesfuly");
+        this._ToastrService.success(
+          res.message,
+          this.translate.instant("sources.add_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error(err.message, "Error in Added Source");
+        this._ToastrService.error(
+          err.message,
+          this.translate.instant("sources.add_error")
+        );
       },
       complete: () => {
         this.getAllSources();
@@ -126,10 +134,16 @@ export class SourcesComponent {
   editSource(data: FormGroup, id: number) {
     this._SourcesService.editSource(data.value, id).subscribe({
       next: (res) => {
-        this._ToastrService.success(res.message, "Source Update Succesfuly");
+        this._ToastrService.success(
+          res.message,
+          this.translate.instant("sources.edit_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error(err.message, "Error in Update Source");
+        this._ToastrService.error(
+          err.message,
+          this.translate.instant("sources.edit_error")
+        );
       },
       complete: () => {
         this.getAllSources();
@@ -149,10 +163,14 @@ export class SourcesComponent {
   deleteItem(id: number) {
     this._SourcesService.deleteSource(id).subscribe({
       next: (res) => {
-        this._ToastrService.success("Source Deleted");
+        this._ToastrService.success(
+          this.translate.instant("sources.delete_success")
+        );
       },
       error: (err) => {
-        this._ToastrService.error("Delete Source Failed");
+        this._ToastrService.error(
+          this.translate.instant("sources.delete_error")
+        );
       },
       complete: () => {
         this.getAllSources();
