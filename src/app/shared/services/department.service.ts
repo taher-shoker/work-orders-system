@@ -8,8 +8,8 @@ import { Observable } from "rxjs";
 export class DepartmentService {
   constructor(private _HttpClient: HttpClient) {}
 
-  getDepartment(): Observable<any> {
-    return this._HttpClient.get("departments");
+  getDepartment(params?: any): Observable<any> {
+    return this._HttpClient.get("departments", { params: { page: params } });
   }
 
   getDepartmentById(id: number): Observable<any> {

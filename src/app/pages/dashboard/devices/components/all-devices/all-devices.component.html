@@ -9,20 +9,18 @@
     <div class="mt-8">
 
         <app-component-card [title]="'sidebar.devices' | translate">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-                <app-StatCard [title]="'sidebar.devices' | translate" [icon]="'group'" [number]="tableData.length"
-                    [colorClass]="'text-blue-500'">
+                <app-StatCard [title]="'sidebar.devices' | translate" [icon]="'dvr'"
+                    [number]="statisticData.total_devices" [colorClass]="'text-blue-500'">
                 </app-StatCard>
-                <app-StatCard [title]="'devices.active' | translate" [icon]="'group'" [number]="tableData.length"
-                    [colorClass]="'text-blue-500'">
+                <app-StatCard [title]="'devices.active' | translate" [icon]="'dvr'"
+                    [number]="statisticData.active_devices" [colorClass]="'text-blue-500'">
                 </app-StatCard>
-                <app-StatCard [title]="'devices.notActive' | translate" [icon]="'group'" [number]="tableData.length"
-                    [colorClass]="'text-blue-500'">
+                <app-StatCard [title]="'devices.notActive' | translate" [icon]="'dvr'"
+                    [number]="statisticData.not_active_devices" [colorClass]="'text-blue-500'">
                 </app-StatCard>
-                <app-StatCard [title]="'devices.notActive' | translate" [icon]="'group'" [number]="tableData.length"
-                    [colorClass]="'text-blue-500'">
-                </app-StatCard>
+
 
 
             </div>
@@ -31,8 +29,10 @@
 
 
     <div class="mt-6">
-        <app-basic-table-three (searchEvent)="handleSearch($event)"  [data]="tableData" [columns]="columns" [title]="'sidebar.devices' | translate"
-            (doAction)="tableAction($event)" [totalItems]="tableResponse"></app-basic-table-three>
+        <app-basic-table-three [placeholderSearch]="'table.search_device_name' | translate"
+            (paginationEvent)="onPageChange($event)" (searchEvent)="handleSearch($event)" [data]="tableData"
+            [columns]="columns" [title]="'sidebar.devices' | translate" (doAction)="tableAction($event)"
+            [totalItems]="tableResponse"></app-basic-table-three>
         <!-- <ng-template #statusTemplate let-item="item">
       <app-badge [colorId]="item.status?.id">
         {{ item.status.name }}

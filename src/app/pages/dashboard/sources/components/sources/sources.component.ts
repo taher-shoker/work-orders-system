@@ -58,15 +58,27 @@ export class SourcesComponent {
   // all sources
   getAllSources() {
     this.spinner.show();
-    this._SourcesService.getSources().subscribe({
+    this._SourcesService.getSources(1).subscribe({
       next: (res) => {
-        this.tableResponse = res;
-        this.tableData = res?.data;
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
         this.originalTableData = [...this.tableData];
         this.spinner.hide();
       },
     });
   }
+  /** ✅ Handle pagination change */
+  onPageChange(event: number): void {
+    this._SourcesService.getSources(event).subscribe({
+      next: (res) => {
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
+        this.originalTableData = [...this.tableData];
+        this.spinner.hide();
+      },
+    });
+  }
+  //
   // search
   handleSearch(value: string) {
     this.tableData = this.originalTableData.filter(

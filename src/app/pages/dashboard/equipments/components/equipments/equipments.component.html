@@ -9,20 +9,20 @@
     <div class="mt-8">
 
         <app-component-card [title]="'equipments.equipments' | translate">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-                <app-StatCard [title]="'equipments.total-equipment' | translate" [icon]="'group'"
-                    [number]="tableData.length" [colorClass]="'text-blue-500'">
+                <app-StatCard [title]="'equipments.total-equipment' | translate" [icon]="'build'"
+                    [number]="statisticData.all_equipment" [colorClass]="'text-blue-500'">
                 </app-StatCard>
-                <app-StatCard [title]="'equipments.active-equipment' | translate" [icon]="'group'"
-                    [number]="tableData.length" [colorClass]="'text-blue-500'">
+                <app-StatCard [title]="'equipments.active-equipment' | translate" [icon]="'build'"
+                    [number]="statisticData.active_equipment" [colorClass]="'text-blue-500'">
                 </app-StatCard>
-                <app-StatCard [title]="'equipments.equipment-maintenance' | translate" [icon]="'group'"
-                    [number]="tableData.length" [colorClass]="'text-blue-500'">
+                <app-StatCard [title]="'equipments.equipment-maintenance' | translate" [icon]="'build'"
+                    [number]="statisticData.not_active_equipment" [colorClass]="'text-blue-500'">
                 </app-StatCard>
-                <app-StatCard [title]="'equipments.out-of-service' | translate" [icon]="'group'"
+                <!-- <app-StatCard [title]="'equipments.out-of-service' | translate" [icon]="'group'"
                     [number]="tableData.length" [colorClass]="'text-blue-500'">
-                </app-StatCard>
+                </app-StatCard> -->
 
 
 
@@ -33,7 +33,10 @@
 
     <div class="mt-6">
         <app-basic-table-three [haveView]="false" [data]="tableData" [columns]="columns"
-           (searchEvent)="handleSearch($event)" [title]="'equipments.equipments' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
+            (searchEvent)="handleSearch($event)" [title]="'equipments.equipments' | translate"
+            (doAction)="tableAction($event)" [totalItems]="tableResponse"
+            [placeholderSearch]="'table.search_name_ar' | translate"
+            (paginationEvent)="onPageChange($event)"></app-basic-table-three>
 
     </div>
 </section>

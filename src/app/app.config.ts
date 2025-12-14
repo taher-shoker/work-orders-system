@@ -83,7 +83,7 @@ export const appConfig: ApplicationConfig = {
 
       // 🔔 Toastr
       ToastrModule.forRoot({
-        positionClass: "toast-bottom-left",
+        positionClass: "toast-top-right",
         timeOut: 3000,
         preventDuplicates: true,
       }),

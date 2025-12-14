@@ -8,8 +8,8 @@ import { Observable } from "rxjs";
 export class DeviceTypeService {
   constructor(private http: HttpClient) {}
 
-  getAllDeviceType(): Observable<any> {
-    return this.http.get(`device_types`);
+  getAllDeviceType(params: any): Observable<any> {
+    return this.http.get(`device_types`, { params: { page: params } });
   }
   addDeviceType(data: any): Observable<any> {
     return this.http.post(`device_types/create`, data, {

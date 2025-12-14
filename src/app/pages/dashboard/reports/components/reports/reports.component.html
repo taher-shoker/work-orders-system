@@ -42,8 +42,9 @@
 
   <div class="mt-6">
     <app-basic-table-three (printEvent)="handlePrint()" [print]="dataToPrint.length > 0" [noFilter]="true"
-      [data]="tableData" [columns]="columns" [dataPrint]="dataToPrint"
-      [title]="'orders.orders' | translate"></app-basic-table-three>
+      [data]="tableData" [columns]="columns" [dataPrint]="dataToPrint" [title]="'orders.orders' | translate"
+      [totalItems]="tableResponse" [placeholderSearch]="'table.search_name_ar' | translate"
+      (paginationEvent)="onPageChange($event)" [noSearch]="true"></app-basic-table-three>
   </div>
 
 

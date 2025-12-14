@@ -9,7 +9,7 @@ export class WorkOrdersService {
   constructor(private _HttpClient: HttpClient) {}
   getAllOrders(params: any = 1): Observable<any> {
     return this._HttpClient.get("work-orders", {
-      params: { page: params },
+      params,
     });
   }
   getOrder(id: number): Observable<any> {

@@ -8,8 +8,8 @@ import { Observable } from "rxjs";
 export class ManufacturersService {
   constructor(private http: HttpClient) {}
 
-  getAllManufacturers(): Observable<any> {
-    return this.http.get(`device_manufacturers`);
+  getAllManufacturers(params: any): Observable<any> {
+    return this.http.get(`device_manufacturers`, { params: { page: params } });
   }
   addManufacturers(data: any): Observable<any> {
     return this.http.post(`device_manufacturers/create`, data, {

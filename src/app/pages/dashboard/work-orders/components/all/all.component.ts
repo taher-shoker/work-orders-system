@@ -1,19 +1,16 @@
 import { Component, TemplateRef, ViewChild } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
-import { NgxSpinnerService } from "ngx-spinner";
 import { MatDialog } from "@angular/material/dialog";
-import { FormControl, FormGroup } from "@angular/forms";
-import { PageEvent } from "@angular/material/paginator";
-import { ViewComponent } from "../view/view.component";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AuthService } from "../../../../../shared/services/auth.service";
 import { LookupsService } from "../../../../../shared/services/lookups.service";
 import { ReportsService } from "../../../../../shared/services/reports.service";
 import { WorkOrdersService } from "../../../../../shared/services/work-orders.service";
-import { relativeToValue } from "@amcharts/amcharts5/.internal/core/util/Utils";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
-import { CommonModule } from "@angular/common";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
+import { forkJoin } from "rxjs";
+import { HelperService } from "../../../../../shared/services";
 
 @Component({
   selector: "app-all",
@@ -31,7 +28,7 @@ export class AllComponent {
   technicians: any;
   workTypeList: any;
   buildingsList: any;
-  isEmptyData: boolean = false;
+  orderForm!: FormGroup;
 
   tableResponse: any | undefined;
   tableData: any[] = [];
@@ -43,6 +40,8 @@ export class AllComponent {
   columns: any = [];
   statisticData: any;
   originalTableData: any[] = []; // keep the original full data
+  filterData: any;
+
   constructor(
     private _ReportsService: ReportsService,
     private _LookupsService: LookupsService,
@@ -51,7 +50,9 @@ export class AllComponent {
     public dialog: MatDialog,
     public router: Router,
     public _AuthService: AuthService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private fb: FormBuilder,
+    private helperService: HelperService
   ) {}
 
   ngOnInit() {
@@ -91,36 +92,54 @@ export class AllComponent {
     });
 
     this.getWorkOrders(1);
-    this.getDepartment();
+    this.initOrderForm();
     this.getAllStatus();
-    this.getEngineers();
-    this.getTechnicians();
-    this.getBuildings();
-    this.getWorkType();
+    this.loadLookupsAndThenPatch();
+
+    this.orderForm.get("department_id")?.valueChanges.subscribe((id) => {
+      this.disableFields();
+      if (id) {
+        this.loadEngineers(id);
+        this.loadTechnicians(id);
+      }
+    });
   }
 
-  orderForm = new FormGroup({
-    status: new FormControl(0),
-    department_id: new FormControl(null),
-    engineer_id: new FormControl(null),
-    technician_id: new FormControl(null),
-    building_id: new FormControl(null),
-    work_type_id: new FormControl(null),
-    from_date: new FormControl(null),
-    to_date: new FormControl(null),
-  });
+  initOrderForm(): void {
+    this.orderForm = this.fb.group({
+      status: this.fb.control<number | null>(null),
+      department_id: this.fb.control<number | null>(null),
+      engineer_id: this.fb.control<number | null>(null),
+      technician_id: this.fb.control<number | null>(null),
+      work_type_id: this.fb.control<number | null>(null),
+      building_id: this.fb.control<number | null>(null),
+      to_date: this.fb.control<string | null>(null),
+      from_date: this.fb.control<Date | null>(null),
+    });
+  }
 
   onSubmit(data: FormGroup) {
     let params = {
       page_size: this.pageSize,
       page: this.page,
     };
+    this.filterData = this.removeNullable(data.value);
+
+    this.getWorkOrders({ page: this.page, ...this.filterData });
   }
   addOrder() {
     this.router.navigate(["./add"], { relativeTo: this.route });
   }
-  getWorkOrders(page: number) {
-    this._WorkOrdersService.getAllOrders(page).subscribe({
+  removeNullable<T extends Record<string, any>>(obj: T): any {
+    return Object.fromEntries(
+      Object.entries(obj).filter(
+        ([_, value]) => value !== null && value !== undefined
+      )
+    );
+  }
+
+  getWorkOrders(filterData: any) {
+    this._WorkOrdersService.getAllOrders(filterData).subscribe({
       next: (res) => {
         this.tableResponse = res.data.total;
         this.tableData = res.data.data;
@@ -129,7 +148,8 @@ export class AllComponent {
     });
   }
   onPageChange(event: number): void {
-    this.getWorkOrders(event);
+    this.page = event;
+    this.getWorkOrders({ page: event, ...this.filterData });
   }
   // search
   handleSearch(value: string) {
@@ -143,40 +163,7 @@ export class AllComponent {
       this.status = res.data;
     });
   }
-  // Department
-  getDepartment() {
-    this._LookupsService.getDepartment().subscribe((res) => {
-      this.departments = res.data;
-    });
-  }
-  // Engineers
-  getEngineers() {
-    this._ReportsService.getEngineers().subscribe((res) => {
-      this.engineers = res.data;
-    });
-  }
-  // Technicians
-  getTechnicians() {
-    this._ReportsService.getTechnicians().subscribe((res) => {
-      this.technicians = res.data;
-    });
-  }
-  // buildings
-  getBuildings() {
-    this._ReportsService.getBuildings().subscribe({
-      next: (res) => {
-        this.buildingsList = res.data;
-      },
-    });
-  }
-  // WorkType
-  getWorkType() {
-    this._ReportsService.getWorkType().subscribe({
-      next: (res) => {
-        this.workTypeList = res.data;
-      },
-    });
-  }
+
   tableAction(event: { value: string; dataRow?: any }) {
     if (event.value === "edit") {
       this.router.navigate(["./edit", event?.dataRow.id], {
@@ -214,9 +201,54 @@ export class AllComponent {
     const index = items.findIndex((item) => item.id === id);
     return index; // +1 for 1-based order
   }
-  handlePageEvent(e: PageEvent) {
-    this.pageSize = e.pageSize;
-    this.page = e.pageIndex + 1;
-    this.onSubmit(this.orderForm);
+
+  disableFields() {
+    this.orderForm.get("engineer_id")?.disable();
+    this.orderForm.get("technician_id")?.disable();
+  }
+  enableFields() {
+    this.orderForm.get("engineer_id")?.enable();
+    this.orderForm.get("technician_id")?.enable();
+  }
+
+  private loadLookupsAndThenPatch(): void {
+    forkJoin({
+      workTypes: this._LookupsService.getWork_type(),
+      buildings: this._LookupsService.getbuilding(),
+      departments: this._LookupsService.getDepartment(),
+    }).subscribe({
+      next: (res) => {
+        // Defensive access — avoid undefined errors
+        this.workTypeList = res.workTypes?.data ?? [];
+        this.buildingsList = res.buildings?.data ?? [];
+        this.departments = res.departments?.data ?? [];
+      },
+      error: () => {},
+    });
+  }
+
+  private loadEngineers(id: number): void {
+    this.disableFields();
+    this.helperService.getEngineers(id).subscribe((res) => {
+      if (res.data && res.data.length > 0) {
+        this.engineers = res.data;
+        this.enableFields();
+      } else {
+        this.engineers = [];
+      }
+    });
+  }
+
+  private loadTechnicians(id: number): void {
+    this.disableFields();
+
+    this.helperService.getTechnicians(id).subscribe((res) => {
+      if (res.data && res.data.length > 0) {
+        this.technicians = res.data;
+        this.enableFields();
+      } else {
+        this.technicians = [];
+      }
+    });
   }
 }

@@ -8,8 +8,8 @@ import { Observable } from "rxjs";
 export class BuildingService {
   constructor(private _HttpClient: HttpClient) {}
 
-  getBuildings(): Observable<any> {
-    return this._HttpClient.get("buildings");
+  getBuildings(params?: any): Observable<any> {
+    return this._HttpClient.get("buildings", { params: { page: params } });
   }
   getBuildingById(id: number): Observable<any> {
     return this._HttpClient.get(`buildings/show/${id}`);

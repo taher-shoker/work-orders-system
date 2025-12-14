@@ -6,7 +6,11 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from "ngx-toastr";
 import { Subject, debounceTime } from "rxjs";
 import { AddEquipmentComponent } from "../add-equipment/add-equipment.component";
-import { AuthService, EquipmentsService } from "../../../../../shared/services";
+import {
+  AuthService,
+  EquipmentsService,
+  LookupsService,
+} from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -26,6 +30,7 @@ export class EquipmentsComponent implements OnInit {
   columns: any = [];
   originalTableData: any[] = []; // keep the original full data
   private subject = new Subject<any>();
+  statisticData: any;
   constructor(
     private _EquipmentsService: EquipmentsService,
     private spinner: NgxSpinnerService,
@@ -33,7 +38,8 @@ export class EquipmentsComponent implements OnInit {
     public dialog: MatDialog,
     public _AuthService: AuthService,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private _LookupsService: LookupsService
   ) {}
 
   ngOnInit(): void {
@@ -48,25 +54,38 @@ export class EquipmentsComponent implements OnInit {
       { header: "", field: "action", type: "action" },
     ];
     this.getAllEquipments();
-    this.subject.pipe(debounceTime(800)).subscribe({
-      next: (res) => {
-        this.getAllEquipments();
-      },
+    this._LookupsService.getDashboard().subscribe(); // Fetch the first time
+
+    this._LookupsService.dashboard$.subscribe((data) => {
+      this.statisticData = data;
     });
   }
 
   // all equipment
   getAllEquipments() {
     this.spinner.show();
-    this._EquipmentsService.getEquipments().subscribe({
+    this._EquipmentsService.getEquipments(1).subscribe({
       next: (res) => {
-        this.tableResponse = res;
-        this.tableData = res?.data;
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
         this.originalTableData = [...this.tableData]; // store original data
         this.spinner.hide();
       },
     });
   }
+
+  /** ✅ Handle pagination change */
+  onPageChange(event: number): void {
+    this._EquipmentsService.getEquipments(event).subscribe({
+      next: (res) => {
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
+        this.originalTableData = [...this.tableData]; // store original data
+        this.spinner.hide();
+      },
+    });
+  }
+
   // search
   handleSearch(value: string) {
     this.tableData = this.originalTableData.filter(

@@ -28,7 +28,7 @@
     "workOrders": "أوامر العمل",
     "departments": "الأقسام",
     "building": "المباني",
-    "sources": "المصادر",
+    "sources": "مصادر أوامر العمل",
     "equipments": "المعدات",
     "reports": "التقارير",
     "myorders": "أوامر العمل خاصتي",
@@ -61,10 +61,10 @@
     "AccType": "نوع الحساب",
     "username_pattern": " أسم المستخدم لابد أن يحتوي على ألاقام وحروف وبدون مسافات",
     "username_place": "ادخل أسم المستخدم",
-    "email_pattern": "ex:test@abc.dc",
+    "email_pattern": "البريدالإكتروني غير صحيح",
     "email_place": "ادخل البريد",
     "user_place": "ادخل الأسم",
-    "password_pattern": "كلمة المرور لا يمكن أن يقل عن ثلاثة أحرف أو أرقام",
+    "password_pattern": "كلمة المرور لا يمكن أن يقل عن ستة أحرف أو أرقام",
     "match": "كلمة المرور غير متطابق \u00A0",
     "add_user_title": "إضافة مستخدم جديد للنظام",
     "edit_user_title": "تعديل مستخدم",
@@ -137,7 +137,9 @@
     "forgot_password": "استرجاع كلمة المرور",
     "forget_text": "أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور بكل سهولة",
     "remember_password": "تذكرت كلمة المرور؟",
-    "send_link": "إرسال"
+    "send_link": "إرسال",
+    "department": "القسم",
+    "title": "الوظيفة"
   },
   "orders": {
     "orders": "أوامر العمل",
@@ -384,7 +386,10 @@
     "export": "إستخراج",
     "add": "أضف",
     "search_name_ar": "إبحث عن الإسم باللغة العربية",
-    "noData": "لا توجد بيانات"
+    "noData": "لا توجد بيانات",
+    "search_byOrder_num": "إبحث عن رقم الطلب",
+    "search_byemail": "إبحث عن البريد الإلكتروني",
+    "search_device_name": "إبحث عن إسم الجهاز"
   },
   "breadCrumb": {
     "home": "الرئيسية",
@@ -403,7 +408,7 @@
     "add_new_department": "إضافة قسم جديد",
     "buildings": "المباني",
     "add_new_building": "إضافة مبني جديد",
-    "sources": "المصادر",
+    "sources": "مصادر أوامر العمل",
     "add_new_source": "إضافة مصدر جديد",
     "equipments": "المعدات",
     "add_new_equipment": "إضافة مٌعدة جديدة",
@@ -442,8 +447,8 @@
     "inactive_users": "المعطلين",
     "buildings": "المباني",
     "equipments": "المعدات",
-    "time":"مرة",
-    "hour":"ساعة"
+    "time": "مرة",
+    "hour": "ساعة"
   },
   "profile_sec": {
     "name": "الأسم",

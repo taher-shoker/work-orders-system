@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input, forwardRef } from "@angular/core";
+import { Component, Input, forwardRef, OnInit } from "@angular/core";
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -9,32 +9,61 @@ import {
   ValidationErrors,
   FormControl,
 } from "@angular/forms";
+import { MatIconModule } from "@angular/material/icon";
 import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-input-field",
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, MatIconModule],
   template: `
     <div class="relative">
-      <input
-        [type]="fieldType"
-        [id]="id"
-        [name]="name"
-        [placeholder]="placeholder"
-        [value]="value"
-        [min]="min"
-        [max]="max"
-        [step]="step"
-        [disabled]="disabled"
-        [ngClass]="inputClasses"
-        (input)="handleInput($event)"
-        (blur)="onTouched()"
-      />
+      <!-- Input wrapper -->
+      <div class="relative  min-h-[44px]">
+        <input
+          [type]="actualType"
+          [id]="id"
+          [name]="name"
+          [placeholder]="placeholder"
+          [value]="value"
+          [disabled]="disabled"
+          [ngClass]="inputClasses"
+          (input)="handleInput($event)"
+          (blur)="onTouched()"
+        />
 
-      @if (control && control.touched && control.errors?.['required']) {
+        <!-- Password toggle icon -->
+        @if (type === 'password') {
+        <span
+          (click)="togglePasswordVisibility()"
+          class="absolute top-1/2 -translate-y-1/2 cursor-pointer z-10
+               ltr:right-4 rtl:left-4 flex items-center"
+        >
+          @if(showPassword){ <mat-icon>visibility</mat-icon>
+          }@else {
+          <mat-icon>visibility_off</mat-icon>
+
+          }
+        </span>
+        }
+      </div>
+
+      <!-- ❗ Error messages OUTSIDE -->
+      @if (control?.touched && control?.errors?.['required']) {
       <p class="mt-1.5 text-xs text-error-500">
         {{ "forms.field_required" | translate }}
+      </p>
+      } @if (control?.touched && control?.errors?.['pattern']) {
+      <p class="mt-1.5 text-xs text-error-500">
+        {{ "users.password_pattern" | translate }}
+      </p>
+      } @if (control?.touched && control?.errors?.['passwordMismatch']) {
+      <p class="mt-1.5 text-xs text-error-500">
+        {{ "users.match" | translate }}
+      </p>
+      } @if (control?.touched && control?.errors?.['email']) {
+      <p class="mt-1.5 text-xs text-error-500">
+        {{ "users.email_pattern" | translate }}
       </p>
       }
     </div>
@@ -52,31 +81,41 @@ import { TranslateModule } from "@ngx-translate/core";
     },
   ],
 })
-export class InputFieldComponent implements ControlValueAccessor, Validator {
-  @Input("type") fieldType: string = "text";
-  @Input() id: string = "";
-  @Input() name: string = "";
-  @Input() placeholder: string = "";
+export class InputFieldComponent
+  implements ControlValueAccessor, Validator, OnInit
+{
+  @Input() type: string = "text";
+  @Input() id = "";
+  @Input() name = "";
+  @Input() placeholder = "";
   @Input() min?: number | string;
   @Input() max?: number | string;
   @Input() step?: number;
-  @Input() hint?: string;
-  @Input() className: string = "";
+  @Input() className = "";
 
   value: string | number = "";
   disabled = false;
 
+  showPassword = false;
+  control?: FormControl;
+
   onChange = (_: any) => {};
   onTouched = () => {};
 
-  control!: FormControl;
-
   ngOnInit(): void {
-    if (!this.id) this.id = this.generateRandomId();
+    if (!this.id) {
+      this.id = "id-" + Math.random().toString(36).substring(2, 10);
+    }
   }
 
-  private generateRandomId(): string {
-    return "id-" + Math.random().toString(36).substring(2, 10);
+  /** 🔑 Actual input type */
+  get actualType(): string {
+    if (this.type !== "password") return this.type;
+    return this.showPassword ? "text" : "password";
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   // CVA
@@ -92,15 +131,15 @@ export class InputFieldComponent implements ControlValueAccessor, Validator {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean) {
+  setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
 
-  handleInput(event: Event) {
+  handleInput(event: Event): void {
     const input = event.target as HTMLInputElement;
     let val: string | number = input.value;
 
-    if (this.fieldType === "number") {
+    if (this.type === "number") {
       val = input.value === "" ? "" : Number(input.value);
     }
 
@@ -108,41 +147,28 @@ export class InputFieldComponent implements ControlValueAccessor, Validator {
     this.onChange(val);
   }
 
-  // VALIDATION — store control instance
+  // Validator
   validate(control: AbstractControl): ValidationErrors | null {
     this.control = control as FormControl;
-    return null; // do not validate manually; let Angular handle it
+    return null;
   }
 
-  // Classes based on FormControl state
+  // Dynamic classes
   get inputClasses(): string {
     const hasError = this.control?.touched && this.control?.errors;
 
-    let classes = `
-      h-11 w-full rounded-lg border appearance-none px-4 py-2.5 text-sm
+    return `
+      h-11 w-full rounded-lg border px-4 py-2.5 text-sm
       shadow-theme-xs placeholder:text-gray-400
       focus:outline-hidden focus:ring-3
-      dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30
-      ${this.className || ""}
+      ${this.className}
+      ${
+        this.disabled
+          ? "opacity-40 bg-gray-100 border-gray-300"
+          : hasError
+          ? "border-error-500 focus:ring-error-500/20"
+          : "border-gray-300 focus:border-brand-300 focus:ring-brand-500/20"
+      }
     `;
-
-    if (this.disabled) {
-      classes += `
-        text-gray-500 border-gray-300 opacity-40 bg-gray-100
-        dark:bg-gray-800 dark:text-gray-400 dark:border-gray-700
-      `;
-    } else if (hasError) {
-      classes += `
-        border-error-500 focus:border-error-300 focus:ring-error-500/20
-      `;
-    } else {
-      classes += `
-        bg-transparent text-gray-800 border-gray-300
-        focus:border-brand-300 focus:ring-brand-500/20
-        dark:border-gray-700 dark:text-white/90 dark:focus:border-brand-800
-      `;
-    }
-
-    return classes;
   }
 }

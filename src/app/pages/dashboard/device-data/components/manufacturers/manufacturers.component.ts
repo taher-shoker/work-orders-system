@@ -23,6 +23,7 @@ export class ManufacturersComponent implements OnInit {
   columns: any = [];
   tableData: any[] = [];
   originalTableData: any[] = [];
+  tableResponse: any;
   constructor(
     private manufacturersService: ManufacturersService,
     private activatedRoute: ActivatedRoute,
@@ -48,9 +49,20 @@ export class ManufacturersComponent implements OnInit {
   }
 
   allManufacturers(): void {
-    this.manufacturersService.getAllManufacturers().subscribe({
+    this.manufacturersService.getAllManufacturers(1).subscribe({
       next: (res) => {
-        this.tableData = res.data;
+        this.tableData = res.data.data;
+        this.tableResponse = res.data.total;
+        this.originalTableData = [...this.tableData];
+      },
+    });
+  }
+  /** ✅ Handle pagination change */
+  onPageChange(event: number): void {
+    this.manufacturersService.getAllManufacturers(event).subscribe({
+      next: (res) => {
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
         this.originalTableData = [...this.tableData];
       },
     });

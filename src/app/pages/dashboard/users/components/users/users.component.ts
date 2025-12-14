@@ -7,7 +7,7 @@ import { ViewUserComponent } from "../view-user/view-user.component";
 import { UsersService } from "../../../../../shared/services/users.service";
 import { MatDialog } from "@angular/material/dialog";
 import { PageEvent } from "@angular/material/paginator";
-import { AuthService } from "../../../../../shared/services";
+import { AuthService, LookupsService } from "../../../../../shared/services";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { TranslateModule } from "@ngx-translate/core";
@@ -38,6 +38,7 @@ export class UsersComponent implements OnInit {
   actionTemplate!: TemplateRef<any>;
 
   private reloadSubject = new Subject<void>();
+  statisticData: any;
 
   constructor(
     private usersService: UsersService,
@@ -46,7 +47,8 @@ export class UsersComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private dialog: MatDialog,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private _LookupsService: LookupsService
   ) {}
 
   ngOnInit(): void {
@@ -80,10 +82,11 @@ export class UsersComponent implements OnInit {
     ];
 
     this.loadUsers();
+    this._LookupsService.getDashboard().subscribe(); // Fetch the first time
 
-    // this.reloadSubject.pipe(debounceTime(800)).subscribe(() => {
-    //   this.loadUsers();
-    // });
+    this._LookupsService.dashboard$.subscribe((data) => {
+      this.statisticData = data;
+    });
   }
 
   addUser() {
@@ -112,6 +115,7 @@ export class UsersComponent implements OnInit {
 
   /** ✅ Handle pagination change */
   onPageChange(event: number): void {
+    this.pageIndex = event;
     this.loadUsers(event);
   }
 
@@ -148,16 +152,12 @@ export class UsersComponent implements OnInit {
         relativeTo: this.route,
       });
     } else if (event.value === "delete") {
-      // this._WorkOrdersService.deleteOrder(event.dataRow.id).subscribe({
-      //   next: (res) => {},
-      //   error: (err) => {
-      //     this._ToastrService.error("delete order failed");
-      //   },
-      //   complete: () => {
-      //     this.onSubmit(this.orderForm);
-      //     this._ToastrService.success("Order Deleted");
-      //   },
-      // });
+      this.usersService.onDeleteUser(event.dataRow.id).subscribe({
+        next: (res) => {},
+        complete: () => {
+          this.loadUsers();
+        },
+      });
     } else if (event.value === "confirm") {
       this.openBlockDialog(event?.dataRow);
     }

@@ -25,7 +25,7 @@ export class DepartmentsComponent {
   page: number | undefined = 1;
   pageIndex: number = 0;
   columns: any = [];
- originalTableData: any[] = []; 
+  originalTableData: any[] = [];
   constructor(
     private _DepartmentService: DepartmentService,
     private spinner: NgxSpinnerService,
@@ -59,14 +59,26 @@ export class DepartmentsComponent {
   // all Departments
   getAllDepartments() {
     this.spinner.show();
-    this._DepartmentService.getDepartment().subscribe({
+    this._DepartmentService.getDepartment(1).subscribe({
       next: (res) => {
-        this.tableResponse = res;
-        this.tableData = res?.data;
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
         this.originalTableData = [...this.tableData];
       },
     });
   }
+  /** ✅ Handle pagination change */
+  onPageChange(event: number): void {
+    this.spinner.show();
+    this._DepartmentService.getDepartment(event).subscribe({
+      next: (res) => {
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
+        this.originalTableData = [...this.tableData];
+      },
+    });
+  }
+
   // search
   handleSearch(value: string) {
     this.tableData = this.originalTableData.filter(

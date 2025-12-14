@@ -23,6 +23,7 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.css",
+              "node_modules/ngx-toastr/toastr.css",
               "node_modules/flatpickr/dist/flatpickr.css",
               "node_modules/ngx-spinner/animations/square-jelly-box.css",
               "node_modules/material-design-icons-iconfont/dist/material-design-icons.css"

@@ -4,7 +4,11 @@ import { ToastrService } from "ngx-toastr";
 import { NgxSpinnerService } from "ngx-spinner";
 import { MatDialog } from "@angular/material/dialog";
 import { PageEvent } from "@angular/material/paginator";
-import { AuthService, DevicesService } from "../../../../../shared/services";
+import {
+  AuthService,
+  DevicesService,
+  LookupsService,
+} from "../../../../../shared/services";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { CommonModule } from "@angular/common";
@@ -26,6 +30,7 @@ export class AllDevicesComponent {
   columns: any = [];
   originalTableData: any[] = []; // keep the original full data
   private subject = new Subject<any>();
+  statisticData: any;
   constructor(
     private _DevicesService: DevicesService,
     private _ToastrService: ToastrService,
@@ -34,7 +39,8 @@ export class AllDevicesComponent {
     private spinner: NgxSpinnerService,
     private dialog: MatDialog,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    private _LookupsService: LookupsService
   ) {}
 
   ngOnInit(): void {
@@ -59,10 +65,10 @@ export class AllDevicesComponent {
     ];
 
     this.onGetAllDevices();
-    this.subject.pipe(debounceTime(800)).subscribe({
-      next: (res) => {
-        this.onGetAllDevices();
-      },
+    this._LookupsService.getDashboard().subscribe(); // Fetch the first time
+
+    this._LookupsService.dashboard$.subscribe((data) => {
+      this.statisticData = data;
     });
   }
   onGetAllDevices() {
@@ -73,8 +79,22 @@ export class AllDevicesComponent {
     this.spinner.show();
     this._DevicesService.getAllDevices(params).subscribe({
       next: (res) => {
-        this.tableResponse = res.total;
-        this.tableData = res?.data;
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
+        this.originalTableData = [...this.tableData]; // store original data
+        this.spinner.hide();
+      },
+      error: (err) => {},
+      complete: () => {},
+    });
+  }
+
+  /** ✅ Handle pagination change */
+  onPageChange(event: number): void {
+    this._DevicesService.getAllDevices(event).subscribe({
+      next: (res) => {
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
         this.originalTableData = [...this.tableData]; // store original data
         this.spinner.hide();
       },

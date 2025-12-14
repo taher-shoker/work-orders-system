@@ -67,8 +67,7 @@ export class SigninFormComponent implements OnInit {
     this._AuthService.onLogin(body).subscribe({
       next: (res) => {
         // Optionally store token/user in localStorage/cookies if not handled in service
-        this._ToastrService.success("Login successful", "Success");
-        console.log(this.redirectUrl);
+        // this._ToastrService.success("Login successful", "Success");
         // Navigate to the redirect URL or home
         this._Route.navigateByUrl(this.redirectUrl);
       },

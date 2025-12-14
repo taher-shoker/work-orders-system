@@ -40,6 +40,7 @@ export class BasicTableThreeComponent implements OnInit, OnChanges {
   @Input() type: string = "normal";
   @Input() importExport: boolean = false;
   @Input() noFilter: boolean = false;
+  @Input() noSearch: boolean = false;
   @Input() addBtn: boolean = false;
   @Input() print: boolean = false;
   @Input() placeholderSearch: string = "";

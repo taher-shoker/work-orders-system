@@ -23,6 +23,7 @@ export class DeviceTypeComponent implements OnInit {
 
   columns: any = [];
   tableData: any[] = [];
+  tableResponse: any;
   constructor(
     private deviceTypeService: DeviceTypeService,
     private toastrService: ToastrService,
@@ -44,14 +45,25 @@ export class DeviceTypeComponent implements OnInit {
   }
 
   allDeviceTypes(): void {
-    this.deviceTypeService.getAllDeviceType().subscribe({
+    this.deviceTypeService.getAllDeviceType(1).subscribe({
       next: (res) => {
-        this.tableData = res.data;
+        this.tableResponse = res.data.total;
+        this.tableData = res.data.data;
         this.originalTableData = [...this.tableData];
       },
     });
   }
-    // search
+  /** ✅ Handle pagination change */
+  onPageChange(event: number): void {
+    this.deviceTypeService.getAllDeviceType(event).subscribe({
+      next: (res) => {
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
+        this.originalTableData = [...this.tableData];
+      },
+    });
+  }
+  // search
   handleSearch(value: string) {
     this.tableData = this.originalTableData.filter(
       (item) =>

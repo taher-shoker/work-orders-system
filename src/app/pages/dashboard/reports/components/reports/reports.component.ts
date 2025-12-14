@@ -41,6 +41,8 @@ export class ReportsComponent {
 
   @ViewChild("statusTemplate", { static: true })
   statusTemplate!: TemplateRef<any>;
+  tableResponse: any;
+  originalTableData: any;
 
   constructor(
     private _ReportsService: ReportsService,
@@ -84,7 +86,9 @@ export class ReportsComponent {
 
     this._ReportsService.addReports(data.value, params).subscribe({
       next: (res) => {
-        this.tableData = res.data;
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
+        this.originalTableData = [...this.tableData];
       },
       error: (err) => {
         this._ToastrService.error(err.message, "Error in filter report");
@@ -131,9 +135,17 @@ export class ReportsComponent {
       },
     });
   }
-  handlePageEvent(e: PageEvent) {
-    this.pageSize = e.pageSize;
-    this.page = e.pageIndex + 1;
-    this.onSubmit(this.reportForm);
+
+  /** ✅ Handle pagination change */
+  onPageChange(event: number): void {
+    this._ReportsService.addReports(this.reportForm.value, event).subscribe({
+      next: (res) => {
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
+      },
+      error: (err) => {
+        this._ToastrService.error(err.message, "Error in filter report");
+      },
+    });
   }
 }

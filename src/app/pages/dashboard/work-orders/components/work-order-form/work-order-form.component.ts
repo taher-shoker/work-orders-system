@@ -54,7 +54,6 @@ export class WorkOrderFormComponent implements OnInit {
     private _WorkOrdersService: WorkOrdersService,
     private helperService: HelperService,
     private devicesService: DevicesService,
-    private spinner: NgxSpinnerService,
     public dialog: MatDialog,
     public router: Router,
     public _AuthService: AuthService,
@@ -145,7 +144,6 @@ export class WorkOrderFormComponent implements OnInit {
       start_time: this.fb.control(new Date().toTimeString().split(" ")[0]),
       priority: this.fb.control("high"),
       type: this.fb.control("maintenance"),
-
       start_date: this.fb.control<number | null>(null, Validators.required),
       department_id: this.fb.control<number | null>(null, Validators.required),
       engineer_id: this.fb.control<number | null>(null, Validators.required),
@@ -165,7 +163,6 @@ export class WorkOrderFormComponent implements OnInit {
   }
 
   onSubmit() {
-
     if (this.orderForm.invalid) {
       this.orderForm.markAllAsTouched();
       return;
@@ -189,7 +186,6 @@ export class WorkOrderFormComponent implements OnInit {
     if (this.orderId) {
       this.updateOrder(formData);
     } else {
-
       this.addNewOrder(formData);
     }
   }

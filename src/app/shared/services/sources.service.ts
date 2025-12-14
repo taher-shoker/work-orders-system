@@ -1,16 +1,15 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class SourcesService {
+  constructor(private _HttpClient: HttpClient) {}
 
-  constructor(private _HttpClient: HttpClient) { }
-
-  getSources(): Observable<any> {
-    return this._HttpClient.get('sources');
+  getSources(params: any): Observable<any> {
+    return this._HttpClient.get("sources", { params: { page: params } });
   }
 
   getSourceById(id: number): Observable<any> {

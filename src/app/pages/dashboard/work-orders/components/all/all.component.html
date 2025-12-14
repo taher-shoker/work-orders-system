@@ -31,14 +31,12 @@
       <div class="
                                 ">
         <app-label>{{'orders.building' | translate}}</app-label>
-        <app-select formControlName="building_id" [options]="buildingsList"
-          [labelName]="isRtl?'name_ar':'name_en'"></app-select>
+        <app-select formControlName="building_id" [options]="buildingsList"></app-select>
       </div>
       <div class="
                                  ">
         <app-label>{{'orders.workType' | translate}}</app-label>
-        <app-select formControlName="work_type_id" [labelName]="isRtl?'name_ar':'name_en'"
-          [options]="workTypeList"></app-select>
+        <app-select formControlName="work_type_id" [options]="workTypeList"></app-select>
       </div>
       <app-date-picker formControlName="from_date" id="date-picker" [label]="'reports.start' | translate"
         placeholder="">
@@ -65,24 +63,24 @@
           <div class="text-3xl font-bold text-blue-700">{{tableResponse?.total}}</div>
           <div class="text-sm text-blue-700 mt-2">{{'home.totalWorkOrders' | translate}}</div>
         </div> -->
-        <app-StatCard [title]="'home.totalWorkOrders' | translate" [icon]="'group'"
+        <app-StatCard [title]="'home.totalWorkOrders' | translate" [icon]="'view_list'"
           [number]="this.statisticData?.total_orders" [colorClass]="'text-blue-500'">
         </app-StatCard>
-        <app-StatCard [title]="'charts.opened' | translate" [icon]="'group'"
+        <app-StatCard [title]="'charts.opened' | translate" [icon]="'view_list'"
           [number]="this.statisticData?.total_opened_orders" [colorClass]="'text-blue-500'">
-        </app-StatCard><app-StatCard [title]="'charts.holding' | translate" [icon]="'group'"
+        </app-StatCard><app-StatCard [title]="'charts.holding' | translate" [icon]="'view_list'"
           [number]="this.statisticData?.total_hold_orders" [colorClass]="'text-blue-500'">
-        </app-StatCard><app-StatCard [title]="'charts.completed' | translate" [icon]="'group'"
+        </app-StatCard><app-StatCard [title]="'charts.completed' | translate" [icon]="'view_list'"
           [number]="this.statisticData?.total_completed_orders" [colorClass]="'text-blue-500'">
-        </app-StatCard><app-StatCard [title]="'charts.rejected' | translate" [icon]="'group'"
+        </app-StatCard><app-StatCard [title]="'charts.rejected' | translate" [icon]="'view_list'"
           [number]="this.statisticData?.total || 0" [colorClass]="'text-blue-500'">
         </app-StatCard>
-        <app-StatCard [title]="'charts.in_progress' | translate" [icon]="'group'"
+        <app-StatCard [title]="'charts.in_progress' | translate" [icon]="'view_list'"
           [number]="this.statisticData?.in_progress_orders" [colorClass]="'text-blue-500'">
         </app-StatCard>
-        <app-StatCard [title]="'charts.canceled' | translate" [icon]="'group'" [number]="this.statisticData?.total || 0"
-          [colorClass]="'text-blue-500'">
-        </app-StatCard><app-StatCard [title]="'charts.closed' | translate" [icon]="'group'"
+        <app-StatCard [title]="'charts.canceled' | translate" [icon]="'view_list'"
+          [number]="this.statisticData?.total || 0" [colorClass]="'text-blue-500'">
+        </app-StatCard><app-StatCard [title]="'charts.closed' | translate" [icon]="'view_list'"
           [number]="this.statisticData?.total_closed_orders" [colorClass]="'text-blue-500'">
         </app-StatCard>
 
@@ -93,8 +91,8 @@
 
   <div class="mt-6">
     <app-basic-table-three (paginationEvent)="onPageChange($event)" [data]="tableData" [columns]="columns"
-      [title]="'orders.orders' | translate" (doAction)="tableAction($event)"
-     (searchEvent)="handleSearch($event)" [totalItems]="tableResponse"></app-basic-table-three>
+      [title]="'orders.orders' | translate" (doAction)="tableAction($event)" (searchEvent)="handleSearch($event)"
+      [totalItems]="tableResponse" [placeholderSearch]="'table.search_byOrder_num' | translate"></app-basic-table-three>
     <ng-template #statusTemplate let-item="item">
       <app-badge [colorId]="getOrderNumberById(item.status?.id)">
         {{ item.status.name }}

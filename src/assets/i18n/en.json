@@ -28,7 +28,7 @@
     "workOrders": "Work Orders",
     "departments": "Departments",
     "building": "building",
-    "sources": "sources",
+    "sources": "sources of work Orders",
     "equipments": "equipments",
     "reports": "Reports",
     "myorders": "My Work Orders",
@@ -61,7 +61,7 @@
     "AccType": "Account Type",
     "username_pattern": " The User name must contain characters and end with numbers without spaces",
     "username_place": " Enter User Name",
-    "email_pattern": "ex:test@abc.dc",
+    "email_pattern": "Invalid Email Format",
     "email_place": "Enter Email",
     "user_place": "Enter Name",
     "password_pattern": "A password must contains at least eight characters, including at least one number and includes both lower and uppercase letters and special characters",
@@ -129,7 +129,9 @@
     "forgot_password": "Forgot Password",
     "forget_text": "Enter your email to reset your password easily",
     "remember_password": "Remember Password?",
-    "send_link": "Send"
+    "send_link": "Send",
+    "department": "Department",
+    "title": "Title"
   },
   "orders": {
     "orders": "Work Orders",
@@ -365,7 +367,10 @@
     "export": "Export",
     "add": "Add",
     "search_name_ar": "Search about name by arabic language",
-    "noData":"No data have found"
+    "noData": "No data have found",
+    "search_byOrder_num": "Search about order number",
+    "search_byemail": "Search about Email",
+    "search_device_name": "Search about device name"
   },
   "breadCrumb": {
     "home": "Home",
@@ -384,7 +389,7 @@
     "add_new_department": "Add New Department",
     "buildings": "buildings",
     "add_new_building": "Add New Building",
-    "sources": "sources",
+    "sources": "sources of work Orders",
     "add_new_source": "Add New Source",
     "equipments": "equipments",
     "add_new_equipment": "Add New Equipment",
@@ -423,8 +428,8 @@
     "inactive_users": "Inactive Users",
     "buildings": "buildings",
     "equipments": "equipments",
-    "time":"time",
-    "hour":"hour"
+    "time": "time",
+    "hour": "hour"
   },
   "profile_sec": {
     "name": "name",

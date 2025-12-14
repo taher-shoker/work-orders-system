@@ -25,6 +25,7 @@ export class DeviceModelComponent implements OnInit {
 
   columns: any = [];
   tableData: any[] = [];
+  tableResponse: any;
 
   constructor(
     private deviceModelService: DeviceModelService,
@@ -47,11 +48,22 @@ export class DeviceModelComponent implements OnInit {
   }
 
   allDeviceModels(): void {
-    this.deviceModelService.getAllDeviceModel().subscribe({
+    this.deviceModelService.getAllDeviceModel(1).subscribe({
       next: (res) => {
-        this.tableData = res.data;
+        this.tableResponse = res.data.total;
+        this.tableData = res.data.data;
         this.originalTableData = [...this.tableData];
+      },
+    });
+  }
 
+  /** ✅ Handle pagination change */
+  onPageChange(event: number): void {
+    this.deviceModelService.getAllDeviceModel(event).subscribe({
+      next: (res) => {
+        this.tableResponse = res.data.total;
+        this.tableData = res.data.data;
+        this.originalTableData = [...this.tableData];
       },
     });
   }

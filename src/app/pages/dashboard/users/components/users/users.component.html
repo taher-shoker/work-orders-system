@@ -8,23 +8,23 @@
   <div class="mt-8">
 
     <app-component-card [title]="'users.users' | translate">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
-        <app-StatCard [title]="'users.users' | translate" [icon]="'group'" [number]="tableResponse?.total"
+        <app-StatCard [title]="'users.users' | translate" [icon]="'group'" [number]="statisticData.all_users"
           [colorClass]="'text-blue-500'">
         </app-StatCard>
-        <app-StatCard [title]="'users.active' | translate" [icon]="'group'" [number]="tableResponse?.total"
+        <app-StatCard [title]="'users.active' | translate" [icon]="'group'" [number]="statisticData?.active_users"
           [colorClass]="'text-blue-500'">
         </app-StatCard>
-        <app-StatCard [title]="'users.notActive' | translate" [icon]="'group'" [number]="tableResponse?.total"
+        <app-StatCard [title]="'users.notActive' | translate" [icon]="'group'"
+          [number]="statisticData?.not_active_users" [colorClass]="'text-blue-500'">
+        </app-StatCard>
+        <!-- <app-StatCard [title]="'users.engineer' | translate" [icon]="'group'" [number]="statisticData?.total"
           [colorClass]="'text-blue-500'">
         </app-StatCard>
-        <app-StatCard [title]="'users.engineer' | translate" [icon]="'group'" [number]="tableResponse?.total"
+        <app-StatCard [title]="'users.technician' | translate" [icon]="'group'" [number]="statisticData?.total"
           [colorClass]="'text-blue-500'">
-        </app-StatCard>
-        <app-StatCard [title]="'users.technician' | translate" [icon]="'group'" [number]="tableResponse?.total"
-          [colorClass]="'text-blue-500'">
-        </app-StatCard>
+        </app-StatCard> -->
 
       </div>
     </app-component-card>
@@ -34,7 +34,8 @@
   <div class="mt-6">
     <app-basic-table-three (paginationEvent)="onPageChange($event)" [type]="'users'" [data]="tableData"
       [columns]="columns" [title]="'users.users' | translate" (doAction)="tableAction($event)"
-     (searchEvent)="handleSearch($event)"  [totalItems]="tableResponse"></app-basic-table-three>
+      (searchEvent)="handleSearch($event)" [totalItems]="tableResponse"
+      [placeholderSearch]="'table.search_byemail' | translate"></app-basic-table-three>
     <ng-template #statusTemplate let-item="item">
       <app-badge [colorId]="item.is_active ?3:4 ">
         {{ item.is_active ? ('users.active' | translate) : ('users.notActive' | translate) }}

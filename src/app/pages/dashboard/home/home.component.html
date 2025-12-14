@@ -1,12 +1,8 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6">
   <div class="">
-    <div
-      class="bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6"
-    >
+    <div class="bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6">
       <!-- Stats -->
-      <div
-        class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right"
-      >
+      <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
         <!-- Total -->
         <div class="text-center">
           <p class="text-gray-500 text-sm font-medium">
@@ -38,20 +34,14 @@
         </div>
       </div>
 
-      <div
-        class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg"
-      >
+      <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
         <!-- Replace with your icon -->
         <mat-icon>home</mat-icon>
       </div>
     </div>
-    <div
-      class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6"
-    >
+    <div class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6">
       <!-- Stats -->
-      <div
-        class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right"
-      >
+      <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
         <!-- Total -->
         <div class="text-center">
           <p class="text-gray-500 text-sm font-medium">
@@ -83,21 +73,15 @@
         </div>
       </div>
 
-      <div
-        class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg"
-      >
+      <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
         <!-- Replace with your icon -->
         <mat-icon>people</mat-icon>
       </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-      <div
-        class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6"
-      >
+      <div class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6">
         <!-- Stats -->
-        <div
-          class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right"
-        >
+        <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
           <!-- Total -->
           <div class="text-center">
             <p class="text-gray-500 text-sm font-medium">
@@ -108,20 +92,14 @@
             </p>
           </div>
         </div>
-        <div
-          class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg"
-        >
+        <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
           <!-- Replace with your icon -->
           <mat-icon>settings_brightness</mat-icon>
         </div>
       </div>
-      <div
-        class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6"
-      >
+      <div class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6">
         <!-- Stats -->
-        <div
-          class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right"
-        >
+        <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
           <!-- Total -->
           <div class="text-center">
             <p class="text-gray-500 text-sm font-medium">
@@ -133,56 +111,42 @@
           </div>
         </div>
 
-        <div
-          class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg"
-        >
+        <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
           <!-- Replace with your icon -->
           <mat-icon>devices_other</mat-icon>
         </div>
       </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-      <div
-        class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6"
-      >
+      <div class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6">
         <!-- Stats -->
-        <div
-          class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right"
-        >
+        <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
           <!-- Total -->
           <div class="text-center">
             <p class="text-gray-500 text-sm font-medium">
               {{ "dashboard.buildings" | translate }}
             </p>
-            <p class="text-2xl font-bold text-gray-900 mt-2">24,560</p>
+            <p class="text-2xl font-bold text-gray-900 mt-2">{{data?.total_categories}}</p>
           </div>
         </div>
-        <div
-          class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg"
-        >
+        <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
           <!-- Replace with your icon -->
           <mat-icon>widgets</mat-icon>
         </div>
       </div>
-      <div
-        class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6"
-      >
+      <div class="mt-4 bg-white rounded-xl p-6 shadow flex flex-col md:flex-row items-center justify-between gap-6">
         <!-- Stats -->
-        <div
-          class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right"
-        >
+        <div class="flex flex-col md:flex-row items-center gap-10 text-center md:text-right">
           <!-- Total -->
           <div class="text-center">
             <p class="text-gray-500 text-sm font-medium">
               {{ "dashboard.equipments" | translate }}
             </p>
-            <p class="text-2xl font-bold text-gray-900 mt-2">24,560</p>
+            <p class="text-2xl font-bold text-gray-900 mt-2">{{data?.all_equipment}}</p>
           </div>
         </div>
 
-        <div
-          class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg"
-        >
+        <div class="flex items-center justify-center w-12 h-12 bg-blue-50 rounded-lg">
           <!-- Replace with your icon -->
           <mat-icon>build</mat-icon>
         </div>
@@ -195,9 +159,7 @@
       {{ "dashboard.in_maintenance" | translate }}
     </h2>
 
-    <div
-      class="space-y-5 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100"
-    >
+    <div class="space-y-5 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
       <!-- Single Device Item -->
       @for (item of data?.devices; track item.id) {
       <div class="p-4 border rounded-lg hover:bg-gray-50">
@@ -216,11 +178,7 @@
 
           <div class="flex flex-col items-center">
             <!-- <p class="text-sm">{{ 'dashboard.maintenance_count' | translate:{count:12} }}</p> -->
-            <img
-              src="assets/images/QR.png"
-              alt="QR"
-              class="w-12 h-12 rounded-sm mt-2"
-            />
+            <img src="assets/images/QR.png" alt="QR" class="w-12 h-12 rounded-sm mt-2" />
           </div>
         </div>
 

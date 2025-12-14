@@ -25,7 +25,7 @@ export class BuildingComponent {
   pageIndex: number = 0;
   buildingData: any;
   columns: any = [];
-  originalTableData: any[] = []; 
+  originalTableData: any[] = [];
 
   private subject = new Subject<any>();
   constructor(
@@ -60,16 +60,24 @@ export class BuildingComponent {
   }
   // all buildings
   getAllBuildings() {
-    let params = {
-      page_size: this.pageSize,
-      page: this.page,
-    };
     this.spinner.show();
-    this._BuildingService.getBuildings().subscribe({
+    this._BuildingService.getBuildings(1).subscribe({
       next: (res) => {
-        this.tableResponse = res;
-        this.tableData = res?.data;
-        this.originalTableData = [...this.tableData]; 
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
+        this.originalTableData = [...this.tableData];
+        this.spinner.hide();
+      },
+    });
+  }
+
+  /** ✅ Handle pagination change */
+  onPageChange(event: number): void {
+    this._BuildingService.getBuildings(event).subscribe({
+      next: (res) => {
+        this.tableResponse = res.data.total;
+        this.tableData = res?.data.data;
+        this.originalTableData = [...this.tableData];
         this.spinner.hide();
       },
     });

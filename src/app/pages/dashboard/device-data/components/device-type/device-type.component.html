@@ -1,5 +1,7 @@
 <div class="mt-6">
-  <app-basic-table-three (searchEvent)="handleSearch($event)" [addBtn]="true" [noFilter]="true" [haveView]="false" [data]="tableData" [columns]="columns"
-    (doAction)="tableAction($event)"></app-basic-table-three>
+  <app-basic-table-three (searchEvent)="handleSearch($event)" [addBtn]="true" [noFilter]="true" [haveView]="false"
+    [data]="tableData" [columns]="columns" (doAction)="tableAction($event)" [totalItems]="tableResponse"
+    [placeholderSearch]="'table.search_name_ar' | translate"
+    (paginationEvent)="onPageChange($event)"></app-basic-table-three>
 
 </div>

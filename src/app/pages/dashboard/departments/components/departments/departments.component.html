@@ -9,12 +9,12 @@
     <div class="mt-8">
 
         <app-component-card [title]="'department.department' | translate">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
 
                 <app-StatCard [title]="'department.total-departments' | translate" [icon]="'group'"
-                    [number]="tableData.length" [colorClass]="'text-blue-500'">
+                    [number]="tableResponse" [colorClass]="'text-blue-500'">
                 </app-StatCard>
-                <app-StatCard [title]="'department.medical-departments' | translate" [icon]="'group'"
+                <!-- <app-StatCard [title]="'department.medical-departments' | translate" [icon]="'group'"
                     [number]="tableData.length" [colorClass]="'text-blue-500'">
                 </app-StatCard>
                 <app-StatCard [title]="'department.administrative-departments' | translate" [icon]="'group'"
@@ -22,7 +22,7 @@
                 </app-StatCard>
                 <app-StatCard [title]="'department.inactive-departments' | translate" [icon]="'group'"
                     [number]="tableData.length" [colorClass]="'text-blue-500'">
-                </app-StatCard>
+                </app-StatCard> -->
 
 
             </div>
@@ -31,8 +31,10 @@
 
 
     <div class="mt-6">
-        <app-basic-table-three [haveView]="false" [data]="tableData" [columns]="columns"
-           (searchEvent)="handleSearch($event)" [title]="'department.department' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
+        <app-basic-table-three [placeholderSearch]="'table.search_name_ar' | translate" [haveView]="false"
+            (paginationEvent)="onPageChange($event)" [data]="tableData" [columns]="columns"
+            (searchEvent)="handleSearch($event)" [totalItems]="tableResponse"
+            [title]="'department.department' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
         <!-- <ng-template #statusTemplate let-item="item">
       <app-badge [colorId]="item.status?.id">
         {{ item.status.name }}

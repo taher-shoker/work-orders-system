@@ -6,7 +6,7 @@
 
 
     <!-- Statistics Section -->
-    <div class="mt-8">
+    <!-- <div class="mt-8">
 
         <app-component-card [title]="'building.buildings' | translate">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -25,13 +25,13 @@
 
             </div>
         </app-component-card>
-    </div>
+    </div> -->
 
 
     <div class="mt-6">
-        <app-basic-table-three [placeholderSearch]="'table.search_name_ar' | translate"
-            (searchEvent)="handleSearch($event)" [haveView]="false" [data]="tableData" [columns]="columns"
-            [title]="'sidebar.devices' | translate" (doAction)="tableAction($event)"></app-basic-table-three>
+        <app-basic-table-three (searchEvent)="handleSearch($event)" [haveView]="false" [data]="tableData"
+            [columns]="columns" [title]="'sidebar.building' | translate"
+            (doAction)="tableAction($event)"></app-basic-table-three>
 
     </div>
 </section>

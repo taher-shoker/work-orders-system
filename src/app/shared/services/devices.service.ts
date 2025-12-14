@@ -17,7 +17,7 @@ export class DevicesService {
     return this._HttpClient.post("devices/lookups", data);
   }
   getAllDevices(params?: any): Observable<any> {
-    return this._HttpClient.get("devices", { params: params });
+    return this._HttpClient.get("devices", { params: { page: params } });
   }
   getDevice(id: number): Observable<any> {
     return this._HttpClient.get(`devices/show/${id}`);

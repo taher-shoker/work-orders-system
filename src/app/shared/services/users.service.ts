@@ -22,6 +22,9 @@ export class UsersService {
   onEditUser(data: any, id: number): Observable<any> {
     return this._HttpClient.put(`profile/update_user_by_id/${id}`, data);
   }
+  onDeleteUser(id: number): Observable<any> {
+    return this._HttpClient.delete(`auth/delete/${id}`);
+  }
   // Lookups
   onGetAccountType(): Observable<any> {
     return this._HttpClient.get("work-orders/lookups/titles");
