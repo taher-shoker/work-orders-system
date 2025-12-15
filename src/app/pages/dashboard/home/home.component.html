@@ -166,9 +166,13 @@
         <div class="flex items-center justify-between gap-4">
           <div class="flex items-center gap-4">
             @if (item.image && item.image !== '') {
+            @if(hasSomethingAfterDevices(item.image)){
             <img [src]="item.image" [alt]="item.name" class="w-25" />
-            }@else if(!item.image && item.image === '') {
-            <div class="w-16 h-12 bg-gray-600 rounded-lg"></div>
+
+            }@else{
+            <img src="assets/images/888.png" [alt]="item.name" class="w-25" />
+
+            }
             }
             <div>
               <p class="font-semibold">{{ item.name }}</p>

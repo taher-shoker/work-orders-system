@@ -41,8 +41,9 @@
               {{'register.userName' | translate}}<span class="text-error-500">*</span>
             </app-label>
             <app-input-field type="text" id="lname" name="lname" placeholder="{{'register.enterUserName' | translate}}"
-              formControlName="user_name" />
+              formControlName="name" />
           </div>
+
           <!-- Email -->
           <div class="sm:col-span-1">
             <app-label>
@@ -52,11 +53,18 @@
               placeholder="{{'register.enterEmail' | translate}}" />
           </div>
         </div>
-
-        <div>
-          <app-label>{{ 'orders.mobile' | translate }}</app-label>
-          <app-phone-input formControlName="mobile"></app-phone-input>
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div class="sm:col-span-1">
+            <app-label>{{ 'register.name' | translate }}</app-label>
+            <app-input-field type="text" id="lname" name="lname" placeholder="{{'register.name' | translate}}"
+              formControlName="user_name" />
+          </div>
+          <div class="sm:col-span-1">
+            <app-label>{{ 'orders.mobile' | translate }}</app-label>
+            <app-phone-input formControlName="mobile"></app-phone-input>
+          </div>
         </div>
+
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div class="sm:col-span-1">
             <app-label>{{ 'register.title' | translate }}</app-label>
@@ -88,7 +96,7 @@
             <div class="relative">
               <app-input-field [type]="showPassword ? 'text' : 'password'"
                 placeholder="{{'register.enterPassword' | translate}}" name="passwordd" class="form-input"
-                formControlName="confirmPassword" />
+                formControlName="password_confirmation" />
 
             </div>
           </div>
@@ -96,7 +104,7 @@
 
         <!-- Checkbox -->
         <div class="flex items-center gap-3">
-          <app-checkbox className="w-5 h-5" />
+          <app-checkbox formControlName="'accept" className="w-5 h-5" />
           <p class="inline-block font-normal text-gray-500 dark:text-gray-400">
             {{'terms.agree_text' | translate}}
             <span class="text-gray-800 dark:text-white/90">
@@ -110,7 +118,7 @@
         <!-- Button -->
         <div>
 
-          <app-button [isLoading]="isChecked" (clicked)="onSignIn()" className="w-full" size="sm"
+          <app-button [isLoading]="isRegister" (clicked)="onSignIn()" className="w-full" size="sm"
             [disabled]="registerForm.invalid">
             {{'register.create' | translate}}
           </app-button>

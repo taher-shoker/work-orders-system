@@ -33,6 +33,8 @@ export class SignupFormComponent implements OnInit {
   registerForm: FormGroup;
   titles: any;
   departments: any;
+  isRegister = false;
+
   constructor(
     private fb: FormBuilder,
     private _AuthService: AuthService,
@@ -44,6 +46,7 @@ export class SignupFormComponent implements OnInit {
   ) {
     this.registerForm = this.fb.group(
       {
+        name: ["", Validators.required],
         user_name: ["", Validators.required],
         title_id: ["", Validators.required],
         department_id: ["", Validators.required],
@@ -53,11 +56,11 @@ export class SignupFormComponent implements OnInit {
           "",
           [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{6,}$/)],
         ],
-        confirmPassword: [
+        password_confirmation: [
           "",
           [Validators.required, Validators.pattern(/^[a-zA-Z0-9]{6,}$/)],
         ],
-        keepLoggedIn: [false],
+        accept: [true, Validators.required],
       },
       {
         validators: this.passwordMatchValidator,
@@ -68,10 +71,10 @@ export class SignupFormComponent implements OnInit {
   isChecked = false;
   passwordMatchValidator(form: AbstractControl) {
     const password = form.get("password")?.value;
-    const confirmPassword = form.get("confirmPassword")?.value;
+    const confirmPassword = form.get("password_confirmation")?.value;
 
     if (password !== confirmPassword) {
-      form.get("confirmPassword")?.setErrors({ passwordMismatch: true });
+      form.get("password_confirmation")?.setErrors({ passwordMismatch: true });
       return { passwordMismatch: true };
     }
 
@@ -85,12 +88,14 @@ export class SignupFormComponent implements OnInit {
     this.loadDepartment();
   }
   onSignIn() {
+    this.isRegister = true;
     this._AuthService.onRegister(this.registerForm.value).subscribe({
       next: (res) => {},
       error: (err) => {
-        this._ToastrService.error(err.error.message, "Error!");
+        this.isRegister = false;
       },
       complete: () => {
+        this.isRegister = false;
         this._Route.navigate(["/signin"]);
       },
     });

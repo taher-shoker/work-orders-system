@@ -46,7 +46,12 @@
 
       <div class="mt-6 ltr:text-right rtl:text-left">
         <button class="px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 duration-200">
-          بحث
+          {{'search' | translate}}
+        </button>
+
+        <button type="button" (click)="orderForm.reset();getWorkOrders(1)"
+          class="mx-4 px-6 py-2 border border-gray-600 text-gray-600 rounded-lg hover:bg-blue-50 duration-200">
+          {{'clear' | translate}}
         </button>
       </div>
     </form>

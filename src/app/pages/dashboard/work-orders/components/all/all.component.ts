@@ -54,8 +54,7 @@ export class AllComponent {
     public route: ActivatedRoute,
     private fb: FormBuilder,
     private helperService: HelperService,
-        private translate: TranslateService
-    
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -117,7 +116,7 @@ export class AllComponent {
       work_type_id: this.fb.control<number | null>(null),
       building_id: this.fb.control<number | null>(null),
       to_date: this.fb.control<string | null>(null),
-      from_date: this.fb.control<Date | null>(null),
+      from_date: this.fb.control<string | null>(null),
     });
   }
 
@@ -176,11 +175,14 @@ export class AllComponent {
       this._WorkOrdersService.deleteOrder(event?.dataRow.id).subscribe({
         next: (res) => {},
         error: (err) => {
-          this._ToastrService.error( this.translate.instant("orders.delete_success"));
+          this._ToastrService.error(
+            this.translate.instant("orders.delete_error")
+          );
         },
         complete: () => {
-          this.onSubmit(this.orderForm);
-          this._ToastrService.success( this.translate.instant("orders.delete_error"));
+          this._ToastrService.success(
+            this.translate.instant("orders.delete_success")
+          );
         },
       });
     } else if (event.value === "view") {

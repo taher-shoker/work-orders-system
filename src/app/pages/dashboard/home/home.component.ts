@@ -14,7 +14,7 @@ import { BarChartOneComponent } from "../../../shared/components/charts/bar/bar-
     CommonModule,
     RadialChartComponent,
     BarChartOneComponent,
-    DatePipe
+    DatePipe,
   ],
 })
 export class HomeComponent implements OnInit {
@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
         if (res.data) {
           this.data = res.data;
           console.log(this.data);
-          
+
           this.dataPieChart = [
             this.data?.total_opened_orders,
             this.data?.in_progress_orders,
@@ -43,5 +43,10 @@ export class HomeComponent implements OnInit {
         }
       },
     });
+  }
+
+  hasSomethingAfterDevices(url: string): boolean {
+    const match = url.match(/\/devices\/(.+)/);
+    return !!match && match[1].trim().length > 0;
   }
 }

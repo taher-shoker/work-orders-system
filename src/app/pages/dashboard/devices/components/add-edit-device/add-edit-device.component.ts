@@ -37,7 +37,7 @@ export class AddEditDeviceComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     public dialog: MatDialog,
-     private translate: TranslateService
+    private translate: TranslateService
   ) {
     this.deviceId = this.route.snapshot.paramMap.get("id");
     this.isUpdatePage = !!this.deviceId;
@@ -109,8 +109,13 @@ export class AddEditDeviceComponent implements OnInit {
     // Update
     if (this.isUpdatePage && this.deviceId) {
       this.devicesService.onEditDevice(formData, +this.deviceId).subscribe({
-        next: () => this.toastr.success(this.translate.instant("devices.edit_success")),
-        error: (err) => this.toastr.error(err.message, this.translate.instant("devices.edit_error")),
+        next: () =>
+          this.toastr.success(this.translate.instant("devices.edit_success")),
+        error: (err) =>
+          this.toastr.error(
+            err.message,
+            this.translate.instant("devices.edit_error")
+          ),
         complete: () => this.router.navigate(["/dashboard/devices"]),
       });
       return;
@@ -118,8 +123,13 @@ export class AddEditDeviceComponent implements OnInit {
 
     // Add
     this.devicesService.addNewDevice(formData).subscribe({
-      next: () => this.toastr.success( this.translate.instant("devices.add_success")),
-      error: (err) => this.toastr.error(err.message, this.translate.instant("devices.add_error")),
+      next: () =>
+        this.toastr.success(this.translate.instant("devices.add_success")),
+      error: (err) =>
+        this.toastr.error(
+          err.message,
+          this.translate.instant("devices.add_error")
+        ),
       complete: () => this.router.navigate(["/dashboard/devices"]),
     });
   }
@@ -185,25 +195,25 @@ export class AddEditDeviceComponent implements OnInit {
 
   private getDepartment(): void {
     this.devicesService.onGetDepartment().subscribe((res) => {
-      this.departments = res.data;
+      this.departments = res.data.data;
     });
   }
 
   private getDeviceModel(): void {
     this.devicesService.onGetDeviceModel().subscribe((res) => {
-      this.devicesModel = res.data;
+      this.devicesModel = res.data.data;
     });
   }
 
   private getDeviceManufacturers(): void {
     this.devicesService.onGetDeviceManufacturers().subscribe((res) => {
-      this.manufacturers = res.data;
+      this.manufacturers = res.data.data;
     });
   }
 
   private getDeviceTypes(): void {
     this.devicesService.onGetDeviceType().subscribe((res) => {
-      this.deviceTypes = res.data;
+      this.deviceTypes = res.data.data;
     });
   }
 

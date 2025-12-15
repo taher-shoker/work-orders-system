@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
 import { CookieService } from "ngx-cookie-service";
+import { ToastrService } from "ngx-toastr";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 
 export interface IUser {
@@ -39,7 +41,9 @@ export class AuthService {
 
   constructor(
     private _HttpClient: HttpClient,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private _ToastrService: ToastrService,
+    private translate: TranslateService
   ) {
     this.restoreUserFromCookie();
   }
@@ -75,6 +79,11 @@ export class AuthService {
 
           // Update observable user
           this.userSubject.next(res.data);
+        }
+        if (res.status_code === 401) {
+          this._ToastrService.error(
+            this.translate.instant("login.failed_login")
+          );
         }
       })
     );
