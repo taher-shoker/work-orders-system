@@ -5,6 +5,7 @@ import { ThemeToggleTwoComponent } from "../../components/common/theme-toggle-tw
 import { SharedUiModule } from "../../components/shared-ui.module";
 import { TranslateModule } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
+import { LangToggleSelectorComponent } from "../../components/common/lang-toggle-selector/lang-toggle-selector.component";
 
 @Component({
   selector: "app-auth-page-layout",
@@ -13,7 +14,8 @@ import { CommonModule } from "@angular/common";
     CommonModule,
     ThemeToggleTwoComponent,
     TranslateModule,
-  ],
+    LangToggleSelectorComponent
+],
   templateUrl: "./auth-page-layout.component.html",
 })
 export class AuthPageLayoutComponent {
