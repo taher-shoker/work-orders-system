@@ -7,6 +7,7 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { CookieService } from "ngx-cookie-service";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class GlobalInterceptor implements HttpInterceptor {
@@ -19,8 +20,8 @@ export class GlobalInterceptor implements HttpInterceptor {
     const token = this.cookieService.get("token");
     const language = localStorage.getItem("app-lang") || "ar";
 
-    const baseUrl = "https://vonnn.net/workorders2/public/api/";
-
+    //const baseUrl = "https://vonnn.net/workorders2/public/api/"; // development
+    // const baseUrl = "http:127.0.0.1:8000/api/"; //production
     let headers: any = {
       "Accept-Language": language,
     };
@@ -28,10 +29,15 @@ export class GlobalInterceptor implements HttpInterceptor {
     if (token) {
       headers["Authorization"] = `Bearer ${token}`;
     }
+    const isAbsoluteUrl = (url: string) =>
+      url.startsWith("http://") || url.startsWith("https://");
 
     const newReq = request.clone({
       setHeaders: headers,
-      url: request.url.includes("assets") ? request.url : baseUrl + request.url,
+      url:
+        request.url.includes("assets") || isAbsoluteUrl(request.url)
+          ? request.url // keep assets and absolute URLs unchanged
+          : `${environment.apiUrl}/api/${request.url.replace(/^\/+/, "")}`, // prepend baseUrl + /api/
     });
 
     return next.handle(newReq);

@@ -35,7 +35,7 @@
     <!-- Email -->
     <div>
       <app-label>{{'login.email' | translate}} <span class="text-error-500">*</span></app-label>
-      <app-input-field type="email" placeholder="info@gmail.com" formControlName="email"
+      <app-input-field type="email" [placeholder]="'users.email_place'| translate" formControlName="email"
         className="form-input"></app-input-field>
       <!-- <p *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-error-500 text-sm mt-1">
         <span *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email.</span>
@@ -46,7 +46,7 @@
     <div>
       <app-label>{{'login.password' | translate}} <span class="text-error-500">*</span></app-label>
       <div class="relative">
-        <app-input-field [type]="showPassword ? 'text' : 'password'" placeholder="Enter your password"
+        <app-input-field [type]="showPassword ? 'text' : 'password'" [placeholder]="'users.enter_password' | translate"
           formControlName="password" className="form-input"></app-input-field>
 
       </div>

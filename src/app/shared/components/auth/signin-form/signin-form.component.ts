@@ -73,6 +73,7 @@ export class SigninFormComponent implements OnInit {
           err.error?.message || "Login failed",
           "Error"
         );
+        this.isLoggingIn = false;
       },
       complete: () => {
         this.isLoggingIn = false;
