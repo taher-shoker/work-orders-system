@@ -12,13 +12,13 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
                 <app-StatCard [title]="'sidebar.devices' | translate" [icon]="'dvr'"
-                    [number]="statisticData.total_devices" [colorClass]="'text-blue-500'">
+                    [number]="statisticData?.total_devices" [colorClass]="'text-blue-500'">
                 </app-StatCard>
                 <app-StatCard [title]="'devices.active' | translate" [icon]="'dvr'"
-                    [number]="statisticData.active_devices" [colorClass]="'text-blue-500'">
+                    [number]="statisticData?.active_devices" [colorClass]="'text-blue-500'">
                 </app-StatCard>
                 <app-StatCard [title]="'devices.notActive' | translate" [icon]="'dvr'"
-                    [number]="statisticData.not_active_devices" [colorClass]="'text-blue-500'">
+                    [number]="statisticData?.not_active_devices" [colorClass]="'text-blue-500'">
                 </app-StatCard>
 
 

@@ -1,118 +1,110 @@
 <form [formGroup]="orderForm">
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
 
     <!-- Date -->
-    <app-date-picker formControlName="start_date" id="date-picker" [label]="'orders.date' | translate" placeholder="">
-    </app-date-picker>
+    <div class="md:col-span-3">
+      <app-date-picker formControlName="start_date" [defaultDate]="currentDate" id="date-picker"
+        [label]="'orders.date' | translate" placeholder=""></app-date-picker>
+    </div>
 
     <!-- Department -->
-    <div>
+    <div class="md:col-span-3">
       <app-label>{{ 'orders.department' | translate }}</app-label>
       <app-select formControlName="department_id" [options]="departments"></app-select>
     </div>
 
     <!-- Engineer -->
-    <div>
+    <div class="md:col-span-3">
       <app-label>{{ 'orders.engineer' | translate }}</app-label>
       <app-select formControlName="engineer_id" [options]="engineers"></app-select>
     </div>
 
     <!-- Technician -->
-    <div>
+    <div class="md:col-span-3">
       <app-label>{{ 'orders.technician' | translate }}</app-label>
       <app-select formControlName="technician_id" [options]="technicians"></app-select>
     </div>
 
     <!-- Work Type -->
-    <div>
+    <div class="md:col-span-3">
       <app-label>{{ 'orders.workType' | translate }}</app-label>
-      <app-select formControlName="work_type_id" [options]="workTypeList">
-      </app-select>
+      <app-select formControlName="work_type_id" [options]="workTypeList"></app-select>
     </div>
 
     <!-- Building -->
-    <div>
+    <div class="md:col-span-3">
       <app-label>{{ 'orders.building' | translate }}</app-label>
-      <app-select formControlName="building_id" [options]="buildingsList">
-      </app-select>
+      <app-select formControlName="building_id" [options]="buildingsList"></app-select>
     </div>
 
     <!-- Floor -->
-    <div>
+    <div class="md:col-span-3">
       <app-label>{{ 'orders.floor' | translate }}</app-label>
-      <app-input-field placeholder="{{ 'orders.floor' | translate }}" formControlName="floor_no" className="form-input">
-      </app-input-field>
+      <app-input-field placeholder="{{ 'orders.floor' | translate }}" formControlName="floor_no"
+        class="form-input"></app-input-field>
     </div>
 
     <!-- Room -->
-    <div>
+    <div class="md:col-span-3">
       <app-label>{{ 'orders.room' | translate }}</app-label>
-      <app-input-field placeholder="{{ 'orders.room' | translate }}" formControlName="room_no" className="form-input">
-      </app-input-field>
+      <app-input-field placeholder="{{ 'orders.room' | translate }}" formControlName="room_no"
+        class="form-input"></app-input-field>
     </div>
 
     <!-- Requester Name -->
-    <div>
+    <div class="md:col-span-4">
       <app-label>{{ 'orders.requestername' | translate }}</app-label>
       <app-input-field placeholder="{{ 'orders.requestername' | translate }}" formControlName="customer_name"
-        className="form-input">
-      </app-input-field>
+        class="form-input"></app-input-field>
     </div>
 
-    <!-- Equipment -->
-    <div>
-      <app-label>{{ 'orders.equipment' | translate }}</app-label>
-      <app-select formControlName="equipment_id" [options]="equipments"></app-select>
-    </div>
-
-    <!-- device -->
-    <div>
-      <app-label>{{'orders.device'| translate}}</app-label>
+    <!-- Device -->
+    <div class="md:col-span-4">
+      <app-label>{{ 'orders.device' | translate }}</app-label>
       <app-select formControlName="device_id" [options]="devices"></app-select>
     </div>
 
-
-
-    <!-- <div *ngIf="!deviceId" class="col-md-4">
-      <mat-form-field class="w-100" [hideRequiredMarker]="hideRequiredMarker">
-        <mat-label>{{'orders.device'| translate}}</mat-label>
-        <mat-select [(ngModel)]="deviceId">
-          <mat-option *ngFor="let item of devices" [value]="item.id">
-            {{item?.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div> -->
     <!-- Source -->
-    <div>
+    <div class="md:col-span-4">
       <app-label>{{ 'orders.source' | translate }}</app-label>
       <app-select formControlName="source_id" [options]="sources"></app-select>
     </div>
-    <div>
-      <app-label>{{ 'orders.mobile' | translate }}</app-label>
-      <app-phone-input formControlName="customer_phone"></app-phone-input>
+    <div class="md:col-span-2">
+      <app-label>{{ 'orders.secondary_phone' | translate }}</app-label>
+      <app-input-field placeholder="{{ 'orders.secondary_phone' | translate }}" formControlName="secondary_phone"
+        class="form-input"></app-input-field>
     </div>
-    <!-- Description -->
+    <!-- Phone Numbers: 8/4 grid -->
     <div class="md:col-span-4">
-      <app-label>{{ 'orders.description' | translate }}</app-label>
-      <app-text-area formControlName="description" placeholder="{{'forms.add_description'| translate}}">
-      </app-text-area>
+      <app-label>{{ 'orders.phone' | translate }}</app-label>
+      <app-input-field placeholder="{{ 'orders.phone' | translate }}" formControlName="customer_phone"
+        class="form-input"></app-input-field>
     </div>
-    <div class="md:col-span-4">
+
+
+    <!-- Attachment -->
+    <div class="md:col-span-6">
       <app-label>{{ 'orders.add_attachment' | translate }}</app-label>
       <app-file-input [multiple]="false" [attachmentFiles]="uploadedFiles" formControlName="attachment"
-        (onformchange)="onUploadFile($event)" (ondelete)="onDeleteFile($event)">
-      </app-file-input>
+        (onformchange)="onUploadFile($event)" (ondelete)="onDeleteFile($event)"></app-file-input>
     </div>
+    <!-- Description -->
+    <div class="md:col-span-8">
+      <app-label>{{ 'orders.description' | translate }}</app-label>
+      <app-text-area formControlName="description"
+        placeholder="{{ 'forms.add_description' | translate }}"></app-text-area>
+    </div>
+
+
   </div>
 
   <!-- Buttons -->
   <div class="mt-10 flex justify-between">
-    <app-button type="button" (clicked)="onSubmit()" [size]="'md'" className="w-40">
-      {{ (!isEditing ? 'forms.add': 'forms.edit') | translate }}
+    <app-button type="button" (clicked)="onSubmit()" [size]="'md'" class="w-40">
+      {{ (!isEditing ? 'forms.add' : 'forms.edit') | translate }}
     </app-button>
 
-    <app-button type="button" [variant]="'outline'" [size]="'md'" className="w-40" (clicked)="goback()">
+    <app-button type="button" [variant]="'outline'" [size]="'md'" class="w-40" (clicked)="goback()">
       {{ 'forms.back' | translate }}
     </app-button>
   </div>

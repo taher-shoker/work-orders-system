@@ -2,7 +2,8 @@
   <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
 
     <!-- Date -->
-    <app-date-picker formControlName="start_date" id="date-picker" [label]="'orders.date' | translate" placeholder="">
+    <app-date-picker [defaultDate]="currentDate" formControlName="start_date" id="date-picker"
+      [label]="'orders.date' | translate" placeholder="">
     </app-date-picker>
 
     <!-- Department -->

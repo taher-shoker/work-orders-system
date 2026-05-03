@@ -10,11 +10,14 @@
       {{ placeholder }}
     </option>
 
-    <ng-container *ngFor="let option of options">
-      <option [value]="option[valueName]" class="">
-        {{ option[labelName] }}
-      </option>
-    </ng-container>
+    @if(options && options.length > 0){
+    @for (option of options; track $index) {
+    <option [value]="option[valueName]" class="">
+      {{ option[labelName] }}
+    </option>
+    }
+    }
+
   </select>
 
 

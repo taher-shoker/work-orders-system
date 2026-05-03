@@ -2,35 +2,39 @@
     <h1 mat-dialog-title class="mb-4 text-center w-100 bg-orange text-dark">
         {{ (isEditing ? 'building.edit' : 'building.add') | translate }}
     </h1>
+
     <div mat-dialog-content>
         <form [formGroup]="buildingForm">
             <div class="grid grid-col-1 md:grid-col-2 gap-2">
-                <div class="">
+                <div>
                     <app-label>{{'building.name_en' | translate}}</app-label>
-                    <app-input-field formControlName="name_en"
-                        placeholder="{{'building.name_en' | translate}}"></app-input-field>
+                    <app-input-field formControlName="name_en" placeholder="{{'building.name_en' | translate}}">
+                    </app-input-field>
                 </div>
-                <div class="">
+
+                <div>
                     <app-label>{{'building.name_ar' | translate}}</app-label>
-                    <app-input-field formControlName="name_ar"
-                        placeholder="{{'building.name_ar' | translate}}"></app-input-field>
+                    <app-input-field formControlName="name_ar" placeholder="{{'building.name_ar' | translate}}">
+                    </app-input-field>
                 </div>
-                <div class="">
+
+                <div formArrayName="no_of_floors">
                     <app-label>{{'building.no_of_floors' | translate}}</app-label>
-                    <app-input-field formControlName="no_of_floors"
-                        placeholder="{{'building.no_of_floors' | translate}}"></app-input-field>
+
+                    <div *ngFor="let floor of noOfFloors.controls; let i = index" class="flex gap-2 items-center mb-2">
+                        <app-input-field [formControlName]="i"
+                            placeholder="{{'building.name_floor' | translate}}"></app-input-field>
+                        <button *ngIf="i !==0" type="button" (click)="removeFloor(i)">❌</button>
+                    </div>
+
+                    <button type="button" (click)="addFloor()">➕ {{'building.add_floor' | translate}}</button>
                 </div>
-
             </div>
-
-
         </form>
     </div>
+
     <div mat-dialog-actions class="flex justify-between mt-6">
-
-        <app-button (clicked)="onSubmit()" [disabled]="buildingForm.invalid">{{'save'|translate }}</app-button>
-        <app-button (clicked)="onNoClick()">{{'cancel'|translate }}</app-button>
-
-
+        <app-button (clicked)="onSubmit()" [disabled]="buildingForm.invalid">{{'save'|translate}}</app-button>
+        <app-button (clicked)="onNoClick()">{{'cancel'|translate}}</app-button>
     </div>
 </section>

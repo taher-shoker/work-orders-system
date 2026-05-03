@@ -57,6 +57,7 @@ export class SelectComponent implements ControlValueAccessor, OnInit {
   constructor(private translate: TranslateService) {}
 
   ngOnInit() {
+    console.log(this.options);
     if (!this.placeholder) {
       this.translate
         .get("forms.select")

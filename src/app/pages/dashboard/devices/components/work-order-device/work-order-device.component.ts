@@ -39,6 +39,8 @@ export class WorkOrderDeviceComponent implements OnInit {
   deviceId: any;
   data: any;
   isEditing = false;
+  currentDate = new Date();
+  userName: any;
 
   constructor(
     private _LookupsService: LookupsService,
@@ -61,8 +63,7 @@ export class WorkOrderDeviceComponent implements OnInit {
   restFormWithValue(data: any) {
     // patch form safely
     this.orderForm.patchValue({
-      start_date: data?.start_date ? new Date(data.start_date) : null,
-      start_time: data?.start_time || new Date().toTimeString().split(" ")[0],
+      start_date: data?.start_date ? new Date(data.start_date) : new Date(),
       department_id: data?.department?.id ?? null,
       engineer_id: data?.engineer?.id,
       technician_id: data?.technician?.id,
@@ -70,7 +71,6 @@ export class WorkOrderDeviceComponent implements OnInit {
       building_id: data?.building?.id ?? null,
       floor_no: data?.floor_no ?? null,
       room_no: data?.room_no ?? null,
-      customer_name: data?.customer_name ?? null,
       customer_phone: data?.customer_phone ?? null,
       equipment_id: data?.equipment?.id ?? null,
       source_id: data?.source?.id ?? null,
@@ -105,24 +105,43 @@ export class WorkOrderDeviceComponent implements OnInit {
       this.isRtl = true;
     }
     this.initOrderForm();
+    this.orderForm.get("start_date")?.disable();
     this.orderForm.get("department_id")?.disable();
     this.orderForm.get("description")?.disable();
     this.orderForm.get("device_id")?.disable();
 
     if (this.deviceId) {
       this.getDeviceById(this.deviceId);
+      this.checkIsAdmin();
     }
     this.loadLookupsAndThenPatch();
     this.loadDevices();
   }
 
+  getuserName() {
+    this._AuthService.user$.subscribe((user: any) => {
+      if (user) {
+        this.userName = user.name;
+        this.orderForm.get("customer_name")?.setValue(user.name);
+      }
+    });
+  }
+  checkIsAdmin() {
+    this.getuserName();
+    if (!this._AuthService.isAdmin()) {
+      this.orderForm.get("customer_name")?.disable();
+    }
+  }
   getDeviceById(id: number) {
     this._devicesService.getDevice(id).subscribe({
       next: (res) => {
         this.data = res.data;
       },
       error: (err) => {
-        this.toastr.error(err.message, this.translate.instant("devices.work_error1"));
+        this.toastr.error(
+          err.message,
+          this.translate.instant("devices.work_error1")
+        );
       },
     });
   }
@@ -140,7 +159,7 @@ export class WorkOrderDeviceComponent implements OnInit {
       priority: this.fb.control("high"),
       type: this.fb.control("maintenance"),
 
-      start_date: this.fb.control<number | null>(null, Validators.required),
+      start_date: this.fb.control<Date>(new Date(), Validators.required),
       department_id: this.fb.control<number | null>(null, Validators.required),
       engineer_id: this.fb.control<number | null>(null, Validators.required),
       technician_id: this.fb.control<number | null>(null, Validators.required),
@@ -151,6 +170,10 @@ export class WorkOrderDeviceComponent implements OnInit {
       source_id: this.fb.control<number | null>(null, Validators.required),
       customer_name: this.fb.control<string | null>(null, Validators.required),
       customer_phone: this.fb.control<string | null>(null, Validators.required),
+      secondary_phone: this.fb.control<string | null>(
+        null,
+        Validators.required
+      ),
       equipment_id: this.fb.control<number | null>(null, Validators.required),
       device_id: this.fb.control<number | null>(null, Validators.required),
       description: this.fb.control<string | null>(null, Validators.required),
@@ -159,7 +182,6 @@ export class WorkOrderDeviceComponent implements OnInit {
   }
 
   onSubmit() {
-
     if (this.orderForm.invalid) {
       this.orderForm.markAllAsTouched();
       return;
@@ -199,7 +221,10 @@ export class WorkOrderDeviceComponent implements OnInit {
         this.toastr.success(this.translate.instant("devices.work_add"));
         this.router.navigate(["/dashboard/work-orders"]);
       },
-      error: (err) => this.toastr.error(err.error?.message || this.translate.instant("devices.work_error2")),
+      error: (err) =>
+        this.toastr.error(
+          err.error?.message || this.translate.instant("devices.work_error2")
+        ),
     });
   }
 
@@ -234,14 +259,17 @@ export class WorkOrderDeviceComponent implements OnInit {
             }).subscribe({
               next: () => this.restFormWithValue(this.data),
               error: () =>
-                this.toastr.error(this.translate.instant("devices.work_error3")),
+                this.toastr.error(
+                  this.translate.instant("devices.work_error3")
+                ),
             });
           } else {
             this.restFormWithValue(this.data);
           }
         }
       },
-      error: () => this.toastr.error(this.translate.instant("devices.work_error4")),
+      error: () =>
+        this.toastr.error(this.translate.instant("devices.work_error4")),
     });
   }
 
@@ -271,7 +299,8 @@ export class WorkOrderDeviceComponent implements OnInit {
   private loadDevices(): void {
     this.devicesService.getAllDevices().subscribe({
       next: (res) => (this.devices = res.data),
-      error: () => this.toastr.error(this.translate.instant("devices.work_error5")),
+      error: () =>
+        this.toastr.error(this.translate.instant("devices.work_error5")),
     });
   }
 

@@ -78,8 +78,18 @@ export class DatePickerComponent
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+
+    // Disable the input element
     if (this.dateInput) {
       this.dateInput.nativeElement.disabled = isDisabled;
+    }
+
+    // Disable or enable Flatpickr popup
+    if (this.flatpickrInstance) {
+      this.flatpickrInstance.set("clickOpens", !isDisabled); // Prevent popup when disabled
+
+      // Optional: completely prevent date selection
+      this.flatpickrInstance.set("allowInput", !isDisabled);
     }
   }
 
@@ -100,6 +110,7 @@ export class DatePickerComponent
       monthSelectorType: "static",
       dateFormat: "Y-m-d",
       defaultDate: this.defaultDate,
+      clickOpens: !this.disabled, // respect initial disabled state
       onChange: (selectedDates, dateStr, instance) => {
         this.onChange(dateStr);
         this.dateChange.emit({ selectedDates, dateStr, instance });
@@ -108,10 +119,14 @@ export class DatePickerComponent
           this.control.updateValueAndValidity();
         }
       },
-      onClose: () => {
-        this.onTouched();
-      },
+      onClose: () => this.onTouched(),
+      allowInput: !this.disabled, // prevent typing when disabled
     });
+
+    // If the control was disabled before view init
+    if (this.disabled) {
+      this.setDisabledState(true);
+    }
   }
 
   ngOnDestroy() {

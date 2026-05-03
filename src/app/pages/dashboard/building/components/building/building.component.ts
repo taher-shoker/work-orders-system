@@ -103,7 +103,8 @@ export class BuildingComponent {
   }
 
   addBuilding(data: FormGroup) {
-    this._BuildingService.addBuilding(data.value).subscribe({
+    console.log(data);
+    this._BuildingService.addBuilding(data).subscribe({
       next: (res) => {
         this._ToastrService.success(
           res.message,
