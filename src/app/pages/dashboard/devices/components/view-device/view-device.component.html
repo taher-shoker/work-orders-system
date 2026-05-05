@@ -78,6 +78,21 @@
       <!-- QR -->
       <div class="mt-3 flex items-center flex-col justify-center">
         <img [src]="deviceData?.qr_code" [alt]="deviceData?.model?.name" class="w-1/4" />
+        <a
+          [href]="scanUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-blue-600 underline mt-2 text-sm break-all text-center"
+        >
+          {{ scanUrl }}
+        </a>
+        <button
+          type="button"
+          (click)="copyScanUrl()"
+          class="text-white cursor-pointer bg-emerald-500 rounded-lg mt-2 px-4 h-10"
+        >
+          {{ "devices.copy_scan_link" | translate }}
+        </button>
         <button class="text-white text-decoration-underline cursor-pointer bg-blue-400 rounded-lg mt-4 w-50 h-11"
           printSectionId="print-section" [printStyle]="{'.printStyle' : {'text-align':'center'}}" printTitle="Device"
           ngxPrint>

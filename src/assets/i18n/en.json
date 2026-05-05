@@ -369,6 +369,7 @@
     "enter_model": "Enter the model/template.",
     "enter_manufacturer": "Enter the manufacturer.",
     "print": "Reprint QR Code",
+    "copy_scan_link": "Copy Scan Link",
     "add_new_device": "Add New Device",
     "add_type": "Add New Device Type ",
     "edit_type": "Edit Device Type",
