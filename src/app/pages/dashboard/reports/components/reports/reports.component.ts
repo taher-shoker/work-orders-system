@@ -13,6 +13,7 @@ import { SharedUiModule } from "../../../../../shared/components/shared-ui.modul
 import { CommonModule } from "@angular/common";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
 import { PageEvent } from "@angular/material/paginator";
+import { getStoredLanguage } from "../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-reports",
@@ -34,7 +35,7 @@ export class ReportsComponent {
   pageSize: number | undefined = 5;
   page: number | undefined = 1;
   isEmptyData: boolean = false;
-  currentLang = localStorage.getItem("lang");
+  currentLang = getStoredLanguage();
   hide: boolean = true;
   confirmHide: boolean = true;
   dataToPrint: any = [];

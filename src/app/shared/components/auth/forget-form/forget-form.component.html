@@ -30,22 +30,22 @@
 
   </div>
   <!-- Form -->
-  <form [formGroup]="loginForm" (ngSubmit)="onSignIn()" class="space-y-6">
+  <form [formGroup]="resetForm" (ngSubmit)="onSendResetLink()" class="space-y-6">
 
     <!-- Email -->
     <div>
       <app-label>{{'login.email' | translate}} <span class="text-error-500">*</span></app-label>
       <app-input-field type="email" placeholder="info@gmail.com" formControlName="email"
         className="form-input"></app-input-field>
-      <!-- <p *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-error-500 text-sm mt-1">
-        <span *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email.</span>
+      <!-- <p *ngIf="resetForm.get('email')?.touched && resetForm.get('email')?.invalid" class="text-error-500 text-sm mt-1">
+        <span *ngIf="resetForm.get('email')?.errors?.['email']">Enter a valid email.</span>
       </p> -->
     </div>
 
 
     <!-- Submit -->
-    <app-button [isLoading]="isLoggingIn" (clicked)="onSignIn()" className="w-full" size="sm"
-      [disabled]="loginForm.invalid">
+    <app-button [isLoading]="isLoggingIn" (clicked)="onSendResetLink()" className="w-full" size="sm"
+      [disabled]="resetForm.invalid">
       {{'register.send_link' | translate}}
     </app-button>
   </form>

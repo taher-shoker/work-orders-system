@@ -12,6 +12,7 @@ import { SharedUiModule } from "../../../shared-ui.module";
 import { PaginationComponent } from "../../../common/paginator/paginator.component";
 import { ModalComponent } from "../../../ui/modal/modal.component";
 import { TableDropdownComponent } from "../../../common/table-dropdown/table-dropdown.component";
+import { getStoredLanguage } from "../../../../utils/language.util";
 
 interface Transaction {
   image: string;
@@ -61,12 +62,7 @@ export class BasicTableThreeComponent implements OnInit, OnChanges {
   isRtl!: boolean;
   totalPages!: number;
   ngOnInit(): void {
-    const language = localStorage.getItem("lang");
-    if (language === "en") {
-      this.isRtl = false;
-    } else {
-      this.isRtl = true;
-    }
+    this.isRtl = getStoredLanguage() !== "en";
     this.calculatePages();
   }
 

@@ -8,11 +8,14 @@ import {
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import {
   ApexNonAxisChartSeries,
+  ApexDataLabels,
+  ApexLegend,
   ApexResponsive,
   ApexChart,
   ApexTitleSubtitle,
   NgApexchartsModule,
 } from "ng-apexcharts";
+import { isRtlLanguage } from "../../../utils/language.util";
 
 @Component({
   selector: "app-radial-chart",
@@ -43,7 +46,7 @@ export class RadialChartComponent implements OnInit, OnChanges {
   }
 
   private setupChartText() {
-    this.isRtl = localStorage.getItem("lang") !== "en";
+    this.isRtl = isRtlLanguage();
 
     this.labels = [
       this.translate.instant("charts.opened"),

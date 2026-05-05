@@ -19,6 +19,7 @@ import {
   DevicesService,
 } from "../../../../../shared/services";
 import { forkJoin, Observable, tap } from "rxjs";
+import { isRtlLanguage } from "../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-work-order-form",
@@ -76,7 +77,7 @@ export class WorkOrderFormComponent implements OnInit, OnChanges {
   // LIFECYCLE
   // -----------------------------
   ngOnInit(): void {
-    this.isRtl = localStorage.getItem("lang") !== "en";
+    this.isRtl = isRtlLanguage();
     this.initOrderForm();
     this.orderForm.get("start_date")?.disable();
     this.loadLookupsAndPatch();

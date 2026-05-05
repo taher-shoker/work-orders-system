@@ -5,7 +5,6 @@ import {
   Router,
   UrlTree,
 } from "@angular/router";
-import { Observable } from "rxjs";
 import { AuthService } from "../services/auth.service";
 @Injectable({
   providedIn: "root",
@@ -17,13 +16,14 @@ export class AuthGuard {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | UrlTree {
-    if (this.authService.isAuthorizedUser() === true) {
+    if (this.authService.isAuthorizedUser()) {
       return true; // user is authorized
-    } else {
-      // redirect to signin and preserve the attempted URL
-      return this.router.createUrlTree(["/signin"], {
-        queryParams: { redirectUrl: state.url },
-      });
     }
+
+    // redirect to signin and preserve only internal attempted URL
+    const safeRedirectUrl = state.url.startsWith("/") ? state.url : "/";
+    return this.router.createUrlTree(["/signin"], {
+      queryParams: { redirectUrl: safeRedirectUrl },
+    });
   }
 }

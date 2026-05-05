@@ -17,7 +17,8 @@ export class GlobalInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this.cookieService.get("token");
+    const token =
+      localStorage.getItem("token") || this.cookieService.get("token");
     const language = localStorage.getItem("app-lang") || "ar";
 
     //const baseUrl = "https://vonnn.net/workorders2/public/api/"; // development

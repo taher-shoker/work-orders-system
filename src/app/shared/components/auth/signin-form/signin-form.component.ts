@@ -29,7 +29,7 @@ export class SigninFormComponent implements OnInit {
   loginForm: FormGroup;
   showPassword = false;
   isLoggingIn = false;
-  redirectUrl: any;
+  redirectUrl = "/";
 
   constructor(
     private fb: FormBuilder,
@@ -46,8 +46,7 @@ export class SigninFormComponent implements OnInit {
   }
   ngOnInit(): void {
     this._ActivatedRoute.queryParams.subscribe((params) => {
-      this.redirectUrl = params["redirectUrl"] || "/";
-      console.log("Redirect URL:", this.redirectUrl);
+      this.redirectUrl = this.getSafeRedirectUrl(params["redirectUrl"]);
     });
   }
 
@@ -65,7 +64,7 @@ export class SigninFormComponent implements OnInit {
     const body = this.loginForm.value;
 
     this._AuthService.onLogin(body).subscribe({
-      next: (res) => {
+      next: () => {
         this._Route.navigateByUrl(this.redirectUrl);
       },
       error: (err) => {
@@ -79,5 +78,21 @@ export class SigninFormComponent implements OnInit {
         this.isLoggingIn = false;
       },
     });
+  }
+
+  private getSafeRedirectUrl(redirectUrl: string | undefined): string {
+    if (!redirectUrl || typeof redirectUrl !== "string") {
+      return "/";
+    }
+
+    if (
+      redirectUrl.startsWith("http://") ||
+      redirectUrl.startsWith("https://") ||
+      redirectUrl.startsWith("//")
+    ) {
+      return "/";
+    }
+
+    return redirectUrl.startsWith("/") ? redirectUrl : "/";
   }
 }

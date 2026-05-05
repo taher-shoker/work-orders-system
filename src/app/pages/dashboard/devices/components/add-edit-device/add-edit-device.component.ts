@@ -6,6 +6,7 @@ import { ToastrService } from "ngx-toastr";
 import { DevicesService } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { TranslateService } from "@ngx-translate/core";
+import { getStoredLanguage } from "../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-add-edit-device",
@@ -14,7 +15,7 @@ import { TranslateService } from "@ngx-translate/core";
   imports: [SharedUiModule],
 })
 export class AddEditDeviceComponent implements OnInit {
-  currentLang = localStorage.getItem("lang");
+  currentLang = getStoredLanguage();
   deviceId!: string | null;
   isUpdatePage = false;
   hideRequiredMarker: boolean = true;
@@ -44,7 +45,7 @@ export class AddEditDeviceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const language = localStorage.getItem("lang");
+    const language = getStoredLanguage();
     if (language === "en") {
       this.isRtl = false;
     } else {

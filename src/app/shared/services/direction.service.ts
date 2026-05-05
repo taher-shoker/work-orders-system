@@ -17,7 +17,8 @@ export class DirectionService {
     if (!isPlatformBrowser(this.platformId)) return;
 
     const savedDir = localStorage.getItem("app-direction");
-    const savedLang = localStorage.getItem("app-lang");
+    const savedLang =
+      localStorage.getItem("app-lang") || localStorage.getItem("lang");
 
     if (savedDir) {
       this.isRTL = savedDir === "rtl";
@@ -36,6 +37,7 @@ export class DirectionService {
     this.applyDirection(this.isRTL);
     localStorage.setItem("app-direction", this.isRTL ? "rtl" : "ltr");
     localStorage.setItem("app-lang", lang);
+    localStorage.setItem("lang", lang);
     this.applyLang(lang);
     window.location.reload();
   }

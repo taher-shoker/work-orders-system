@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DevicesService } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { CommonModule } from "@angular/common";
+import { getStoredLanguage } from "../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-view-device",
@@ -12,7 +13,7 @@ import { CommonModule } from "@angular/common";
   imports: [SharedUiModule, CommonModule],
 })
 export class ViewDeviceComponent {
-  currentLang = localStorage.getItem("lang");
+  currentLang = getStoredLanguage();
   deviceData: any;
   deviceWork: any = [];
   deviceId: any;
