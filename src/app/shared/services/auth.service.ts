@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
-import { CookieService } from "ngx-cookie-service";
-import { ToastrService } from "ngx-toastr";
-import { BehaviorSubject, Observable, tap } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
 export interface IUser {
   id: number;
@@ -32,24 +32,24 @@ export interface IUserRoles {
 }
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AuthService {
   private userSubject = new BehaviorSubject<IUser | null>(null);
   user$ = this.userSubject.asObservable();
   title: any;
-  private readonly tokenKey = "token";
-  private readonly userKey = "user";
+  private readonly tokenKey = 'token';
+  private readonly userKey = 'user';
 
   constructor(
     private _HttpClient: HttpClient,
     private cookieService: CookieService,
     private _ToastrService: ToastrService,
-    private translate: TranslateService
+    private translate: TranslateService,
   ) {
     if (this.hasValidToken()) {
       this.restoreUserFromCookie();
-      this.refreshCurrentUser();
+      //this.refreshCurrentUser();
     } else {
       this.clearStoredAuth();
     }
@@ -59,18 +59,19 @@ export class AuthService {
   private restoreUserFromCookie(): void {
     try {
       const userStr =
-        localStorage.getItem(this.userKey) || this.cookieService.get(this.userKey);
+        localStorage.getItem(this.userKey) ||
+        this.cookieService.get(this.userKey);
       if (userStr) {
         const user: IUser = JSON.parse(userStr);
         this.userSubject.next(user);
       }
     } catch (error) {
-      console.error("Failed to parse stored user:", error);
+      console.error('Failed to parse stored user:', error);
     }
   }
 
   private refreshCurrentUser(): void {
-    this._HttpClient.get<{ data: IUser }>("auth/get_single_user").subscribe({
+    this._HttpClient.get<{ data: IUser }>('auth/get_single_user').subscribe({
       next: (res) => {
         if (res?.data) {
           localStorage.setItem(this.userKey, JSON.stringify(res.data));
@@ -90,7 +91,7 @@ export class AuthService {
 
   /** 🔹 Login */
   onLogin(data: any): Observable<any> {
-    return this._HttpClient.post("auth/login", data).pipe(
+    return this._HttpClient.post('auth/login', data).pipe(
       tap((res: any) => {
         if (res?.data?.token) {
           // Keep auth data in localStorage as a frontend fallback.
@@ -103,10 +104,10 @@ export class AuthService {
         }
         if (res.status_code === 401) {
           this._ToastrService.error(
-            this.translate.instant("login.failed_login")
+            this.translate.instant('login.failed_login'),
           );
         }
-      })
+      }),
     );
   }
 
@@ -123,7 +124,7 @@ export class AuthService {
     this.cookieService.delete(this.userKey);
   }
   onRegister(data: any): Observable<any> {
-    return this._HttpClient.post("auth/register", data);
+    return this._HttpClient.post('auth/register', data);
   }
 
   /** 🔹 Role Checks */
@@ -147,7 +148,8 @@ export class AuthService {
 
   getAccessToken(): string {
     return (
-      localStorage.getItem(this.tokenKey) || this.cookieService.get(this.tokenKey)
+      localStorage.getItem(this.tokenKey) ||
+      this.cookieService.get(this.tokenKey)
     );
   }
 
@@ -157,7 +159,7 @@ export class AuthService {
       return false;
     }
 
-    const tokenParts = token.split(".");
+    const tokenParts = token.split('.');
     if (tokenParts.length !== 3) {
       return true;
     }
