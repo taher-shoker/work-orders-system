@@ -14,6 +14,7 @@ import {
 } from "../../../../../shared/services";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
+import { getStoredLanguage } from "../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-work-order-device",
@@ -98,7 +99,7 @@ export class WorkOrderDeviceComponent implements OnInit {
     }
   }
   ngOnInit() {
-    const language = localStorage.getItem("lang");
+    const language = getStoredLanguage();
     if (language === "en") {
       this.isRtl = false;
     } else {

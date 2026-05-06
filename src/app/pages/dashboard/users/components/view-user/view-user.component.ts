@@ -4,6 +4,7 @@ import { ToastrService } from "ngx-toastr";
 import { UsersService } from "../../../../../shared/services/users.service";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { getStoredLanguage } from "../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-view-user",
@@ -12,7 +13,7 @@ import { TranslateModule, TranslateService } from "@ngx-translate/core";
   imports: [TranslateModule],
 })
 export class ViewUserComponent {
-  currentLang = localStorage.getItem("lang");
+  currentLang = getStoredLanguage();
   // buildingData: any
   userData: any;
 

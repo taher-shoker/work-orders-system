@@ -7,6 +7,7 @@ import { DeviceModelService } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { BasicTableThreeComponent } from "../../../../../shared/components/tables/basic-tables/basic-table-three/basic-table-three.component";
 import { TranslateService } from "@ngx-translate/core";
+import { getStoredLanguage } from "../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-device-model",
@@ -15,7 +16,7 @@ import { TranslateService } from "@ngx-translate/core";
   imports: [SharedUiModule, BasicTableThreeComponent],
 })
 export class DeviceModelComponent implements OnInit {
-  currentLang = localStorage.getItem("lang");
+  currentLang = getStoredLanguage();
 
   deviceModels: any[] = [];
   filteredList: any[] = [];

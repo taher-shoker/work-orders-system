@@ -19,6 +19,7 @@ import {
   ApexTooltip,
   NgApexchartsModule,
 } from "ng-apexcharts";
+import { isRtlLanguage } from "../../../../utils/language.util";
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -104,7 +105,7 @@ export class BarChartOneComponent implements OnInit {
     },
   ];
   ngOnInit() {
-    this.isRtl = localStorage.getItem("lang") !== "en";
+    this.isRtl = isRtlLanguage();
     if (this.isRtl) {
       this.xaxis.categories = [
         "فبراير",

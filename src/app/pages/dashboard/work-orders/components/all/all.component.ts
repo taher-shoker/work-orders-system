@@ -12,6 +12,7 @@ import { BasicTableThreeComponent } from "../../../../../shared/components/table
 import { forkJoin } from "rxjs";
 import { HelperService } from "../../../../../shared/services";
 import { TranslateService } from "@ngx-translate/core";
+import { getStoredLanguage } from "../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-all",
@@ -36,7 +37,7 @@ export class AllComponent {
   pageSize: number | undefined = 5;
   page: number | undefined = 1;
   pageIndex: number = 0;
-  currentLang = localStorage.getItem("lang");
+  currentLang = getStoredLanguage();
   isRtl = false;
   columns: any = [];
   statisticData: any;
@@ -58,7 +59,7 @@ export class AllComponent {
   ) {}
 
   ngOnInit() {
-    const language = localStorage.getItem("lang");
+    const language = getStoredLanguage();
     if (language === "en") {
       this.isRtl = false;
     } else {

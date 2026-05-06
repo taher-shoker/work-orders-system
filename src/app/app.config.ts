@@ -32,6 +32,7 @@ import { SharedUiModule } from "./shared/components/shared-ui.module";
 // Interceptors
 import { GlobalInterceptor } from "./interceptors/global.interceptor";
 import { SpinnerInterceptor } from "./interceptors/spinner.interceptor";
+import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { DirectionService } from "./shared/services/direction.service";
 import { LocationStrategy, HashLocationStrategy } from "@angular/common";
 
@@ -61,6 +62,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpinnerInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true,
     },
 

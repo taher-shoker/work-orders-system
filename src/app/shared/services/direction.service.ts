@@ -1,12 +1,16 @@
 import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class DirectionService {
   private isRTL = true; // 🔥 Default RTL (Arabic)
+  private initialized = false;
+  private currentLanguageSubject = new BehaviorSubject<string>("ar");
+  currentLanguage$ = this.currentLanguageSubject.asObservable();
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -14,42 +18,61 @@ export class DirectionService {
   ) {}
 
   initDirection() {
-    if (!isPlatformBrowser(this.platformId)) return;
+    if (!isPlatformBrowser(this.platformId) || this.initialized) return;
+    this.initialized = true;
 
     const savedDir = localStorage.getItem("app-direction");
-    const savedLang = localStorage.getItem("app-lang");
+    const savedLang =
+      localStorage.getItem("app-lang") || localStorage.getItem("lang");
 
-    if (savedDir) {
-      this.isRTL = savedDir === "rtl";
-    }
+    const lang = savedLang === "en" ? "en" : "ar";
+    this.isRTL = savedDir ? savedDir === "rtl" : lang !== "en";
 
-    const lang = savedLang || "ar"; // 🔥 Default to Arabic if nothing saved
-
-    this.applyDirection(this.isRTL);
-    this.applyLang(lang);
+    this.setLanguage(lang, false);
+    this.preloadOtherLanguage(lang);
   }
 
   toggle() {
-    this.isRTL = !this.isRTL;
-    const lang = this.isRTL ? "ar" : "en";
-
-    this.applyDirection(this.isRTL);
-    localStorage.setItem("app-direction", this.isRTL ? "rtl" : "ltr");
-    localStorage.setItem("app-lang", lang);
-    this.applyLang(lang);
-    window.location.reload();
+    const nextLang = this.currentLanguageSubject.value === "ar" ? "en" : "ar";
+    this.setLanguage(nextLang);
   }
 
-  private applyDirection(isRTL: boolean): void {
+  setLanguage(lang: string, persist = true): void {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const normalizedLang = lang === "en" ? "en" : "ar";
+    this.isRTL = normalizedLang !== "en";
+
+    if (persist) {
+      localStorage.setItem("app-direction", this.isRTL ? "rtl" : "ltr");
+      localStorage.setItem("app-lang", normalizedLang);
+      localStorage.setItem("lang", normalizedLang);
+    }
+
+    this.applyDirection(this.isRTL, normalizedLang);
+    this.applyLang(normalizedLang);
+    this.currentLanguageSubject.next(normalizedLang);
+  }
+
+  private applyDirection(isRTL: boolean, lang: string): void {
     document.documentElement.dir = isRTL ? "rtl" : "ltr";
-    document.documentElement.lang = isRTL ? "ar" : "en";
+    document.documentElement.lang = lang;
     document.body.classList.toggle("rtl-layout", isRTL);
     document.body.classList.toggle("ltr-layout", !isRTL);
   }
+
   applyLang(lang: string) {
     this.translate.setDefaultLang(lang);
     this.translate.use(lang);
   }
+
+  private preloadOtherLanguage(currentLang: string): void {
+    const otherLang = currentLang === "ar" ? "en" : "ar";
+    this.translate.getTranslation(otherLang).subscribe({
+      error: () => {},
+    });
+  }
+
   isRTLMode(): boolean {
     return this.isRTL;
   }

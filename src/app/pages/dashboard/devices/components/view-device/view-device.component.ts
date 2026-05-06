@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DevicesService } from "../../../../../shared/services";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
 import { CommonModule } from "@angular/common";
+import { getStoredLanguage } from "../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-view-device",
@@ -12,10 +13,11 @@ import { CommonModule } from "@angular/common";
   imports: [SharedUiModule, CommonModule],
 })
 export class ViewDeviceComponent {
-  currentLang = localStorage.getItem("lang");
+  currentLang = getStoredLanguage();
   deviceData: any;
   deviceWork: any = [];
   deviceId: any;
+  scanUrl = "";
 
   constructor(
     private _devicesService: DevicesService,
@@ -27,6 +29,9 @@ export class ViewDeviceComponent {
   }
 
   ngOnInit(): void {
+    this.scanUrl = `${window.location.origin}${this.router.serializeUrl(
+      this.router.createUrlTree(["/scan", this.deviceId])
+    )}`;
     this.getDeviceById(this.deviceId);
     this.getDeviceWorkOrder(this.deviceId);
   }
@@ -70,5 +75,11 @@ export class ViewDeviceComponent {
 
   handleNavigate(orderId: number) {
     this.router.navigate(["/dashboard/work-orders/view", orderId]);
+  }
+
+  copyScanUrl(): void {
+    navigator.clipboard.writeText(this.scanUrl).then(() => {
+      this._ToastrService.success("Scan link copied");
+    });
   }
 }

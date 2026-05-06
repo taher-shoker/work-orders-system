@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { SharedUiModule } from "../../../../../../shared/components/shared-ui.module";
+import { getStoredLanguage } from "../../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-block-users",
@@ -22,7 +23,7 @@ export class BlockUsersComponent implements OnInit {
     this.dialogRef.close(id);
   }
   ngOnInit() {
-    const language = localStorage.getItem("lang");
+    const language = getStoredLanguage();
     if (language === "en") {
       this.isRtl = false;
     } else {

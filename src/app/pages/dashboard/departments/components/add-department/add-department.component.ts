@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { UsersService } from "../../../../../shared/services/users.service";
 import { SharedUiModule } from "../../../../../shared/components/shared-ui.module";
+import { getStoredLanguage } from "../../../../../shared/utils/language.util";
 
 @Component({
   selector: "app-add-department",
@@ -11,7 +12,7 @@ import { SharedUiModule } from "../../../../../shared/components/shared-ui.modul
   imports: [SharedUiModule],
 })
 export class AddDepartmentComponent implements OnInit {
-  currentLang = localStorage.getItem("lang");
+  currentLang = getStoredLanguage();
   hideRequiredMarker: boolean = true;
   tableResponse: any | undefined;
   tableData: any[] = [];

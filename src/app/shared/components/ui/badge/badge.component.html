@@ -4,6 +4,6 @@
   }
   <ng-content></ng-content>
   @if (endIcon) {
-  <span class="ml-1" [innerHTML]="endIcon"></span>
+  <span class="ml-1" [innerHTML]="endIcon | safeHtml"></span>
   }
 </span>

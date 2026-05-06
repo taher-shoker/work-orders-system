@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
-import { Observable } from "rxjs";
+import { catchError, Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -11,6 +10,11 @@ export class HelperService {
 
   getCurrentUser(): Observable<any> {
     return this._HttpClient.get("auth/get_single_user");
+  }
+  forgotPassword(data: { email: string }): Observable<any> {
+    return this._HttpClient.post("auth/forgot-password", data).pipe(
+      catchError(() => this._HttpClient.post("auth/forget-password", data))
+    );
   }
   getEngineers(id: number): Observable<any> {
     return this._HttpClient.get(`auth/get_engineers/100/${id}`, {

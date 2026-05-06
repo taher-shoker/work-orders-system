@@ -10,6 +10,11 @@ import { ResetPasswordComponent } from "./pages/auth-pages/reset-password/reset-
 
 export const routes: Routes = [
   { path: "", redirectTo: "dashboard/home", pathMatch: "full" },
+  {
+    path: "scan/:deviceId",
+    redirectTo: "dashboard/devices/view/:deviceId/add-work-order",
+    pathMatch: "full",
+  },
 
   {
     path: "",
